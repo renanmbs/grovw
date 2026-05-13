@@ -241,6 +241,7 @@ p strong { font-weight: 600; color: var(--char); }
   font-size: 0.85rem;
   font-weight: 500;
   letter-spacing: 0.16em;
+  text-indent: 0.16em; /* offset letter-spacing's trailing gap so centered text reads centered */
   text-transform: uppercase;
   color: var(--cta-fg);
   background: var(--cta-bg);
@@ -422,6 +423,11 @@ p strong { font-weight: 600; color: var(--char); }
 .hero__media {
   position: absolute; inset: 0; z-index: -1;
 }
+.hero__media picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
 .hero__media img {
   width: 100%; height: 100%;
   object-fit: cover;
@@ -435,6 +441,25 @@ p strong { font-weight: 600; color: var(--char); }
   background:
     radial-gradient(120% 70% at 30% 60%, rgba(14,26,20,0.55) 0%, rgba(14,26,20,0.25) 50%, rgba(14,26,20,0.85) 100%),
     linear-gradient(180deg, rgba(14,26,20,0.45) 0%, rgba(14,26,20,0.2) 35%, rgba(14,26,20,0.85) 100%);
+}
+/* Phones get a portrait-cropped version of the hero photo via <picture>
+   (see index.html). Just need a gentle veil to keep the headline area
+   legible — the cropped image already composes nicely for portrait. */
+@media (max-width: 767px) {
+  /* Portrait-cropped home photo serves via <picture>. Veil keeps the home
+     subtly visible up top and lands the headline on a uniformly dark band
+     so the gold italic line stays legible — no visible seam. */
+  .hero__media img { object-position: center 35%; }
+  .hero__veil {
+    background: linear-gradient(180deg,
+      rgba(14,26,20,0.32) 0%,
+      rgba(14,26,20,0.38) 22%,
+      rgba(14,26,20,0.82) 42%,
+      rgba(14,26,20,0.94) 100%);
+  }
+  .hero h1       { text-shadow: 0 4px 28px rgba(0,0,0,0.45); }
+  .hero__sub     { text-shadow: 0 2px 12px rgba(0,0,0,0.55); }
+  .hero .eyebrow { text-shadow: 0 1px 6px  rgba(0,0,0,0.65); }
 }
 
 .hero__content {
