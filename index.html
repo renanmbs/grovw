@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0E1A14">
+  <meta name="color-scheme" content="light dark">
+
+  <title>GROWV — Luxury Real Estate by Jonathan Perez</title>
+  <meta name="description" content="GROWV is a Utah-based brokerage delivering a hospitality-grade real estate experience. Curated luxury homes, fluent service in English and Spanish, and a brokerage led by Jonathan Perez.">
+
+  <meta property="og:title" content="GROWV — Luxury Real Estate by Jonathan Perez">
+  <meta property="og:description" content="A hospitality-grade real estate experience in Utah. Discover a place you'll love to live.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mygrowv.com/">
+  <meta property="og:image" content="assets/images/growv-logo-gold.png">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" type="image/png" href="assets/images/growv-mark.png">
+  <link rel="apple-touch-icon" href="assets/images/growv-mark.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="assets/images/hero-lg.jpg" as="image" media="(min-width: 768px)">
+  <link rel="preload" href="assets/images/hero-sm.jpg" as="image" media="(max-width: 767px)">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <!-- ===================== NAV ===================== -->
+  <header class="site-header" id="siteHeader" data-scrolled="false">
+    <div class="nav-shell">
+      <a class="brand" href="#top" aria-label="GROWV — home">
+        <img src="assets/images/growv-logo-gold.png" alt="GROWV" class="brand__logo" width="120" height="69" decoding="async">
+      </a>
+
+      <nav class="primary-nav" aria-label="Primary">
+        <ul role="list">
+          <li><a href="#about">About</a></li>
+          <li><a href="#why">Why GROWV</a></li>
+          <li><a href="#properties">Properties</a></li>
+          <li><a href="#team">Our Brokers</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      <a class="cta cta--ghost" href="#contact" data-cta="header">
+        <span>Schedule a Viewing</span>
+      </a>
+
+      <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mobileNav" aria-label="Open menu" type="button">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <div class="mobile-nav" id="mobileNav" hidden>
+      <nav aria-label="Mobile">
+        <ul role="list">
+          <li><a href="#about">About</a></li>
+          <li><a href="#why">Why GROWV</a></li>
+          <li><a href="#properties">Properties</a></li>
+          <li><a href="#team">Our Brokers</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <a class="cta cta--gold cta--block" href="#contact">Schedule a Viewing</a>
+      <div class="mobile-nav__contact">
+        <a href="tel:+18019403551" aria-label="Call Jonathan">(801)&nbsp;940-3551</a>
+        <a href="mailto:jonathan@mygrowv.com">jonathan@mygrowv.com</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <span id="top" tabindex="-1" aria-hidden="true"></span>
+
+    <!-- ===================== HERO ===================== -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero__media" aria-hidden="true">
+        <picture>
+          <source media="(min-width: 768px)" srcset="assets/images/hero-lg.jpg">
+          <img
+            src="assets/images/hero-sm.jpg"
+            srcset="assets/images/hero-sm.jpg 900w, assets/images/hero-lg.jpg 1800w"
+            sizes="100vw"
+            alt=""
+            loading="eager"
+            fetchpriority="high"
+            decoding="async">
+        </picture>
+        <div class="hero__veil"></div>
+      </div>
+
+      <div class="hero__content">
+        <p class="eyebrow eyebrow--gold">Luxury Real Estate · Utah</p>
+        <h1 id="hero-title" class="display">
+          <span class="display__line">Discover a place</span>
+          <span class="display__line display__line--italic">you&rsquo;ll love to live.</span>
+        </h1>
+        <p class="hero__sub">A boutique brokerage delivering the calm precision of a five-star concierge — for the people, homes, and stories worth that standard of care.</p>
+        <div class="hero__actions">
+          <a class="cta cta--gold" href="#properties">View Properties</a>
+          <a class="cta cta--quiet" href="#about">
+            <span>About GROWV</span>
+            <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" focusable="false"><path d="M1 7h11M7 1l5 6-5 6" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <a href="#about" class="hero__scroll" aria-label="Scroll to about section">
+        <span class="hero__scroll-line" aria-hidden="true"></span>
+        <span class="hero__scroll-label">Scroll</span>
+      </a>
+    </section>
+
+    <!-- ===================== ABOUT ===================== -->
+    <section class="section section--cream" id="about" aria-labelledby="about-title">
+      <div class="container split">
+        <div class="split__media reveal" data-reveal>
+          <img
+            src="assets/images/about-sm.jpg"
+            srcset="assets/images/about-sm.jpg 900w, assets/images/about-lg.jpg 1800w"
+            sizes="(min-width: 1280px) 600px, (min-width: 900px) 50vw, 90vw"
+            alt="Architectural detail of a contemporary luxury home with stone, wood, and large glass openings."
+            loading="lazy"
+            decoding="async"
+            width="1400" height="1700">
+          <span class="split__media-tag" aria-hidden="true">Est. Utah</span>
+        </div>
+        <div class="split__text reveal" data-reveal data-reveal-delay="120">
+          <p class="eyebrow">About GROWV</p>
+          <h2 id="about-title" class="display display--md">A different kind of brokerage.</h2>
+          <p class="lede">GROWV is a Utah brokerage built on a single belief — that buying or selling a home is one of the most personal decisions a family ever makes, and it deserves to be handled with the same precision and grace as a stay at a great hotel.</p>
+          <p>Founded and led by broker-owner <strong>Jonathan Perez</strong>, our practice draws on more than a decade across lending, property management, and strategic negotiation. We&rsquo;re selective about who we represent and obsessive about how we represent them. Every client receives a direct line to the broker, fluent service in English and Spanish, and a process designed to feel effortless from first showing to final signature.</p>
+          <a class="link-arrow" href="#team">
+            <span>Meet the team</span>
+            <svg width="22" height="10" viewBox="0 0 22 10" aria-hidden="true" focusable="false"><path d="M0 5h20M16 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== WHY GROWV ===================== -->
+    <section class="section section--ink" id="why" aria-labelledby="why-title">
+      <div class="container">
+        <header class="section-head reveal" data-reveal>
+          <p class="eyebrow eyebrow--gold">Why GROWV</p>
+          <h2 id="why-title" class="display display--md display--light">A standard of service<br>built for the long view.</h2>
+        </header>
+
+        <ul class="value-grid" role="list">
+          <li class="value reveal" data-reveal>
+            <span class="value__num" aria-hidden="true">01</span>
+            <h3 class="value__title">Broker-led, every step</h3>
+            <p>Your transaction is never handed off. The broker you meet is the broker who negotiates, advises, and closes — accountable from first message to final key.</p>
+          </li>
+          <li class="value reveal" data-reveal data-reveal-delay="80">
+            <span class="value__num" aria-hidden="true">02</span>
+            <h3 class="value__title">A decade of cross-discipline depth</h3>
+            <p>Lending. Property management. Strategic negotiation. Each chapter of experience sharpens a more complete read of the market — and a more decisive plan for yours.</p>
+          </li>
+          <li class="value reveal" data-reveal data-reveal-delay="160">
+            <span class="value__num" aria-hidden="true">03</span>
+            <h3 class="value__title">Bilingual, by design</h3>
+            <p>Fluent service in English and Spanish — not as a feature, but as part of how we ensure nothing is lost in translation when it matters most.</p>
+          </li>
+          <li class="value reveal" data-reveal data-reveal-delay="240">
+            <span class="value__num" aria-hidden="true">04</span>
+            <h3 class="value__title">Hospitality-grade discretion</h3>
+            <p>Quiet listings, private showings, careful timing. We treat your move with the privacy it deserves — and the care a flagship hotel reserves for its most valued guests.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===================== MISSION ===================== -->
+    <section class="mission" aria-labelledby="mission-title">
+      <div class="container mission__inner">
+        <p class="eyebrow eyebrow--gold reveal" data-reveal>Mission</p>
+        <h2 id="mission-title" class="display display--lg reveal" data-reveal data-reveal-delay="80">
+          We are committed to the standard for excellence and leadership&nbsp;— providing the highest level of service to our clients through integrity.
+        </h2>
+        <p class="mission__sig reveal" data-reveal data-reveal-delay="180">— Jonathan Perez, Broker &amp; Owner</p>
+      </div>
+    </section>
+
+    <!-- ===================== FEATURED PROPERTIES ===================== -->
+    <section class="section section--paper" id="properties" aria-labelledby="properties-title">
+      <div class="container">
+        <header class="section-head section-head--row reveal" data-reveal>
+          <div>
+            <p class="eyebrow">The Portfolio</p>
+            <h2 id="properties-title" class="display display--md">Selected residences.</h2>
+          </div>
+          <p class="section-head__note">A curated look at the kind of homes we represent. Active listings are presented privately on request.</p>
+        </header>
+
+        <div class="property-grid">
+          <!-- Property cards are illustrative; replace data-href when real listings are wired -->
+          <article class="property reveal" data-reveal>
+            <a class="property__media" href="#contact" aria-label="Inquire about Glasshouse Estate, Park City">
+              <img
+                src="assets/images/prop-glasshouse-sm.jpg"
+                srcset="assets/images/prop-glasshouse-sm.jpg 900w, assets/images/prop-glasshouse-lg.jpg 1800w"
+                sizes="(min-width: 1280px) 25vw, (min-width: 600px) 50vw, 90vw"
+                alt="Modern mountain estate with floor-to-ceiling glass and a long covered terrace at dusk."
+                loading="lazy" decoding="async" width="1200" height="900">
+            </a>
+            <div class="property__body">
+              <p class="property__loc">Park City, UT</p>
+              <h3 class="property__title">Glasshouse Estate</h3>
+              <ul class="property__meta" role="list">
+                <li>5 bed</li><li>6 bath</li><li>7,400 sqft</li>
+              </ul>
+              <p class="property__price">Price upon request</p>
+            </div>
+          </article>
+
+          <article class="property reveal" data-reveal data-reveal-delay="80">
+            <a class="property__media" href="#contact" aria-label="Inquire about Cedar Hollow Residence, Riverdale">
+              <img
+                src="assets/images/prop-cedar-sm.jpg"
+                srcset="assets/images/prop-cedar-sm.jpg 900w, assets/images/prop-cedar-lg.jpg 1800w"
+                sizes="(min-width: 1280px) 25vw, (min-width: 600px) 50vw, 90vw"
+                alt="Warm wood and stone luxury home with a long pool reflecting evening light."
+                loading="lazy" decoding="async" width="1200" height="900">
+            </a>
+            <div class="property__body">
+              <p class="property__loc">Riverdale, UT</p>
+              <h3 class="property__title">Cedar Hollow Residence</h3>
+              <ul class="property__meta" role="list">
+                <li>4 bed</li><li>5 bath</li><li>5,100 sqft</li>
+              </ul>
+              <p class="property__price">$3.9M</p>
+            </div>
+          </article>
+
+          <article class="property reveal" data-reveal data-reveal-delay="160">
+            <a class="property__media" href="#contact" aria-label="Inquire about The Ridgeline, Ogden Valley">
+              <img
+                src="assets/images/prop-ridgeline-sm.jpg"
+                srcset="assets/images/prop-ridgeline-sm.jpg 900w, assets/images/prop-ridgeline-lg.jpg 1800w"
+                sizes="(min-width: 1280px) 25vw, (min-width: 600px) 50vw, 90vw"
+                alt="Two-story luxury home with limestone façade, manicured landscaping, and dramatic entry lighting."
+                loading="lazy" decoding="async" width="1200" height="900">
+            </a>
+            <div class="property__body">
+              <p class="property__loc">Ogden Valley, UT</p>
+              <h3 class="property__title">The Ridgeline</h3>
+              <ul class="property__meta" role="list">
+                <li>6 bed</li><li>7 bath</li><li>8,900 sqft</li>
+              </ul>
+              <p class="property__price">Price upon request</p>
+            </div>
+          </article>
+
+          <article class="property reveal" data-reveal data-reveal-delay="240">
+            <a class="property__media" href="#contact" aria-label="Inquire about Aspen House, Deer Valley">
+              <img
+                src="assets/images/prop-aspen-sm.jpg"
+                srcset="assets/images/prop-aspen-sm.jpg 900w, assets/images/prop-aspen-lg.jpg 1800w"
+                sizes="(min-width: 1280px) 25vw, (min-width: 600px) 50vw, 90vw"
+                alt="Contemporary luxury home with cantilevered roof, dark cladding, and stone accents under mountain skies."
+                loading="lazy" decoding="async" width="1200" height="900">
+            </a>
+            <div class="property__body">
+              <p class="property__loc">Deer Valley, UT</p>
+              <h3 class="property__title">Aspen House</h3>
+              <ul class="property__meta" role="list">
+                <li>5 bed</li><li>6 bath</li><li>6,200 sqft</li>
+              </ul>
+              <p class="property__price">$4.6M</p>
+            </div>
+          </article>
+        </div>
+
+        <p class="property-grid__note">Featured selections are representative of GROWV&rsquo;s portfolio. For an introduction to active and off-market listings, <a href="#contact">request a private consultation</a>.</p>
+      </div>
+    </section>
+
+    <!-- ===================== AGENTS / TEAM ===================== -->
+    <section class="section section--ink section--ink-soft" id="team" aria-labelledby="team-title">
+      <div class="container">
+        <header class="section-head reveal" data-reveal>
+          <p class="eyebrow eyebrow--gold">The Team</p>
+          <h2 id="team-title" class="display display--md display--light">Our brokers.</h2>
+          <p class="section-head__lede">A small bench of carefully chosen agents — each one selected for the same standard of judgement, discretion, and care.</p>
+        </header>
+
+        <ul class="team-grid" role="list" id="teamGrid">
+          <!-- Cards are rendered from data in app.js so the agent list is easy to update.
+               Each card links to the agent's external personal website. -->
+        </ul>
+
+        <p class="team-grid__note">Joining GROWV? <a href="#contact">Speak with Jonathan</a> about our brokerage model.</p>
+      </div>
+    </section>
+
+    <!-- ===================== FINAL CTA / CONTACT ===================== -->
+    <section class="section section--cream" id="contact" aria-labelledby="contact-title">
+      <div class="container contact">
+        <div class="contact__lead reveal" data-reveal>
+          <p class="eyebrow">Begin</p>
+          <h2 id="contact-title" class="display display--lg">Let&rsquo;s find the one.</h2>
+          <p class="lede">Whether you&rsquo;re imagining your first move into Utah&rsquo;s luxury market, or quietly preparing to list a property you&rsquo;ve loved for years — start with a conversation. No pressure. Just a thoughtful, well-prepared place to begin.</p>
+        </div>
+
+        <div class="contact__card reveal" data-reveal data-reveal-delay="120">
+          <div class="contact__row">
+            <span class="contact__label">Broker</span>
+            <span class="contact__value">Jonathan Perez</span>
+          </div>
+          <div class="contact__row">
+            <span class="contact__label">Office</span>
+            <a class="contact__value" href="tel:+18018888817">(801)&nbsp;888-8817</a>
+          </div>
+          <div class="contact__row">
+            <span class="contact__label">Mobile</span>
+            <a class="contact__value" href="tel:+18019403551">(801)&nbsp;940-3551</a>
+          </div>
+          <div class="contact__row">
+            <span class="contact__label">Email</span>
+            <a class="contact__value" href="mailto:jonathan@mygrowv.com">jonathan@mygrowv.com</a>
+          </div>
+          <div class="contact__row">
+            <span class="contact__label">Studio</span>
+            <span class="contact__value">5098 S 1050 W&nbsp;#102,<br>Riverdale, UT 84405</span>
+          </div>
+          <a class="cta cta--gold cta--block cta--lg" href="mailto:jonathan@mygrowv.com?subject=Private%20Consultation%20Request">
+            <span>Request a private consultation</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="site-footer" aria-labelledby="footer-title">
+    <div class="container site-footer__inner">
+      <h2 id="footer-title" class="sr-only">Footer</h2>
+
+      <div class="site-footer__brand">
+        <img src="assets/images/growv-logo-gold.png" alt="GROWV" width="140" height="81" loading="lazy" decoding="async">
+        <p>A boutique luxury real estate brokerage based in Riverdale, Utah — serving the Wasatch Front and beyond.</p>
+      </div>
+
+      <nav class="site-footer__nav" aria-label="Footer">
+        <h3>Explore</h3>
+        <ul role="list">
+          <li><a href="#about">About</a></li>
+          <li><a href="#why">Why GROWV</a></li>
+          <li><a href="#properties">Properties</a></li>
+          <li><a href="#team">Brokers</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="site-footer__contact">
+        <h3>Studio</h3>
+        <address>
+          5098 S 1050 W #102<br>
+          Riverdale, UT 84405<br><br>
+          <a href="tel:+18018888817">(801)&nbsp;888-8817</a><br>
+          <a href="mailto:jonathan@mygrowv.com">jonathan@mygrowv.com</a>
+        </address>
+      </div>
+
+      <div class="site-footer__legal">
+        <p>&copy; <span id="year">2026</span> GROWV LLC. All rights reserved. Equal Housing Opportunity.</p>
+        <p class="site-footer__fineprint">Information deemed reliable but not guaranteed. All measurements and square footage are approximate.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/app.js" defer></script>
+</body>
+</html>
