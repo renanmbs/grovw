@@ -188,8 +188,10 @@
       nav.hidden = false;
       toggle.setAttribute('aria-expanded', 'true');
       toggle.setAttribute('aria-label', 'Close menu');
-      const first = nav.querySelector(focusableSel);
-      if (first) first.focus({ preventScroll: true });
+      // Focus the menu container (tabindex="-1") rather than the first link,
+      // so screen readers / keyboard users still land inside the menu —
+      // but no visible focus ring lands on a specific link.
+      nav.focus({ preventScroll: true });
     };
 
     const close = () => {

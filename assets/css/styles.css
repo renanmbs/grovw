@@ -391,6 +391,10 @@ html.is-nav-open .site-header {
 }
 @keyframes slideIn { from { opacity: 0; transform: translateY(-12px); } to { opacity: 1; transform: translateY(0); } }
 .mobile-nav[hidden] { display: none; }
+/* The menu container takes programmatic focus on open (so screen-reader
+   users land inside the menu) — suppress its focus outline since the
+   container itself isn't an interactive target. */
+.mobile-nav:focus, .mobile-nav:focus-visible { outline: none; }
 .mobile-nav ul { display: flex; flex-direction: column; }
 .mobile-nav li + li { border-top: 1px solid var(--ink-line); }
 .mobile-nav a {
