@@ -319,8 +319,9 @@ p strong { font-weight: 600; color: var(--char); }
   background: linear-gradient(180deg, rgba(14,26,20,0.55) 0%, rgba(14,26,20,0) 100%);
   transition: background-color .35s var(--ease-out), backdrop-filter .35s var(--ease-out);
 }
-.site-header[data-scrolled="true"] {
-  background: rgba(14, 26, 20, 0.92);
+.site-header[data-scrolled="true"],
+html.is-nav-open .site-header {
+  background: rgba(14, 26, 20, 0.96);
   backdrop-filter: saturate(180%) blur(12px);
   -webkit-backdrop-filter: saturate(180%) blur(12px);
   border-bottom: 1px solid rgba(255,255,255,0.06);

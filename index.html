@@ -54,24 +54,30 @@
         <span></span><span></span><span></span>
       </button>
     </div>
-
-    <div class="mobile-nav" id="mobileNav" hidden>
-      <nav aria-label="Mobile">
-        <ul role="list">
-          <li><a href="#about">About</a></li>
-          <li><a href="#why">Why GROWV</a></li>
-          <li><a href="#properties">Properties</a></li>
-          <li><a href="#team">Our Brokers</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-      </nav>
-      <a class="cta cta--gold cta--block" href="#contact">Schedule a Viewing</a>
-      <div class="mobile-nav__contact">
-        <a href="tel:+18019403551" aria-label="Call Jonathan">(801)&nbsp;940-3551</a>
-        <a href="mailto:jonathan@mygrowv.com">jonathan@mygrowv.com</a>
-      </div>
-    </div>
   </header>
+
+  <!-- Mobile nav sits OUTSIDE <header> on purpose: the header has
+       backdrop-filter when scrolled / when the menu is open, and any
+       backdrop-filter ancestor would become the containing block for
+       position:fixed children — pinning the menu to the 74px-tall header
+       instead of the viewport. Keeping it as a top-level sibling lets
+       position:fixed correctly reference the viewport. -->
+  <div class="mobile-nav" id="mobileNav" hidden>
+    <nav aria-label="Mobile">
+      <ul role="list">
+        <li><a href="#about">About</a></li>
+        <li><a href="#why">Why GROWV</a></li>
+        <li><a href="#properties">Properties</a></li>
+        <li><a href="#team">Our Brokers</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <a class="cta cta--gold cta--block" href="#contact">Schedule a Viewing</a>
+    <div class="mobile-nav__contact">
+      <a href="tel:+18019403551" aria-label="Call Jonathan">(801)&nbsp;940-3551</a>
+      <a href="mailto:jonathan@mygrowv.com">jonathan@mygrowv.com</a>
+    </div>
+  </div>
 
   <main id="main">
     <span id="top" tabindex="-1" aria-hidden="true"></span>

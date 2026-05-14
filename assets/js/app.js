@@ -180,17 +180,21 @@
     const open = () => {
       lastFocused = document.activeElement;
       lockScroll();
+      // The body-scroll-lock zeros out window.scrollY, so the header's
+      // scroll-state detector would flip back to its translucent hero
+      // state. Mark <html> as nav-open so CSS can keep the header opaque
+      // while the menu is on screen.
+      document.documentElement.classList.add('is-nav-open');
       nav.hidden = false;
       toggle.setAttribute('aria-expanded', 'true');
       toggle.setAttribute('aria-label', 'Close menu');
-      // Focus the first link, but tell the browser NOT to scroll the page
-      // to bring it into view — that would fight the scroll lock on iOS.
       const first = nav.querySelector(focusableSel);
       if (first) first.focus({ preventScroll: true });
     };
 
     const close = () => {
       nav.hidden = true;
+      document.documentElement.classList.remove('is-nav-open');
       toggle.setAttribute('aria-expanded', 'false');
       toggle.setAttribute('aria-label', 'Open menu');
       unlockScroll();
