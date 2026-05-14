@@ -236,12 +236,15 @@ p strong { font-weight: 600; color: var(--char); }
   align-items: center;
   justify-content: center;
   gap: 0.65em;
-  padding: 0.95em 1.6em;
+  /* Slightly asymmetric inline padding compensates for letter-spacing's
+     trailing gap on the last character — optically centers uppercase text.
+     text-align: center keeps each line centered when text wraps. */
+  padding: 0.95em 1.55em 0.95em 1.65em;
+  text-align: center;
   font-family: var(--f-body);
   font-size: 0.85rem;
   font-weight: 500;
   letter-spacing: 0.16em;
-  text-indent: 0.16em; /* offset letter-spacing's trailing gap so centered text reads centered */
   text-transform: uppercase;
   color: var(--cta-fg);
   background: var(--cta-bg);

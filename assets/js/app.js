@@ -152,26 +152,52 @@
 
     const focusableSel = 'a[href], button:not([disabled])';
     let lastFocused = null;
+    let lockedScrollY = 0;
+
+    // iOS Safari has known issues with `overflow: hidden` on <html> while
+    // the page is scrolled — the layout glitches and position:fixed elements
+    // get computed against the wrong viewport. Use the body-position-fixed
+    // technique instead, which is the iOS-friendly way to lock scroll.
+    const lockScroll = () => {
+      lockedScrollY = window.scrollY || window.pageYOffset || 0;
+      const body = document.body;
+      body.style.position = 'fixed';
+      body.style.top = `-${lockedScrollY}px`;
+      body.style.left = '0';
+      body.style.right = '0';
+      body.style.width = '100%';
+    };
+    const unlockScroll = () => {
+      const body = document.body;
+      body.style.position = '';
+      body.style.top = '';
+      body.style.left = '';
+      body.style.right = '';
+      body.style.width = '';
+      window.scrollTo(0, lockedScrollY);
+    };
 
     const open = () => {
       lastFocused = document.activeElement;
+      lockScroll();
       nav.hidden = false;
       toggle.setAttribute('aria-expanded', 'true');
       toggle.setAttribute('aria-label', 'Close menu');
-      document.documentElement.style.overflow = 'hidden';
+      // Focus the first link, but tell the browser NOT to scroll the page
+      // to bring it into view — that would fight the scroll lock on iOS.
       const first = nav.querySelector(focusableSel);
-      if (first) first.focus();
+      if (first) first.focus({ preventScroll: true });
     };
 
     const close = () => {
       nav.hidden = true;
       toggle.setAttribute('aria-expanded', 'false');
       toggle.setAttribute('aria-label', 'Open menu');
-      document.documentElement.style.overflow = '';
+      unlockScroll();
       if (lastFocused && typeof lastFocused.focus === 'function') {
-        lastFocused.focus();
+        lastFocused.focus({ preventScroll: true });
       } else {
-        toggle.focus();
+        toggle.focus({ preventScroll: true });
       }
     };
 
