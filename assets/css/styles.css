@@ -391,10 +391,12 @@ html.is-nav-open .site-header {
 }
 @keyframes slideIn { from { opacity: 0; transform: translateY(-12px); } to { opacity: 1; transform: translateY(0); } }
 .mobile-nav[hidden] { display: none; }
-/* The menu container takes programmatic focus on open (so screen-reader
-   users land inside the menu) — suppress its focus outline since the
-   container itself isn't an interactive target. */
-.mobile-nav:focus, .mobile-nav:focus-visible { outline: none; }
+/* The first link receives programmatic focus on open so it adopts the
+   gold "active" color (via the existing :focus-visible rule below).
+   Suppress only the outline ring on menu links — the color change is
+   a sufficient focus indicator within this high-contrast surface. */
+.mobile-nav a:focus,
+.mobile-nav a:focus-visible { outline: none; }
 .mobile-nav ul { display: flex; flex-direction: column; }
 .mobile-nav li + li { border-top: 1px solid var(--ink-line); }
 .mobile-nav a {
@@ -405,7 +407,9 @@ html.is-nav-open .site-header {
   letter-spacing: -0.005em;
   color: #fff;
 }
-.mobile-nav a:hover, .mobile-nav a:focus-visible { color: var(--gold); }
+.mobile-nav a:hover,
+.mobile-nav a:focus,
+.mobile-nav a:focus-visible { color: var(--gold); }
 .mobile-nav__contact { display: flex; flex-direction: column; gap: 0.4rem; color: rgba(255,255,255,0.65); font-size: 0.92rem; margin-top: auto; padding-top: var(--space-5); border-top: 1px solid var(--ink-line); }
 .mobile-nav__contact a:hover { color: var(--gold); }
 

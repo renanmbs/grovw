@@ -188,10 +188,11 @@
       nav.hidden = false;
       toggle.setAttribute('aria-expanded', 'true');
       toggle.setAttribute('aria-label', 'Close menu');
-      // Focus the menu container (tabindex="-1") rather than the first link,
-      // so screen readers / keyboard users still land inside the menu —
-      // but no visible focus ring lands on a specific link.
-      nav.focus({ preventScroll: true });
+      // Focus the first link so it picks up the gold "active" color
+      // (via the existing :focus-visible rule). The outline ring is
+      // suppressed in CSS — the color change is the focus indicator.
+      const first = nav.querySelector(focusableSel);
+      if (first) first.focus({ preventScroll: true });
     };
 
     const close = () => {
