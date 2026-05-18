@@ -824,49 +824,47 @@ html.is-nav-open .site-header {
 a.contact__value { transition: color .25s var(--ease-out); }
 a.contact__value:hover, a.contact__value:focus-visible { color: var(--gold-2); }
 
-.contact__form { display: flex; flex-direction: column; gap: 1.25rem; margin-top: var(--space-4); }
-.contact__form-row { display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
+.contact__form { display: flex; flex-direction: column; gap: 1.1rem; margin-top: var(--space-4); }
+.contact__form-row { display: grid; grid-template-columns: 1fr; gap: 1.1rem; }
 @media (min-width: 600px) { .contact__form-row { grid-template-columns: 1fr 1fr; } }
-.contact__field { display: flex; flex-direction: column; gap: 0.5rem; position: relative; }
-.contact__field-label { font-size: 0.7rem; letter-spacing: 0.24em; text-transform: uppercase; color: rgba(255,255,255,0.6); transition: color .25s var(--ease-out); }
+.contact__field { display: flex; flex-direction: column; gap: 0.45rem; }
+.contact__field-label {
+  font-size: 0.68rem; letter-spacing: 0.24em; text-transform: uppercase;
+  color: rgba(255,255,255,0.65);
+  transition: color .25s var(--ease-out);
+}
 .contact__field:focus-within .contact__field-label { color: var(--gold-2); }
 .contact__field input,
 .contact__field textarea {
   font: inherit;
   font-family: var(--f-body);
   color: #fff;
-  background: transparent;
-  border: 0;
-  border-bottom: 1px solid rgba(255,255,255,0.18);
-  padding: 0.7rem 0;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 2px;
+  padding: 0.85rem 1rem;
   outline: none;
-  transition: border-bottom-color .35s var(--ease-out);
   width: 100%;
   resize: vertical;
+  transition: border-color .25s var(--ease-out), background-color .25s var(--ease-out), box-shadow .25s var(--ease-out);
 }
-.contact__field textarea { min-height: 7.5rem; line-height: 1.55; }
+.contact__field textarea { min-height: 8.5rem; line-height: 1.55; padding-top: 0.95rem; }
 .contact__field input::placeholder,
-.contact__field textarea::placeholder { color: rgba(255,255,255,0.3); font-style: italic; }
+.contact__field textarea::placeholder { color: rgba(255,255,255,0.4); font-style: italic; }
 .contact__field input:hover,
-.contact__field textarea:hover { border-bottom-color: rgba(191, 161, 100, 0.5); }
-.contact__field input:focus,
-.contact__field textarea:focus { border-bottom-color: var(--gold); }
-/* Animated gold accent line that slides in on focus */
-.contact__field::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  height: 2px;
-  width: 0;
-  background: var(--gold);
-  transition: width .45s var(--ease-out);
-  pointer-events: none;
+.contact__field textarea:hover {
+  border-color: rgba(191, 161, 100, 0.45);
+  background: rgba(255,255,255,0.05);
 }
-.contact__field:focus-within::after { width: 100%; }
-/* Validation: use a quieter gold tint instead of red */
+.contact__field input:focus,
+.contact__field textarea:focus {
+  border-color: var(--gold);
+  background: rgba(255,255,255,0.06);
+  box-shadow: 0 0 0 3px rgba(191, 161, 100, 0.12);
+}
+/* Validation: gold tint instead of red */
 .contact__field input:invalid:not(:placeholder-shown):not(:focus),
-.contact__field textarea:invalid:not(:placeholder-shown):not(:focus) { border-bottom-color: rgba(191, 161, 100, 0.55); }
+.contact__field textarea:invalid:not(:placeholder-shown):not(:focus) { border-color: rgba(191, 161, 100, 0.5); }
 .contact__honeypot { position: absolute !important; left: -9999px !important; width: 1px !important; height: 1px !important; opacity: 0 !important; pointer-events: none !important; }
 .contact__form-status { margin: 0.4rem 0 0; font-size: 0.9rem; line-height: 1.5; padding: 0.85rem 1rem; border-radius: 4px; }
 .contact__form-status[data-state="success"] { background: rgba(191, 161, 100, 0.12); border: 1px solid rgba(191, 161, 100, 0.45); color: var(--gold-2); }
