@@ -26,6 +26,7 @@
       role: 'Broker · Owner',
       bio: 'A decade across lending, property management, and negotiation. Bilingual EN/ES. Personally accountable on every transaction.',
       photo: 'assets/images/jonathan-headshot.jpg',
+      photoSm: 'assets/images/jonathan-headshot-sm.jpg',
       url: 'https://mygrowv.com/?fromCms=1'
     },
     {
@@ -103,10 +104,14 @@
         : `Contact GROWV about the ${a.role} role`;
       const cardLabel = a.photo ? 'View profile' : 'Inquire';
 
+      const srcsetAttr = a.photoSm
+        ? ` srcset="${escapeHTML(a.photoSm)} 900w, ${escapeHTML(a.photo)} 1600w" sizes="(min-width: 1024px) 360px, (min-width: 600px) 45vw, 90vw"`
+        : '';
+
       return `
         <li class="agent reveal" data-reveal style="--reveal-delay:${delay}ms">
           <div class="agent__media">
-            <img src="${escapeHTML(photo)}"
+            <img src="${escapeHTML(photo)}"${srcsetAttr}
                  alt="${escapeHTML(altText)}"
                  loading="lazy" decoding="async" width="900" height="1125">
           </div>
