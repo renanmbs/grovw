@@ -719,11 +719,13 @@ html.is-nav-open .site-header {
 }
 .agent__media img {
   width: 100%; height: 100%; object-fit: cover;
-  filter: saturate(0.95) contrast(1.02);
-  transition: transform 1.2s var(--ease-out), filter .6s var(--ease-out);
+  transition: transform 1.2s var(--ease-out);
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 .agent:hover .agent__media img,
-.agent:focus-within .agent__media img { transform: scale(1.05); filter: saturate(1.05); }
+.agent:focus-within .agent__media img { transform: scale(1.05) translateZ(0); }
 .agent__media::after {
   content: ""; position: absolute; inset: 0;
   background: linear-gradient(180deg, rgba(14,26,20,0) 50%, rgba(14,26,20,0.6) 100%);
