@@ -10,6 +10,15 @@
 (() => {
   'use strict';
 
+  /* =====================================================
+     CONTACT FORM ENDPOINT — PASTE YOUR APPS SCRIPT URL
+     After deploying the Google Apps Script as a Web App,
+     replace the value below with the deployment URL
+     (it looks like: https://script.google.com/macros/s/AKfy.../exec).
+     Until this is filled in, the form falls back to mailto.
+     ===================================================== */
+  const FORM_ENDPOINT = 'https://script.google.com/macros/s/AKfycbykbcAN9feeY_O1rbPiibOs3bK-0WHDpKurE9pGkOU_-mStIWCE5d70cbF-YwWwBY4hyw/exec';
+
   /* -----------------------------------------------------
      AGENT DATA — EDIT HERE
      Each agent renders a clickable card linking to their
@@ -312,6 +321,75 @@
     if (el) el.textContent = String(new Date().getFullYear());
   };
 
+  /* ---------- Contact form ---------- */
+  const initContactForm = () => {
+    const form = $('#contactForm');
+    if (!form) return;
+    const status = $('#contactStatus');
+    const button = $('#contactSubmit');
+    const buttonLabel = button.querySelector('span');
+    const originalLabel = buttonLabel.textContent;
+
+    const setStatus = (state, msg) => {
+      status.hidden = !msg;
+      status.dataset.state = state;
+      status.textContent = msg || '';
+    };
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Bot check — honeypot must stay empty
+      if (form.elements['company_website'].value) return;
+
+      // Native HTML5 validation
+      if (!form.checkValidity()) {
+        setStatus('error', 'Please complete the highlighted fields and try again.');
+        form.reportValidity();
+        return;
+      }
+
+      const data = {
+        name: form.elements['name'].value.trim(),
+        email: form.elements['email'].value.trim(),
+        phone: form.elements['phone'].value.trim(),
+        message: form.elements['message'].value.trim(),
+        source: 'mygrowv.com',
+        submitted_at: new Date().toISOString()
+      };
+
+      // Fallback to mailto if the Apps Script URL hasn't been set yet
+      if (!FORM_ENDPOINT) {
+        const body = `Name: ${data.name}%0D%0AEmail: ${data.email}%0D%0APhone: ${data.phone}%0D%0A%0D%0A${encodeURIComponent(data.message)}`;
+        window.location.href = `mailto:jonathan@mygrowv.com?subject=Inquiry%20from%20${encodeURIComponent(data.name)}&body=${body}`;
+        return;
+      }
+
+      button.disabled = true;
+      buttonLabel.textContent = 'Sending…';
+      setStatus('', '');
+
+      try {
+        const res = await fetch(FORM_ENDPOINT, {
+          method: 'POST',
+          // Apps Script Web Apps require either text/plain or
+          // form-encoded bodies; JSON triggers a CORS preflight Apps
+          // Script can't handle, so we send a stringified payload as text.
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(data)
+        });
+        if (!res.ok) throw new Error('Bad response ' + res.status);
+        setStatus('success', 'Thank you — your message is on its way. Jonathan will be in touch shortly.');
+        form.reset();
+      } catch (err) {
+        setStatus('error', 'Something went wrong. Please email jonathan@mygrowv.com directly.');
+      } finally {
+        button.disabled = false;
+        buttonLabel.textContent = originalLabel;
+      }
+    });
+  };
+
   /* ---------- Boot ---------- */
   document.addEventListener('DOMContentLoaded', () => {
     initHeader();
@@ -319,6 +397,7 @@
     initSmoothScroll();
     initYear();
     renderTeam();
+    initContactForm();
     observeReveals(document.querySelectorAll('.reveal'));
   });
 })();

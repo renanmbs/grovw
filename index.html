@@ -336,9 +336,32 @@
             <span class="contact__label">Studio</span>
             <span class="contact__value">5098 S 1050 W&nbsp;#2,<br>Riverdale, UT 84405</span>
           </div>
-          <a class="cta cta--gold cta--block cta--lg" href="mailto:jonathan@mygrowv.com?subject=Private%20Consultation%20Request">
-            <span>Request a private consultation</span>
-          </a>
+          <form class="contact__form" id="contactForm" novalidate>
+            <div class="contact__form-row">
+              <label class="contact__field">
+                <span class="contact__field-label">Full name</span>
+                <input type="text" name="name" required autocomplete="name">
+              </label>
+              <label class="contact__field">
+                <span class="contact__field-label">Email</span>
+                <input type="email" name="email" required autocomplete="email">
+              </label>
+            </div>
+            <label class="contact__field">
+              <span class="contact__field-label">Phone <span class="contact__field-hint">(optional)</span></span>
+              <input type="tel" name="phone" autocomplete="tel">
+            </label>
+            <label class="contact__field">
+              <span class="contact__field-label">How can we help?</span>
+              <textarea name="message" rows="4" required placeholder="Tell us a little about what you're looking for — buying, selling, or just exploring."></textarea>
+            </label>
+            <!-- Honeypot — real visitors leave this empty. Bots fill it and get rejected. -->
+            <input type="text" name="company_website" class="contact__honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
+            <button type="submit" class="cta cta--gold cta--block cta--lg" id="contactSubmit">
+              <span>Request a private consultation</span>
+            </button>
+            <p class="contact__form-status" id="contactStatus" role="status" aria-live="polite" hidden></p>
+          </form>
         </div>
       </div>
     </section>
