@@ -829,8 +829,8 @@ a.contact__value:hover, a.contact__value:focus-visible { color: var(--gold-2); }
 @media (min-width: 600px) { .contact__form-row { grid-template-columns: 1fr 1fr; } }
 .contact__field { display: flex; flex-direction: column; gap: 0.45rem; }
 .contact__field-label {
-  font-size: 0.68rem; letter-spacing: 0.24em; text-transform: uppercase;
-  color: rgba(255,255,255,0.65);
+  font-size: 0.68rem; letter-spacing: 0.26em; text-transform: uppercase;
+  color: var(--gold);
   transition: color .25s var(--ease-out);
 }
 .contact__field:focus-within .contact__field-label { color: var(--gold-2); }
