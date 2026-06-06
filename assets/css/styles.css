@@ -559,6 +559,16 @@ html.is-nav-open .site-header {
 .split__text > * + * { margin-top: var(--space-4); }
 .split__text > p { line-height: 1.7; color: var(--char-2); }
 .split__text .link-arrow { margin-top: var(--space-5); }
+.split__text > .about__signoff {
+  font-family: var(--f-display);
+  font-size: clamp(1.2rem, 0.6vw + 1.05rem, 1.45rem);
+  color: var(--gold);
+  letter-spacing: 0.01em;
+  line-height: 1.4;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--hairline);
+  margin-top: var(--space-5) !important;
+}
 
 /* ---------- Value Grid (Why GROWV) ---------- */
 .value-grid {
@@ -695,6 +705,13 @@ html.is-nav-open .site-header {
 @media (min-width: 600px)  { .team-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 1024px) { .team-grid { grid-template-columns: repeat(3, 1fr); } }
 @media (min-width: 1440px) { .team-grid { grid-template-columns: repeat(4, 1fr); } }
+
+/* When only one agent is present (placeholders hidden) — keep the card
+   at a portrait-friendly width and center it instead of stretching to a full row. */
+.team-grid:has(.agent:only-child) {
+  grid-template-columns: minmax(0, 460px);
+  justify-content: center;
+}
 
 .agent {
   position: relative;

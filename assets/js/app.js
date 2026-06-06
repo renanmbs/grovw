@@ -38,27 +38,29 @@
       photoSm: 'assets/images/jonathan-headshot-sm.jpg',
       url: 'https://mygrowv.com/?fromCms=1'
     },
-    {
-      name: 'Joining the Team',
-      role: 'Associate Broker',
-      bio: 'A new addition to the GROWV bench. Profile and listings forthcoming.',
-      placeholder: 'AB',
-      url: '#contact'
-    },
-    {
-      name: 'Joining the Team',
-      role: 'Buyer Specialist',
-      bio: 'A new addition to the GROWV bench. Profile and listings forthcoming.',
-      placeholder: 'BS',
-      url: '#contact'
-    },
-    {
-      name: 'Joining the Team',
-      role: 'Listing Specialist',
-      bio: 'A new addition to the GROWV bench. Profile and listings forthcoming.',
-      placeholder: 'LS',
-      url: '#contact'
-    },
+    // ---- Placeholder roles temporarily hidden until real agents join. ----
+    // To restore: uncomment the objects below (or any subset), then refresh.
+    // {
+    //   name: 'Joining the Team',
+    //   role: 'Associate Broker',
+    //   bio: 'A new addition to the GROWV bench. Profile and listings forthcoming.',
+    //   placeholder: 'AB',
+    //   url: '#contact'
+    // },
+    // {
+    //   name: 'Joining the Team',
+    //   role: 'Buyer Specialist',
+    //   bio: 'A new addition to the GROWV bench. Profile and listings forthcoming.',
+    //   placeholder: 'BS',
+    //   url: '#contact'
+    // },
+    // {
+    //   name: 'Joining the Team',
+    //   role: 'Listing Specialist',
+    //   bio: 'A new addition to the GROWV bench. Profile and listings forthcoming.',
+    //   placeholder: 'LS',
+    //   url: '#contact'
+    // },
   ];
 
   /* Inline SVG monogram for placeholder agents — luxe gold-on-ink */
