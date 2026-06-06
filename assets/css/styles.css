@@ -707,11 +707,16 @@ html.is-nav-open .site-header {
 @media (min-width: 1440px) { .team-grid { grid-template-columns: repeat(4, 1fr); } }
 
 /* When only one agent is present (placeholders hidden) — keep the card
-   at a portrait-friendly width and center it instead of stretching to a full row. */
+   at a portrait-friendly width and center it instead of stretching to a full row.
+   Also tighten the surrounding section so the team area doesn't dominate the page. */
 .team-grid:has(.agent:only-child) {
-  grid-template-columns: minmax(0, 460px);
+  grid-template-columns: minmax(0, 340px);
   justify-content: center;
+  gap: 0;
 }
+#team:has(.agent:only-child) { padding: clamp(3rem, 5vw, 5rem) 0; }
+#team:has(.agent:only-child) .section-head { margin-bottom: var(--space-4); }
+#team:has(.agent:only-child) .team-grid__note { margin-top: var(--space-4); }
 
 .agent {
   position: relative;
