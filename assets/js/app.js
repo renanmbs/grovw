@@ -36,7 +36,7 @@
       bio: 'A decade across lending, property management, and negotiation. Bilingual EN/ES. Personally accountable on every transaction.',
       photo: 'assets/images/jonathan-headshot.jpg',
       photoSm: 'assets/images/jonathan-headshot-sm.jpg',
-      url: 'https://mygrowv.com/?fromCms=1'
+      url: 'https://jonathanperez.site/'
     },
     // ---- Placeholder roles temporarily hidden until real agents join. ----
     // To restore: uncomment the objects below (or any subset), then refresh.
