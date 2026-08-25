@@ -38,6 +38,22 @@
       photoSm: 'assets/images/jonathan-headshot-sm.jpg',
       url: 'https://jonathanperez.site/'
     },
+    {
+      name: 'Stefanie Godinez',
+      role: 'Real Estate Agent',
+      // bio: add a short bio here — the card renders fine without one.
+      photo: 'assets/images/stefanie-godinez.jpg',
+      photoSm: 'assets/images/stefanie-godinez-sm.jpg',
+      url: '#contact'
+    },
+    {
+      name: 'Wilian Guevara',
+      role: 'Real Estate Agent',
+      // bio: add a short bio here — the card renders fine without one.
+      photo: 'assets/images/wilian-guevara.jpg',
+      photoSm: 'assets/images/wilian-guevara-sm.jpg',
+      url: '#contact'
+    },
     // ---- Placeholder roles temporarily hidden until real agents join. ----
     // To restore: uncomment the objects below (or any subset), then refresh.
     // {
@@ -110,10 +126,15 @@
       const altText = a.photo
         ? `Portrait of ${a.name}, ${a.role} at GROWV.`
         : `Placeholder portrait card for a future ${a.role} at GROWV.`;
-      const linkLabel = a.photo
+      // An agent without their own site links to the contact form, so the label
+      // has to promise the form rather than a profile page.
+      const hasProfile = a.photo && !a.url.startsWith('#');
+      const linkLabel = hasProfile
         ? `View ${a.name}'s profile, ${a.role}`
-        : `Contact GROWV about the ${a.role} role`;
-      const cardLabel = a.photo ? 'View profile' : 'Inquire';
+        : a.photo
+          ? `Contact GROWV about ${a.name}, ${a.role}`
+          : `Contact GROWV about the ${a.role} role`;
+      const cardLabel = hasProfile ? 'View profile' : 'Get in touch';
 
       const srcsetAttr = a.photoSm
         ? ` srcset="${escapeHTML(a.photoSm)} 900w, ${escapeHTML(a.photo)} 1600w" sizes="(min-width: 1024px) 360px, (min-width: 600px) 45vw, 90vw"`
@@ -129,7 +150,7 @@
           <div class="agent__body">
             <p class="agent__role">${escapeHTML(a.role)}</p>
             <h3 class="agent__name">${escapeHTML(a.name)}</h3>
-            <p class="agent__bio">${escapeHTML(a.bio)}</p>
+            ${a.bio ? `<p class="agent__bio">${escapeHTML(a.bio)}</p>` : ''}
             <span class="agent__link" aria-hidden="true">${escapeHTML(cardLabel)}</span>
           </div>
           <a class="agent__cover"

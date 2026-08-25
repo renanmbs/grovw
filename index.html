@@ -20,8 +20,8 @@
   <link rel="apple-touch-icon" href="assets/images/growv-mark.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" href="assets/images/hero-lg.jpg" as="image" media="(min-width: 768px)">
-  <link rel="preload" href="assets/images/hero-mobile-lg.jpg" as="image" media="(max-width: 767px)">
+  <link rel="preload" href="assets/images/neighborhood-lg.jpg" as="image" media="(min-width: 768px)">
+  <link rel="preload" href="assets/images/neighborhood-mobile-lg.jpg" as="image" media="(max-width: 767px)">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="assets/css/styles.css">
@@ -38,10 +38,10 @@
 
       <nav class="primary-nav" aria-label="Primary">
         <ul role="list">
-          <li><a href="#about">About</a></li>
-          <li><a href="#why">Join GROWV</a></li>
-          <li><a href="#properties">Properties</a></li>
           <li><a href="#team">Our Agents</a></li>
+          <li><a href="#why">Join GROWV</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#properties">Properties</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
       </nav>
@@ -65,10 +65,10 @@
   <div class="mobile-nav" id="mobileNav" tabindex="-1" hidden>
     <nav aria-label="Mobile">
       <ul role="list">
-        <li><a href="#about">About</a></li>
-        <li><a href="#why">Join GROWV</a></li>
-        <li><a href="#properties">Properties</a></li>
         <li><a href="#team">Our Agents</a></li>
+        <li><a href="#why">Join GROWV</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#properties">Properties</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
     </nav>
@@ -87,12 +87,12 @@
       <div class="hero__media" aria-hidden="true">
         <picture>
           <!-- Wide landscape crop for tablets and up -->
-          <source media="(min-width: 768px)" srcset="assets/images/hero-lg.jpg">
-          <!-- Portrait crop of the same home for phones — avoids the
+          <source media="(min-width: 768px)" srcset="assets/images/neighborhood-lg.jpg">
+          <!-- Portrait crop of the same neighborhood for phones — avoids the
                awkward horizon line that the landscape crop creates -->
           <img
-            src="assets/images/hero-mobile-sm.jpg"
-            srcset="assets/images/hero-mobile-sm.jpg 600w, assets/images/hero-mobile-lg.jpg 1000w"
+            src="assets/images/neighborhood-mobile-sm.jpg"
+            srcset="assets/images/neighborhood-mobile-sm.jpg 600w, assets/images/neighborhood-mobile-lg.jpg 1000w"
             sizes="100vw"
             alt=""
             loading="eager"
@@ -102,14 +102,19 @@
         <div class="hero__veil"></div>
       </div>
 
-      <div class="hero__content">
-        <h1 id="hero-title" class="display">
-          <span class="display__line">Discover Where Your</span>
-          <span class="display__line display__line--italic">Next Chapter Begins.</span>
-        </h1>
-        <p class="hero__sub">Rooted in Real Estate, Driven by Results.</p>
+      <div class="hero__content hero__content--center">
+        <div class="hero__announce">
+          <h1 id="hero-title" class="display">
+            <span class="display__line hero__headline">Office Grand Opening Aug. 19, 2026</span>
+            <span class="display__line hero__invite">Lunch is on us. <span aria-hidden="true">🥪</span> Come say hello. <span aria-hidden="true">👋</span></span>
+          </h1>
+        </div>
+        <p class="eyebrow eyebrow--gold hero__eyebrow">Everyone Is Welcome</p>
+        <p class="hero__sub">Rooted in Real Estate.</p>
         <div class="hero__actions">
-          <a class="cta cta--gold" href="#properties">View Properties</a>
+          <a class="cta cta--gold" href="https://jonathanperez.site/" target="_blank" rel="noopener noreferrer">
+            View Properties<span class="sr-only"> (opens in a new tab)</span>
+          </a>
           <a class="cta cta--quiet" href="#properties">
             <span>Search Listings</span>
             <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" focusable="false"><path d="M1 7h11M7 1l5 6-5 6" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -123,33 +128,21 @@
       </a>
     </section>
 
-    <!-- ===================== ABOUT ===================== -->
-    <section class="section section--cream" id="about" aria-labelledby="about-title">
-      <div class="container split">
-        <div class="split__media reveal" data-reveal>
-          <img
-            src="assets/images/about-sm.jpg"
-            srcset="assets/images/about-sm.jpg 900w, assets/images/about-lg.jpg 1800w"
-            sizes="(min-width: 1280px) 600px, (min-width: 900px) 50vw, 90vw"
-            alt="Architectural detail of a contemporary luxury home with stone, wood, and large glass openings."
-            loading="lazy"
-            decoding="async"
-            width="1400" height="1700">
-          <span class="split__media-tag" aria-hidden="true">Est. Utah</span>
-        </div>
-        <div class="split__text reveal" data-reveal data-reveal-delay="120">
-          <p class="eyebrow">About GROWV</p>
-          <h2 id="about-title" class="display display--md">A different kind of brokerage.</h2>
-          <p class="lede">Real estate should be personal, strategic, and built on genuine relationships. In an industry often driven by volume and automation, we take a different approach — one centered on communication, accountability, and exceptional service.</p>
-          <p>Our team is committed to delivering a modern real estate experience that combines industry expertise with practical solutions. Whether helping clients buy, sell, invest, or navigate complex transactions, we focus on protecting their interests, solving problems proactively, and creating a clear path forward.</p>
-          <p>As a bilingual brokerage serving both English and Spanish-speaking clients, we believe every client deserves to be informed, understood, and supported throughout the entire process. We value transparency, responsiveness, and the trust our clients place in us when making some of life&rsquo;s most important decisions.</p>
-          <p>At GROWV, you&rsquo;re more than a transaction. You&rsquo;re a relationship we intend to earn, protect, and grow. Our mission is simple: provide thoughtful guidance, strong advocacy, and results-driven service while creating an experience that feels professional, personal, and refreshingly different.</p>
-          <p class="about__signoff"><em>GROWV — Rooted in Real Estate.</em></p>
-          <a class="link-arrow" href="#team">
-            <span>Meet the team</span>
-            <svg width="22" height="10" viewBox="0 0 22 10" aria-hidden="true" focusable="false"><path d="M0 5h20M16 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-        </div>
+    <!-- ===================== AGENTS / TEAM ===================== -->
+    <section class="section section--ink section--ink-soft" id="team" aria-labelledby="team-title">
+      <div class="container">
+        <header class="section-head reveal" data-reveal>
+          <p class="eyebrow eyebrow--gold">The Team</p>
+          <h2 id="team-title" class="display display--md display--light">Our agents.</h2>
+          <p class="section-head__lede">A small bench of carefully chosen agents — each one selected for the same standard of judgement, discretion, and care.</p>
+        </header>
+
+        <ul class="team-grid" role="list" id="teamGrid">
+          <!-- Cards are rendered from data in app.js so the agent list is easy to update.
+               Each card links to the agent's external personal website. -->
+        </ul>
+
+        <p class="team-grid__note">Joining GROWV? <a href="#contact">Speak with Jonathan</a> about our brokerage model.</p>
       </div>
     </section>
 
@@ -195,6 +188,40 @@
           We are committed to the standard for excellence and leadership&nbsp;— providing the highest level of service to our clients through integrity.
         </h2>
         <p class="mission__sig reveal" data-reveal data-reveal-delay="180">— Jonathan Perez, Broker &amp; Owner</p>
+      </div>
+    </section>
+
+    <!-- ===================== ABOUT ===================== -->
+    <section class="section section--cream" id="about" aria-labelledby="about-title">
+      <div class="container split">
+        <div class="split__media reveal" data-reveal>
+          <img
+            src="assets/images/about-jonathan-sm.jpg"
+            srcset="assets/images/about-jonathan-sm.jpg 900w, assets/images/about-jonathan-lg.jpg 1800w"
+            sizes="(min-width: 1280px) 600px, (min-width: 900px) 50vw, 90vw"
+            alt="Jonathan Perez standing at the island of a modern kitchen with stone, walnut cabinetry, and marble counters."
+            loading="lazy"
+            decoding="async"
+            width="1800" height="2250">
+          <span class="split__media-tag" aria-hidden="true">Est. Utah</span>
+        </div>
+        <div class="split__text reveal" data-reveal data-reveal-delay="120">
+          <p class="eyebrow">About GROWV</p>
+          <h2 id="about-title" class="display display--md">
+            <span class="display__line">Modern Real Estate.</span>
+            <span class="display__line">Genuine Relationships.</span>
+          </h2>
+          <p>We believe real estate should feel personal, strategic, and human.</p>
+          <p>In an industry increasingly focused on volume, automation, and transactions, GROWV takes a different approach. We believe great real estate starts with genuine relationships, clear communication, and having someone in your corner who takes responsibility for getting things done.</p>
+          <p>Our team combines experience, modern technology, and practical problem-solving to help our clients move forward with confidence. Whether you&rsquo;re buying your first home, selling a property, building an investment portfolio, or navigating a complicated transaction, our job is to protect your interests, anticipate challenges, and make the process as clear and straightforward as possible.</p>
+          <p>As a bilingual brokerage serving English- and Spanish-speaking clients, we believe everyone deserves to feel informed, understood, and represented. We communicate openly, respond when you need us, and never lose sight of the trust you place in us when making important financial and personal decisions.</p>
+          <p>At GROWV, you are never just another transaction. You&rsquo;re a relationship we intend to earn, protect, and grow.</p>
+          <p class="about__signoff"><em>GROWV — Rooted in Real Estate.</em></p>
+          <a class="link-arrow" href="#team">
+            <span>Meet the team</span>
+            <svg width="22" height="10" viewBox="0 0 22 10" aria-hidden="true" focusable="false"><path d="M0 5h20M16 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
       </div>
     </section>
 
@@ -289,24 +316,6 @@
         </div>
 
         <p class="property-grid__note">Featured selections are representative of GROWV&rsquo;s portfolio. For an introduction to active and off-market listings, <a href="#contact">request a private consultation</a>.</p>
-      </div>
-    </section>
-
-    <!-- ===================== AGENTS / TEAM ===================== -->
-    <section class="section section--ink section--ink-soft" id="team" aria-labelledby="team-title">
-      <div class="container">
-        <header class="section-head reveal" data-reveal>
-          <p class="eyebrow eyebrow--gold">The Team</p>
-          <h2 id="team-title" class="display display--md display--light">Our agents.</h2>
-          <p class="section-head__lede">A small bench of carefully chosen agents — each one selected for the same standard of judgement, discretion, and care.</p>
-        </header>
-
-        <ul class="team-grid" role="list" id="teamGrid">
-          <!-- Cards are rendered from data in app.js so the agent list is easy to update.
-               Each card links to the agent's external personal website. -->
-        </ul>
-
-        <p class="team-grid__note">Joining GROWV? <a href="#contact">Speak with Jonathan</a> about our brokerage model.</p>
       </div>
     </section>
 

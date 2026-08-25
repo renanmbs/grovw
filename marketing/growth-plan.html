@@ -1,0 +1,510 @@
+<title>Wasatch Front First-Time-Buyer Growth Plan</title>
+<style>
+:root{
+  --ground:#EEF1F2; --panel:#FFFFFF; --panel-2:#F6F8F8;
+  --ink:#15202A; --ink-2:#3D4C58; --ink-3:#6A7883;
+  --rule:#D4DBDE; --rule-2:#E4E9EB;
+  --accent:#1F5568; --accent-soft:#DCE8EC;
+  --yes:#2E7245; --yes-soft:#DFEBE2;
+  --no:#A93528; --no-soft:#F4E0DD;
+  --warn:#8C6416; --warn-soft:#F2E9D5;
+  --shadow:0 1px 2px rgba(21,32,42,.06),0 8px 24px -12px rgba(21,32,42,.18);
+  --serif:"Iowan Old Style","Charter","Palatino Linotype",Palatino,Georgia,serif;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#0E151B; --panel:#161F27; --panel-2:#1B252E;
+    --ink:#E6ECEF; --ink-2:#B2BFC8; --ink-3:#7E8D98;
+    --rule:#2A3742; --rule-2:#222E38;
+    --accent:#6FB2C7; --accent-soft:#1C333D;
+    --yes:#6FBF8C; --yes-soft:#172C1F;
+    --no:#E08678; --no-soft:#33201C;
+    --warn:#D9AF5E; --warn-soft:#2E2718;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0E151B; --panel:#161F27; --panel-2:#1B252E;
+  --ink:#E6ECEF; --ink-2:#B2BFC8; --ink-3:#7E8D98;
+  --rule:#2A3742; --rule-2:#222E38;
+  --accent:#6FB2C7; --accent-soft:#1C333D;
+  --yes:#6FBF8C; --yes-soft:#172C1F;
+  --no:#E08678; --no-soft:#33201C;
+  --warn:#D9AF5E; --warn-soft:#2E2718;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.6);
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:var(--sans); font-size:16.5px; line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 28px 96px}
+.col{max-width:68ch}
+
+/* ---- masthead ---- */
+.mast{padding:56px 0 30px;border-bottom:2px solid var(--ink)}
+.eyebrow{
+  font-family:var(--mono); font-size:11.5px; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--accent); margin:0 0 18px;
+}
+h1{
+  font-family:var(--serif); font-weight:600; font-size:clamp(2.1rem,5.2vw,3.3rem);
+  line-height:1.06; letter-spacing:-.015em; margin:0 0 18px; text-wrap:balance;
+}
+.standfirst{font-size:1.12rem;color:var(--ink-2);margin:0;max-width:60ch}
+.metabar{
+  display:flex;flex-wrap:wrap;gap:10px 26px;margin-top:26px;
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;color:var(--ink-3);
+  text-transform:uppercase;
+}
+.metabar b{color:var(--ink-2);font-weight:500}
+
+/* ---- thesis ---- */
+.thesis{
+  margin:36px 0 0;padding:28px 30px;background:var(--panel);
+  border:1px solid var(--rule);border-left:4px solid var(--accent);
+  border-radius:3px;box-shadow:var(--shadow);
+}
+.thesis p{margin:0;font-family:var(--serif);font-size:1.3rem;line-height:1.45;text-wrap:balance}
+.thesis p+p{margin-top:14px;font-family:var(--sans);font-size:1rem;color:var(--ink-2)}
+
+/* ---- sections ---- */
+section{margin-top:62px}
+h2{
+  font-family:var(--serif);font-weight:600;font-size:1.72rem;line-height:1.15;
+  letter-spacing:-.01em;margin:0 0 6px;text-wrap:balance;
+  padding-bottom:12px;border-bottom:1px solid var(--rule);
+}
+h2 .n{font-family:var(--mono);font-size:.72em;color:var(--accent);margin-right:.7em;letter-spacing:.04em}
+.lede{color:var(--ink-2);margin:16px 0 24px;max-width:66ch}
+h3{
+  font-family:var(--sans);font-weight:650;font-size:1.02rem;letter-spacing:.005em;
+  margin:32px 0 10px;
+}
+p{margin:0 0 15px}
+a{color:var(--accent)}
+
+/* ---- tables ---- */
+.scroll{overflow-x:auto;margin:22px 0;border:1px solid var(--rule);border-radius:3px;background:var(--panel)}
+table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:520px}
+th{
+  text-align:left;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink-3);font-weight:500;
+  padding:12px 16px;border-bottom:1px solid var(--rule);background:var(--panel-2);
+  white-space:nowrap;
+}
+td{padding:12px 16px;border-bottom:1px solid var(--rule-2);vertical-align:top}
+tr:last-child td{border-bottom:0}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+
+.tag{
+  display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;
+  text-transform:uppercase;padding:3px 8px;border-radius:2px;white-space:nowrap;font-weight:500;
+}
+.t-no{background:var(--no-soft);color:var(--no)}
+.t-yes{background:var(--yes-soft);color:var(--yes)}
+.t-warn{background:var(--warn-soft);color:var(--warn)}
+.t-acc{background:var(--accent-soft);color:var(--accent)}
+
+/* ---- callouts ---- */
+.note{
+  margin:24px 0;padding:18px 22px;border-radius:3px;background:var(--panel);
+  border:1px solid var(--rule);border-left:3px solid var(--ink-3);
+}
+.note.crit{border-left-color:var(--no);background:var(--no-soft)}
+.note.win{border-left-color:var(--yes);background:var(--yes-soft)}
+.note.flag{border-left-color:var(--warn);background:var(--warn-soft)}
+.note h4{
+  margin:0 0 8px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;
+  text-transform:uppercase;font-weight:600;
+}
+.note.crit h4{color:var(--no)} .note.win h4{color:var(--yes)} .note.flag h4{color:var(--warn)}
+.note p{margin:0;font-size:15px;color:var(--ink-2)}
+.note p+p{margin-top:10px}
+.note strong{color:var(--ink)}
+
+/* ---- cards ---- */
+.grid{display:grid;gap:16px;margin:24px 0}
+.g2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.card{
+  background:var(--panel);border:1px solid var(--rule);border-radius:3px;
+  padding:20px 22px;box-shadow:var(--shadow);
+}
+.card h4{margin:0 0 4px;font-size:1rem;font-weight:650;font-family:var(--sans)}
+.card .cty{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--accent);margin:0 0 12px;
+}
+.card p{font-size:14.5px;color:var(--ink-2);margin:0 0 10px}
+.card p:last-child{margin-bottom:0}
+.big{font-family:var(--mono);font-size:1.5rem;font-weight:600;color:var(--ink);letter-spacing:-.02em}
+
+/* ---- ad copy specimen ---- */
+.ad{
+  background:var(--panel-2);border:1px solid var(--rule);border-radius:3px;
+  padding:16px 18px;margin:14px 0;
+}
+.ad .lbl{
+  font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink-3);display:block;margin-bottom:8px;
+}
+.ad q{font-family:var(--serif);font-size:1.07rem;color:var(--ink);quotes:'"' '"';display:block;line-height:1.45}
+.ad .why{font-size:13.5px;color:var(--ink-3);margin:10px 0 0;font-style:italic}
+
+/* ---- phases ---- */
+.phase{display:grid;grid-template-columns:64px 1fr;gap:20px;padding:22px 0;border-bottom:1px solid var(--rule-2)}
+.phase:last-child{border-bottom:0}
+.phase .d{
+  font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--accent);
+  text-transform:uppercase;padding-top:3px;line-height:1.4;
+}
+.phase h4{margin:0 0 6px;font-size:1rem;font-weight:650}
+.phase p{margin:0;font-size:14.5px;color:var(--ink-2)}
+.phase ul{margin:8px 0 0;padding-left:18px;font-size:14.5px;color:var(--ink-2)}
+.phase li{margin:4px 0}
+
+ul.tight{padding-left:20px;margin:12px 0}
+ul.tight li{margin:7px 0;color:var(--ink-2)}
+ul.tight li strong{color:var(--ink)}
+
+.check{list-style:none;padding:0;margin:16px 0;display:grid;gap:9px}
+.check li{
+  display:grid;grid-template-columns:22px 1fr;gap:10px;align-items:start;
+  font-size:14.5px;color:var(--ink-2);
+}
+.check li::before{
+  content:"";width:14px;height:14px;margin-top:4px;border:1.5px solid var(--accent);border-radius:2px;
+}
+footer{
+  margin-top:70px;padding-top:22px;border-top:1px solid var(--rule);
+  font-family:var(--mono);font-size:11.5px;line-height:1.7;color:var(--ink-3);
+}
+@media(max-width:600px){
+  body{font-size:16px}
+  .wrap{padding:0 18px 64px}
+  .phase{grid-template-columns:1fr;gap:8px}
+  .thesis{padding:22px}
+}
+</style>
+
+<div class="wrap">
+
+<header class="mast">
+  <p class="eyebrow">Paid Acquisition Strategy · Davis · Weber · Salt Lake</p>
+  <h1>Growing a first-time-buyer practice inside the rules that govern housing ads</h1>
+  <p class="standfirst">A Meta and Google operating plan built around the constraint most agents treat as an obstacle — and a few Utah-specific openings almost nobody is running.</p>
+  <div class="metabar">
+    <span><b>Prepared</b> Aug 2026</span>
+    <span><b>Market</b> Wasatch Front</span>
+    <span><b>Planning CPL</b> $20–45</span>
+    <span><b>Regime</b> Meta HEC + Google Housing</span>
+  </div>
+</header>
+
+<div class="thesis">
+  <p>You cannot target first-time buyers. So stop trying — and put the qualifying in the creative instead.</p>
+  <p>Under the Housing category, Meta strips age, gender, ZIP, income, and every "likely to move" signal. Every competitor in your market faces the same stripped-down targeting. That flattens the advantage of whoever spends most on audience tooling and shifts it to whoever writes the sharpest offer. The agent with the most specific, most local, most dollar-denominated hook wins — and Utah hands you four of those for free.</p>
+</div>
+
+<section>
+  <h2><span class="n">A</span>The constraint map</h2>
+  <p class="lede">What each platform takes away, and what survives. Everything downstream in this plan is built on the right-hand column.</p>
+
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Lever</th><th>Meta (Housing SAC)</th><th>Google (Housing)</th><th>Consequence for you</th></tr></thead>
+    <tbody>
+      <tr><td>Age</td><td><span class="tag t-no">Removed</span></td><td><span class="tag t-no">Removed</span></td><td>All housing ads run 18+. Don't design creative for an age you can't buy.</td></tr>
+      <tr><td>Gender</td><td><span class="tag t-no">Removed</span></td><td><span class="tag t-no">Removed</span></td><td>—</td></tr>
+      <tr><td>ZIP / neighborhood</td><td><span class="tag t-no">Removed</span></td><td><span class="tag t-no">Removed</span></td><td>No geofencing Layton or Farmington. Name the city in <em>copy</em> instead.</td></tr>
+      <tr><td>Income / net worth / "luxury buyer"</td><td><span class="tag t-no">Removed</span></td><td><span class="tag t-no">Removed</span></td><td>The DPA dollar figure does this filtering for you, legally.</td></tr>
+      <tr><td>Audience exclusions</td><td><span class="tag t-no">Disabled</span></td><td><span class="tag t-warn">Limited</span></td><td>You cannot exclude past clients. Expect some waste; budget for it.</td></tr>
+      <tr><td>Lookalikes</td><td><span class="tag t-warn">Special Ad Audiences only</span></td><td><span class="tag t-warn">Restricted</span></td><td>Weaker than standard LLAs. Feed them your best seed list.</td></tr>
+      <tr><td>Minimum radius</td><td><span class="tag t-warn">15 miles</span></td><td><span class="tag t-warn">Privacy-safe radius</span></td><td>A 15mi pin on Layton covers most of Davis + south Weber. Fine — one campaign, not five.</td></tr>
+      <tr><td><strong>Your CRM / past clients</strong></td><td><span class="tag t-yes">Allowed</span></td><td><span class="tag t-yes">Customer Match</span></td><td><strong>Your single biggest remaining edge.</strong> See §E.</td></tr>
+      <tr><td><strong>Pixel / site / video engagers</strong></td><td><span class="tag t-yes">Allowed</span></td><td><span class="tag t-yes">Allowed</span></td><td>Retargeting survives intact. Build the pool now.</td></tr>
+      <tr><td><strong>Search keywords</strong></td><td>n/a</td><td><span class="tag t-yes">Untouched</span></td><td>Intent is not a protected signal. Google is your precision channel.</td></tr>
+      <tr><td>City / county / DMA</td><td><span class="tag t-yes">Allowed</span></td><td><span class="tag t-yes">Allowed</span></td><td>County-level campaigns map cleanly to county-level DPA programs.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="note crit">
+    <h4>Do not try to route around this</h4>
+    <p>Meta's 2026 classifiers read your images (exteriors, floor plans, "For Sale" signage), your copy, your landing page, and your account history, and will <strong>auto-apply the Housing category whether or not you select it</strong>. Failing to declare is logged as an <strong>Evasion violation</strong> — strictly worse than declaring, and it degrades account health permanently. Declare it yourself, every time.</p>
+  </div>
+</section>
+
+<section>
+  <h2><span class="n">B</span>Two channels, two jobs</h2>
+  <p class="lede">The regulations hit these platforms asymmetrically. That asymmetry should drive your budget split, not a 50/50 habit.</p>
+
+  <div class="grid g2">
+    <div class="card">
+      <p class="cty">Meta · Facebook &amp; Instagram</p>
+      <h4>Demand creation</h4>
+      <p>Targeting is gutted, so Meta's job is reaching people who <em>aren't searching yet</em> — the renter in Clearfield who has never run the numbers. Broad audience, sharp creative, program dollars in the hook.</p>
+      <p><strong>Wins:</strong> seller valuation offers, DPA program awareness, renter-to-owner math, retargeting.</p>
+      <p><strong>Loses:</strong> anything needing precision. Stop fighting it.</p>
+    </div>
+    <div class="card">
+      <p class="cty">Google · Search</p>
+      <h4>Intent capture</h4>
+      <p>Keyword intent is <em>not</em> a protected signal, so the housing restriction barely touches Search. Someone typing "utah down payment assistance 2026" has self-identified more precisely than any Meta audience ever could.</p>
+      <p><strong>Wins:</strong> program-name searches, "first time home buyer utah", city + price queries.</p>
+      <p><strong>Loses:</strong> volume. The market is small; you'll cap out.</p>
+    </div>
+  </div>
+
+  <div class="note">
+    <h4>Recommended split at $2,000/mo</h4>
+    <p><strong>Google $700</strong> — capture everything available; this pool is finite and high-converting. <strong>Meta $1,000</strong> — split between seller valuation ($400) and buyer DPA ($600). <strong>Reserve $300</strong> — retargeting once your pixel pool clears ~1,000 users. Expect roughly <strong>45–100 leads/month</strong> at the $20–45 band. Below ~$20 CPL you are probably collecting low-intent form fills; check lead quality before celebrating.</p>
+  </div>
+</section>
+
+<section>
+  <h2><span class="n">C</span>Offer architecture</h2>
+  <p class="lede">With targeting stripped, the offer <em>is</em> the targeting. Ranked by cost per lead — start at the top, fund the bottom from proceeds.</p>
+
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Offer</th><th class="num">Expected CPL</th><th>Self-selects for</th><th>Run it</th></tr></thead>
+    <tbody>
+      <tr><td><strong>"What's your home worth?"</strong> instant valuation</td><td class="num">$15–35</td><td>Sellers, 6–18mo out</td><td><span class="tag t-acc">Always on</span></td></tr>
+      <tr><td><strong>SB 240 $20K explainer</strong> (new build)</td><td class="num">$20–40</td><td>FTHB with no down payment</td><td><span class="tag t-acc">Always on</span></td></tr>
+      <tr><td><strong>Own in Ogden tiers</strong> ($10/15/20K)</td><td class="num">$20–40</td><td>Weber buyers, public employees</td><td><span class="tag t-acc">Weber only</span></td></tr>
+      <tr><td><strong>Rent-vs-own math</strong> for a named city</td><td class="num">$25–45</td><td>Renters who've never modeled it</td><td><span class="tag t-warn">Test</span></td></tr>
+      <tr><td><strong>Free homebuyer education class</strong></td><td class="num">$25–50</td><td>Committed FTHB — highest intent</td><td><span class="tag t-yes">Highest value</span></td></tr>
+      <tr><td>Generic "search homes" / IDX signup</td><td class="num">$50–90</td><td>Nobody in particular</td><td><span class="tag t-no">Skip</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>Compliant copy that still qualifies hard</h3>
+
+  <div class="ad">
+    <span class="lbl">Seller · lowest CPL offer</span>
+    <q>Layton homes are selling for more than most owners think. Get an instant estimate for your address — no calls unless you ask for one.</q>
+    <p class="why">City named in copy, not in targeting. "No calls unless you ask" lifts form completion sharply.</p>
+  </div>
+
+  <div class="ad">
+    <span class="lbl">Buyer · SB 240</span>
+    <q>Utah will put $20,000 toward your first home. 0% interest, no monthly payment, new construction under $450,000. Most people who qualify have never heard of it.</q>
+    <p class="why">The dollar figure and the $450K cap do the demographic filtering that Meta won't let you do in the audience builder — legally, and better.</p>
+  </div>
+
+  <div class="ad">
+    <span class="lbl">Buyer · Own in Ogden</span>
+    <q>Ogden teachers: $15,000 toward a down payment. Ogden police and firefighters: $20,000. Everyone else inside city limits: $10,000. Here's how the program works.</q>
+    <p class="why">Naming a profession in <em>copy</em> is not prohibited targeting — you're describing the program's own tiers. This is the single most precise compliant hook available to you.</p>
+  </div>
+
+  <div class="ad">
+    <span class="lbl">Renter conversion</span>
+    <q>Renting in Clearfield? The gap between your rent and a mortgage is probably smaller than the down payment standing in the way — and Utah has $20,000 for that. Run your own numbers in 90 seconds.</q>
+    <p class="why">Describes the math and the program, never the person. Safe under HEC.</p>
+  </div>
+
+  <div class="note crit">
+    <h4>Verified: do not run "your rent already covers a mortgage"</h4>
+    <p>It is the most common renter-conversion hook in real estate advertising and <strong>it is false in this market at current rates.</strong> A $340,000 home at 3.5% down and 6.5% carries roughly <strong>$2,485/month</strong> all-in (principal, interest, ~0.55% Utah property tax, insurance, FHA MIP) against typical Clearfield rent near $1,500–1,700. Payment would have to fall to about <strong>$214,000</strong> in purchase price to break even against $1,600 rent — there is no such move-in inventory on the Wasatch Front.</p>
+    <p>Lead with the <strong>down payment</strong> as the obstacle instead. That framing is true, it is the actual barrier for first-time buyers, and it hands you the DPA programs as the answer.</p>
+  </div>
+
+  <div class="note crit">
+    <h4>Copy that will get you rejected</h4>
+    <p>"Perfect for young families." "Great starter home for newlyweds." "Ideal for retirees." "Safe neighborhood for kids." Anything implying <em>who should live somewhere</em> is a Fair Housing problem, not just an ad-policy one. <strong>Describe the property and the program. Never the person.</strong></p>
+  </div>
+</section>
+
+<section>
+  <h2><span class="n">D</span>County plays</h2>
+  <p class="lede">Your three counties have materially different programs. This is the local knowledge no national competitor bidding into your market has.</p>
+
+  <div class="grid g3">
+    <div class="card">
+      <p class="cty">Weber · Ogden</p>
+      <h4>Own in Ogden</h4>
+      <p class="big">$10–20K</p>
+      <p>0% deferred, repaid at sale. <strong>First-time status not required.</strong> Tiered: $10K general, $15K state-certified K-12 teachers and city employees, $20K sworn police and fire.</p>
+      <p>Price cap ~$430K existing / ~$467K new. Stack with the ~$5K Weber County CDBG grant (forgiven after 5 years) and FHLB HELP (~$20K forgivable).</p>
+    </div>
+    <div class="card">
+      <p class="cty">Davis</p>
+      <h4>County assistance</h4>
+      <p class="big">Up to $50K</p>
+      <p>1% loan, deferred, repaid at sale or refi. ≤80% AMI. Not restricted to first-time buyers — the largest single figure in your market.</p>
+      <p><strong>2025 funds were exhausted.</strong> Applications were scheduled to reopen around July 1, 2026. Confirm live funding before any creative names this number.</p>
+    </div>
+    <div class="card">
+      <p class="cty">Salt Lake</p>
+      <h4>Fragmented, stackable</h4>
+      <p class="big">$10–15K</p>
+      <p>SLC HOME ~$10K · CDCU deferred forgivable (SLC / county / Taylorsville) · NeighborWorks ~$10K forgivable · West Valley City up to ~$14,999.</p>
+      <p>No single dominant program, so lead with <strong>SB 240</strong> and UHC FirstHome here instead, and treat city programs as the closing detail.</p>
+    </div>
+  </div>
+
+  <div class="note flag">
+    <h4>Verify before you spend</h4>
+    <p>Most county and city figures above come from lender and aggregator sites rather than primary county pages. Several programs cycle annually or exhaust mid-year. <strong>An exhausted program named in a live ad is a false-advertising exposure</strong> — confirm current funding with a participating lender before launching any creative containing a dollar amount, and pull the creative the day funding closes.</p>
+    <p>Also pending: <strong>HB 541</strong> would extend SB 240–style help to existing homes (up to $10,000). Introduced, <strong>not confirmed passed</strong>. Do not advertise it yet. And <strong>UHC HomeAgain is currently suspended</strong> — route repeat buyers to FHA/VA or HFA Advantage.</p>
+  </div>
+
+  <h3>The stack conversation</h3>
+  <p>The highest-value thing you can say to a first-time buyer is that these <em>combine</em>. UHC FirstHome plus DPA up to 6% capped at $27,500, layered against SB 240's $20K on a new build, against an FHA 3.5%-down base. "You may be able to combine these" is a compliant, non-demographic hook that almost no competitor is making — and it's the reason a buyer picks you over the listing agent on the sign.</p>
+</section>
+
+<section>
+  <h2><span class="n">E</span>The network engine</h2>
+  <p class="lede">Paid ads rent attention. These four relationships compound, and three of them feed the one audience lever HEC left you: your own first-party list.</p>
+
+  <div class="note win">
+    <h4>The strongest play in this document</h4>
+    <p>UHC FirstHome <strong>requires homebuyer education</strong>. That is a mandatory step every qualified Utah first-time buyer must complete before closing. <strong>Become the place they complete it.</strong> Co-host a monthly class with a UHC-participating loan officer and a title partner — you meet every serious FTHB in your counties <em>before</em> they choose an agent, at the exact moment they're choosing one. It is the cheapest, most defensible lead source available to you, it doubles as ad creative ("free homebuyer class, seats limited"), and every attendee legally enters your CRM — the one audience Meta still lets you target.</p>
+  </div>
+
+  <div class="grid g2">
+    <div class="card">
+      <p class="cty">Partnership 01</p>
+      <h4>UHC-participating lenders</h4>
+      <p>Pick two or three loan officers who actively write FirstHome and SB 240. Co-brand the DPA explainer campaigns and split spend. They carry program authority you don't; you carry the audience.</p>
+      <p>Ask each for current funding status monthly — that's also your compliance check from §D.</p>
+    </div>
+    <div class="card">
+      <p class="cty">Partnership 02</p>
+      <h4>New-construction builders</h4>
+      <p><strong>SB 240 is new-construction-only.</strong> That single rule means builder relationships <em>are</em> the SB 240 channel — there is no other way to deliver that $20K.</p>
+      <p>Approach builders with inventory under the $450K cap in west Weber and southwest Salt Lake. You bring pre-qualified SB 240 buyers; they bring co-op marketing dollars.</p>
+    </div>
+    <div class="card">
+      <p class="cty">Partnership 03</p>
+      <h4>Property managers</h4>
+      <p>Renters at lease-end are your buyer pipeline. Offer PMs a rent-vs-own class for tenants approaching renewal — they lose a tenant but keep goodwill, and you convert the ones who were leaving anyway.</p>
+    </div>
+    <div class="card">
+      <p class="cty">Partnership 04</p>
+      <h4>Past clients &amp; sphere</h4>
+      <p>Under HEC your CRM Custom Audience is one of the last precise levers standing. Upload it, keep it current, and run a low-budget always-on retargeting layer against it and its Special Ad Audience.</p>
+      <p>Every class attendee, every valuation request, every open-house signature belongs in it.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2><span class="n">F</span>Campaign build</h2>
+
+  <h3>Meta</h3>
+  <p>Keep it deliberately simple — with targeting stripped there is nothing to gain from a sprawling account, and Meta needs volume per ad set to exit learning.</p>
+  <ul class="tight">
+    <li><strong>Campaign 1 — Seller valuation.</strong> Housing category declared. One ad set, 15mi radius on Layton or Bountiful, 18+, all genders, no interests. 4–6 creatives, city named in each.</li>
+    <li><strong>Campaign 2 — Buyer DPA.</strong> One ad set per county (Weber / Davis / Salt Lake), each carrying that county's program hook from §D.</li>
+    <li><strong>Campaign 3 — Retargeting.</strong> Site visitors + video 50%+ viewers + CRM list. Launch once the pool passes ~1,000.</li>
+    <li>Lead forms: <strong>three fields maximum</strong>. Every added field costs completion. Qualify on the follow-up call, not the form.</li>
+  </ul>
+
+  <h3>Google</h3>
+  <ul class="tight">
+    <li><strong>Program-name campaign</strong> — highest intent, cheapest clicks, almost no competition: <span class="num">sb 240 utah</span>, <span class="num">utah housing corporation down payment</span>, <span class="num">own in ogden program</span>, <span class="num">davis county down payment assistance</span>.</li>
+    <li><strong>Category campaign</strong> — <span class="num">first time home buyer utah</span>, <span class="num">down payment assistance utah</span>, <span class="num">how much house can i afford utah</span>.</li>
+    <li><strong>Local inventory</strong> — <span class="num">homes for sale layton ut under 400k</span> and county variants.</li>
+    <li><strong>Negatives from day one:</strong> <span class="num">jobs</span>, <span class="num">salary</span>, <span class="num">license</span>, <span class="num">school</span>, <span class="num">for rent</span>, <span class="num">apartments</span>, <span class="num">zillow</span>, <span class="num">redfin</span>, <span class="num">calculator</span>. Real estate search terms bleed into careers and rentals constantly; this list is the difference between a $28 and a $60 lead.</li>
+    <li>Geo: county-level or privacy-safe radius. <strong>Never ZIP.</strong></li>
+  </ul>
+
+  <div class="note">
+    <h4>Speed to lead beats everything downstream</h4>
+    <p>At a $20–45 CPL, response time is worth more than any optimization in this document. A lead contacted in five minutes converts multiples better than one contacted in an hour. Build the follow-up before you build the campaign — if you can't answer fast, don't turn the ads on yet.</p>
+  </div>
+</section>
+
+<section>
+  <h2><span class="n">G</span>Measurement</h2>
+  <p class="lede">Public benchmarks for this vertical disagree by roughly 3× ($16.61 vs $51.90 per lead depending on methodology). Treat every number below as a planning band, then replace it with your own.</p>
+
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Signal</th><th class="num">Threshold</th><th>Action</th></tr></thead>
+    <tbody>
+      <tr><td>CPL within band</td><td class="num">$20–45</td><td>Hold. Let it run to 50 conversions before judging.</td></tr>
+      <tr><td>CPL sustained high</td><td class="num">&gt; $65</td><td><strong>Fix the offer and creative.</strong> Do not touch targeting — under HEC there's almost none left to fix, so cost problems are nearly always creative problems.</td></tr>
+      <tr><td>Seasonal drift</td><td class="num">Q4 → Q1</td><td>Expect real estate CPL to roughly double into January. Budget for it; don't panic-cut in December.</td></tr>
+      <tr><td>Your true benchmark</td><td class="num">50 conv.</td><td>After ~50 conversions, your own account number replaces every figure here. That is the only benchmark that matters.</td></tr>
+      <tr><td>Program funding</td><td class="num">Monthly</td><td>Confirm with a lender partner. Pull any creative naming an exhausted program the same day.</td></tr>
+      <tr><td>Auto-flagged as Housing</td><td class="num">Any</td><td>Stop and re-declare the category properly. Never rebuild to evade.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>No Salt Lake–specific public CPL benchmark exists. The $20–45 band is inferred from Tier 2 metro data (Denver, Austin, Nashville), which Salt Lake resembles — it is a starting hypothesis, not a measured local figure. Similarly, the Special Ad Category is widely reported to raise housing CPMs, but no clean public number quantifies it; don't let anyone sell you a specific inflation percentage.</p>
+</section>
+
+<section>
+  <h2><span class="n">H</span>First 90 days</h2>
+  <p class="lede">Ordered by dependency — each phase needs the one before it.</p>
+
+  <div class="phase">
+    <div class="d">Days<br>1–14</div>
+    <div>
+      <h4>Instrument, don't spend</h4>
+      <ul>
+        <li>Meta connector read-only; reconcile everything it reports against Ads Manager before granting write access</li>
+        <li>Pixel + Conversions API on the site; valuation and class landing pages live</li>
+        <li>CRM exported and uploaded as a Custom Audience</li>
+        <li>Confirm current funding on all four program families with a lender partner</li>
+      </ul>
+    </div>
+  </div>
+  <div class="phase">
+    <div class="d">Days<br>15–30</div>
+    <div>
+      <h4>Launch the cheapest offer first</h4>
+      <p>Seller valuation on Meta, plus the Google program-name campaign. Both are low-CPL and fast-feedback — they fund the learning for everything else. Hold buyer campaigns until the pixel has data.</p>
+    </div>
+  </div>
+  <div class="phase">
+    <div class="d">Days<br>31–60</div>
+    <div>
+      <h4>Add buyer DPA, county by county</h4>
+      <p>One ad set per county carrying its own program hook. Book the first homebuyer education class with a lender and title partner. Approach two builders with sub-$450K inventory about SB 240.</p>
+    </div>
+  </div>
+  <div class="phase">
+    <div class="d">Days<br>61–90</div>
+    <div>
+      <h4>Compound it</h4>
+      <p>Turn on retargeting against the accumulated pool. Run the class monthly. Recompute your real CPL from your own account and rebuild the budget split around what actually converted — not around the bands in §G.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2><span class="n">I</span>Pre-launch checklist</h2>
+  <p class="lede">Run this against every campaign before it goes live. Your <span class="num">utah-fthb-ads</span> skill enforces the same list automatically.</p>
+  <ul class="check">
+    <li>Housing category explicitly declared</li>
+    <li>No age, gender, or ZIP targeting anywhere in the build</li>
+    <li>Radius is 15 miles or greater</li>
+    <li>No standard Lookalikes — Special Ad Audiences or first-party Custom Audiences only</li>
+    <li>No audience exclusions configured</li>
+    <li>Copy describes the property and the program, never the person</li>
+    <li>Every dollar amount named is confirmed currently funded</li>
+    <li>Landing page claim matches the ad claim exactly</li>
+    <li>Lead form is three fields or fewer</li>
+    <li>Follow-up process can respond within five minutes</li>
+    <li>Campaign stays paused until a human un-pauses it</li>
+  </ul>
+</section>
+
+<footer>
+  Compiled from verified August 2026 research. Program figures marked for reconfirmation in §D are drawn from lender and aggregator sources rather than primary county pages.<br>
+  CPL bands are inferred from national Tier 2 metro data; no Salt Lake–specific public benchmark exists.<br>
+  Not legal advice. Fair Housing compliance is your obligation regardless of what any platform's tooling permits.
+</footer>
+
+</div>

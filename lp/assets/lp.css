@@ -1,0 +1,245 @@
+/* =========================================================
+   GROWV — Landing pages (paid traffic)
+   Inherits the brand tokens from assets/css/styles.css but
+   is deliberately standalone: ad landing pages load on their
+   own and must not pull the full site CSS/JS payload.
+
+   Conversion rules baked in:
+     - one CTA, no nav, no exit paths
+     - 3 form fields maximum
+     - Equal Housing mark + fair housing statement on every page
+   ========================================================= */
+
+:root{
+  --ink:#0E1A14; --ink-2:#142219; --ink-3:#1B2C24;
+  --gold:#BFA164; --gold-2:#D9C28C; --gold-3:#8E7842;
+  --gold-soft:rgba(191,161,100,.14);
+  --cream:#F5F1EA; --cream-2:#EBE4D5; --paper:#FFFFFF;
+  --char:#1F1F1F; --char-2:#3A3A3A; --mute:#6B6F6C;
+  --hairline:rgba(20,34,25,.12);
+  --ok:#2E6B45; --ok-soft:#E2EDE6;
+  --warn:#8A6414; --warn-soft:#F5EDDA;
+
+  --f-display:'Cormorant Garamond','Cormorant',Georgia,'Times New Roman',serif;
+  --f-body:'Inter',system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;
+
+  --pad-side:clamp(1.25rem,5vw,2.5rem);
+  --max-w:1120px; --max-w-narrow:720px;
+  --radius:8px; --radius-lg:14px;
+  --ease-out:cubic-bezier(.22,1,.36,1);
+  --shadow:0 1px 2px rgba(14,26,20,.06),0 12px 32px -16px rgba(14,26,20,.25);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--cream);color:var(--char);
+  font-family:var(--f-body);font-size:clamp(1rem,.2vw+.95rem,1.06rem);
+  line-height:1.62;-webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;height:auto;display:block}
+
+.skip-link{
+  position:absolute;left:-9999px;top:0;background:var(--ink);color:var(--cream);
+  padding:.75rem 1.25rem;z-index:100;
+}
+.skip-link:focus{left:0}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:2px}
+
+.shell{max-width:var(--max-w);margin:0 auto;padding:0 var(--pad-side)}
+.narrow{max-width:var(--max-w-narrow);margin-left:auto;margin-right:auto}
+
+/* ---------- masthead: brand only, no nav ---------- */
+.lp-head{
+  background:var(--ink);padding:1.1rem 0;
+  border-bottom:1px solid rgba(191,161,100,.25);
+}
+.lp-head .shell{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.lp-head img{width:104px;height:auto}
+.lp-head a.tel{
+  color:var(--gold-2);text-decoration:none;font-size:.9rem;font-weight:500;
+  letter-spacing:.01em;white-space:nowrap;
+}
+.lp-head a.tel:hover{color:var(--cream)}
+
+/* ---------- hero ---------- */
+.hero{
+  background:var(--ink);color:var(--cream);
+  padding:clamp(2.75rem,7vw,4.75rem) 0 clamp(3rem,8vw,5.25rem);
+}
+.eyebrow{
+  font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--gold);margin:0 0 1rem;font-weight:600;
+}
+.hero h1{
+  font-family:var(--f-display);font-weight:400;
+  font-size:clamp(2.1rem,5.4vw+.4rem,3.9rem);line-height:1.06;
+  letter-spacing:-.01em;margin:0 0 1.1rem;text-wrap:balance;
+}
+.hero h1 em{font-style:normal;color:var(--gold-2)}
+.hero .lede{
+  font-size:clamp(1.05rem,.5vw+.95rem,1.22rem);color:rgba(245,241,234,.82);
+  margin:0;max-width:56ch;
+}
+.hero-grid{display:grid;gap:clamp(2rem,5vw,3.5rem);align-items:start}
+@media(min-width:900px){.hero-grid{grid-template-columns:1.05fr .95fr}}
+
+/* ---------- form card ---------- */
+.formcard{
+  background:var(--paper);border-radius:var(--radius-lg);
+  padding:clamp(1.5rem,3.5vw,2rem);box-shadow:var(--shadow);
+  border:1px solid rgba(191,161,100,.3);
+}
+.formcard h2{
+  font-family:var(--f-display);font-weight:500;font-size:1.6rem;line-height:1.2;
+  margin:0 0 .4rem;color:var(--ink);
+}
+.formcard .sub{font-size:.92rem;color:var(--mute);margin:0 0 1.35rem}
+.field{display:block;margin-bottom:1rem}
+.field span{
+  display:block;font-size:.78rem;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--char-2);font-weight:600;margin-bottom:.4rem;
+}
+.field input{
+  width:100%;padding:.85rem .95rem;font:inherit;font-size:1rem;
+  border:1px solid var(--hairline);border-radius:var(--radius);
+  background:var(--cream);color:var(--char);transition:border-color .18s,background .18s;
+}
+.field input:focus{border-color:var(--gold);background:var(--paper);outline:none}
+.field input::placeholder{color:#9AA09C}
+.honeypot{position:absolute!important;left:-9999px!important;opacity:0;height:0;width:0}
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
+  width:100%;padding:1rem 1.5rem;border:0;border-radius:var(--radius);
+  background:var(--gold);color:var(--ink);font:inherit;font-weight:650;
+  font-size:1.02rem;letter-spacing:.01em;cursor:pointer;
+  transition:background .18s var(--ease-out),transform .18s var(--ease-out);
+}
+.btn:hover{background:var(--gold-2)}
+.btn:active{transform:translateY(1px)}
+.btn[disabled]{opacity:.6;cursor:progress}
+.microcopy{
+  font-size:.8rem;color:var(--mute);margin:.85rem 0 0;text-align:center;line-height:1.5;
+}
+.status{
+  margin:1rem 0 0;padding:.85rem 1rem;border-radius:var(--radius);
+  font-size:.92rem;line-height:1.5;
+}
+.status.ok{background:var(--ok-soft);color:var(--ok);border:1px solid rgba(46,107,69,.25)}
+.status.err{background:#F6E3E0;color:#93342A;border:1px solid rgba(147,52,42,.25)}
+
+/* ---------- body sections ---------- */
+main section{padding:clamp(2.75rem,6vw,4.5rem) 0}
+main section.alt{background:var(--paper)}
+h2.sec{
+  font-family:var(--f-display);font-weight:500;
+  font-size:clamp(1.6rem,2.6vw+.5rem,2.4rem);line-height:1.15;
+  margin:0 0 1rem;color:var(--ink);text-wrap:balance;
+}
+h3{font-size:1.05rem;font-weight:650;margin:1.75rem 0 .5rem;color:var(--ink)}
+p{margin:0 0 1rem}
+.lede-2{font-size:1.1rem;color:var(--char-2);max-width:62ch}
+
+/* NB: these list items mix inline text with <strong>/<span>. A grid or flex
+   container would blockify each child into its own item and wrap the trailing
+   text into a second row, so the marker is positioned absolutely instead and
+   the item stays a normal block. */
+.steps{list-style:none;padding:0;margin:1.75rem 0;display:grid;gap:1.1rem;counter-reset:s}
+.steps li{position:relative;padding-left:3rem;counter-increment:s}
+.steps li::before{
+  content:counter(s);position:absolute;left:0;top:-.15rem;
+  font-family:var(--f-display);font-size:1.35rem;color:var(--gold-3);
+  line-height:1.2;font-weight:600;
+}
+.steps strong{display:block;color:var(--ink)}
+.steps span{color:var(--char-2);font-size:.96rem}
+
+.checks{list-style:none;padding:0;margin:1.5rem 0;display:grid;gap:.7rem}
+.checks li{position:relative;padding-left:1.9rem;color:var(--char-2)}
+.checks li::before{
+  content:"";position:absolute;left:.1rem;top:.5rem;
+  width:.95rem;height:.55rem;
+  border-left:2.5px solid var(--gold-3);border-bottom:2.5px solid var(--gold-3);
+  transform:rotate(-45deg);
+}
+.checks li strong{color:var(--ink)}
+
+.tiers{display:grid;gap:1rem;margin:1.75rem 0}
+@media(min-width:720px){.tiers{grid-template-columns:repeat(3,1fr)}}
+.tier{
+  background:var(--paper);border:1px solid var(--hairline);border-radius:var(--radius);
+  padding:1.4rem 1.5rem;border-top:3px solid var(--gold);
+}
+main section.alt .tier{background:var(--cream)}
+.tier .amt{
+  font-family:var(--f-display);font-size:2.3rem;line-height:1;color:var(--ink);
+  font-weight:600;letter-spacing:-.02em;display:block;margin-bottom:.35rem;
+}
+.tier .who{font-size:.95rem;color:var(--char-2);margin:0}
+
+/* ---------- calculator ---------- */
+.calc{
+  background:var(--paper);border:1px solid var(--hairline);border-radius:var(--radius-lg);
+  padding:clamp(1.4rem,3.5vw,2rem);box-shadow:var(--shadow);margin:1.75rem 0;
+}
+main section.alt .calc{background:var(--cream)}
+.calc-inputs{display:grid;gap:1rem}
+@media(min-width:640px){.calc-inputs{grid-template-columns:repeat(2,1fr)}}
+.calc .field{margin-bottom:0}
+.calc-out{
+  margin-top:1.6rem;padding-top:1.5rem;border-top:1px solid var(--hairline);
+  display:grid;gap:1rem;
+}
+@media(min-width:640px){.calc-out{grid-template-columns:repeat(3,1fr)}}
+.stat{text-align:center}
+.stat .k{
+  display:block;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--mute);font-weight:600;margin-bottom:.3rem;
+}
+.stat .v{
+  font-family:var(--f-display);font-size:clamp(1.7rem,4vw,2.3rem);font-weight:600;
+  color:var(--ink);line-height:1.05;font-variant-numeric:tabular-nums;letter-spacing:-.02em;
+}
+.stat .v.pos{color:var(--ok)}
+.verdict{
+  margin-top:1.5rem;padding:1.1rem 1.25rem;border-radius:var(--radius);
+  background:var(--gold-soft);border-left:3px solid var(--gold);
+  font-size:1.02rem;color:var(--ink);line-height:1.55;
+}
+.assump{font-size:.82rem;color:var(--mute);margin:1.1rem 0 0;line-height:1.55}
+
+/* ---------- notes ---------- */
+.note{
+  margin:1.5rem 0;padding:1.1rem 1.35rem;border-radius:var(--radius);
+  background:var(--warn-soft);border-left:3px solid var(--warn);
+  font-size:.94rem;color:var(--char-2);line-height:1.55;
+}
+.note strong{color:var(--ink)}
+.note p{margin:0}
+.note p+p{margin-top:.6rem}
+
+/* ---------- closing CTA ---------- */
+.close{background:var(--ink);color:var(--cream);text-align:center}
+.close h2{
+  font-family:var(--f-display);font-weight:400;
+  font-size:clamp(1.8rem,3.5vw+.5rem,2.8rem);margin:0 0 .9rem;text-wrap:balance;
+}
+.close p{color:rgba(245,241,234,.8);max-width:52ch;margin:0 auto 1.75rem}
+.close .btn{width:auto;min-width:min(340px,90vw)}
+
+/* ---------- footer / compliance ---------- */
+.lp-foot{background:var(--ink-2);color:rgba(245,241,234,.62);padding:2.25rem 0;font-size:.82rem;line-height:1.65}
+.lp-foot .shell{display:grid;gap:1.25rem}
+@media(min-width:720px){.lp-foot .shell{grid-template-columns:auto 1fr;align-items:start;gap:1.75rem}}
+.lp-foot .eho{display:flex;align-items:center;gap:.7rem}
+.lp-foot .eho img{width:38px;filter:brightness(0) invert(1);opacity:.72}
+.lp-foot .eho span{font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;color:rgba(245,241,234,.7)}
+.lp-foot a{color:var(--gold-2)}
+.lp-foot p{margin:0 0 .6rem}
+.lp-foot p:last-child{margin:0}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}
+}
+@media print{.formcard,.close,.lp-head{display:none}}

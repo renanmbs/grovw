@@ -483,6 +483,78 @@ html.is-nav-open .site-header {
   padding-bottom: clamp(5rem, 12vh, 9rem);
   padding-top: clamp(3rem, 8vh, 6rem);
 }
+/* ---------- Hero grand-opening announcement ---------- */
+/* The whole hero column centres so the framed announcement reads as the
+   centrepiece rather than a left-aligned headline with a box around it. */
+.hero__content--center { text-align: center; }
+.hero__content--center .hero__sub { margin-inline: auto; }
+.hero__content--center .hero__actions { justify-content: center; }
+
+/* The frame: a gold hairline with a second rule set inside it, the way a
+   printed invitation is ruled. The translucent ink panel is what keeps the
+   type legible over a busy photograph. */
+.hero__announce {
+  position: relative;
+  display: block;
+  padding: clamp(1.75rem, 4.5cqw, 3.75rem) clamp(1.25rem, 3.5cqw, 3.25rem);
+  border: 1px solid var(--gold-3);
+  background: rgba(14, 26, 20, 0.42);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.38);
+}
+.hero__announce::before {
+  content: "";
+  position: absolute;
+  inset: 7px;
+  border: 1px solid rgba(191, 161, 100, 0.32);
+  pointer-events: none;
+}
+
+/* The announcement has to hold one line at every width. Sizing it off the
+   viewport would break above 1680px, where .hero__content is deliberately
+   capped at 60%/56% so the headline doesn't span the whole photo — so it is
+   sized off the text column itself via container units instead. The value
+   accounts for the frame's padding and the positive tracking below; measured
+   to leave ~6% slack for font-loading differences. */
+.hero__content { container-type: inline-size; }
+.hero__headline {
+  white-space: nowrap;
+  font-size: min(5.5cqw, 4.6rem);
+  letter-spacing: 0.015em;
+  font-weight: 500;
+}
+/* Both lines share the display serif — one family, roman over italic, is the
+   classic invitation setting and keeps the frame feeling composed. */
+.hero__invite {
+  font-family: var(--f-display);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(1.1rem, 2.1cqw, 1.9rem);
+  line-height: 1.4;
+  letter-spacing: 0.005em;
+  color: var(--gold);
+  margin-top: var(--space-4);
+}
+/* A short gold rule between the two lines — the announcement's dividing mark. */
+.hero__invite::before {
+  content: "";
+  display: block;
+  width: clamp(48px, 9cqw, 88px);
+  height: 1px;
+  margin: 0 auto var(--space-4);
+  background: var(--gold);
+  opacity: 0.65;
+}
+
+/* Sits between the headline and the subline, so it needs the top spacing the
+   eyebrow normally gets from the block above it. */
+.hero__eyebrow {
+  margin-top: var(--space-4);
+  margin-bottom: 0;
+}
+.hero__eyebrow + .hero__sub { margin-top: var(--space-2); }
+
 .hero__sub {
   margin-top: var(--space-4);
   font-size: var(--fs-lede);
@@ -1035,4 +1107,17 @@ a.contact__value:hover, a.contact__value:focus-visible { color: var(--gold-2); }
   .hero__media { display: none; }
   a { color: #000; text-decoration: underline; }
   .section { padding-block: 1.5rem; break-inside: avoid; }
+}
+
+/* ---------- About copy ---------- */
+/* The About body reads as one uniform block — every paragraph at the same
+   family and size (no larger lede), justified to both margins. Hyphenation
+   comes along because justifying a column this narrow without it opens
+   rivers of white space between words. The eyebrow and the sign-off keep
+   their own treatment. */
+#about .split__text > p:not(.eyebrow):not(.about__signoff) {
+  font-family: var(--f-body);
+  font-size: var(--fs-body);
+  text-align: justify;
+  hyphens: auto;
 }
