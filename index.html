@@ -6,10 +6,10 @@
   <meta name="theme-color" content="#0E1A14">
   <meta name="color-scheme" content="light dark">
 
-  <title>GROWV — Luxury Real Estate by Jonathan Perez</title>
+  <title>GROWV — Rooted in Real Estate</title>
   <meta name="description" content="GROWV is a Utah-based brokerage delivering a hospitality-grade real estate experience. Curated luxury homes, fluent service in English and Spanish, and a brokerage led by Jonathan Perez.">
 
-  <meta property="og:title" content="GROWV — Luxury Real Estate by Jonathan Perez">
+  <meta property="og:title" content="GROWV — Rooted in Real Estate">
   <meta property="og:description" content="A hospitality-grade real estate experience in Utah. Discover a place you'll love to live.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://mygrowv.com/">
@@ -22,7 +22,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preload" href="assets/images/neighborhood-lg.jpg" as="image" media="(min-width: 768px)">
   <link rel="preload" href="assets/images/neighborhood-mobile-lg.jpg" as="image" media="(max-width: 767px)">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="assets/css/styles.css">
 </head>
@@ -105,12 +105,10 @@
       <div class="hero__content hero__content--center">
         <div class="hero__announce">
           <h1 id="hero-title" class="display">
-            <span class="display__line hero__headline">Office Grand Opening Aug. 19, 2026</span>
-            <span class="display__line hero__invite">Lunch is on us. <span aria-hidden="true">🥪</span> Come say hello. <span aria-hidden="true">👋</span></span>
+            <span class="display__line hero__headline">Good Decisions start with Good Advice.</span>
+            <span class="display__line hero__invite">Rooted in Real Estate.</span>
           </h1>
         </div>
-        <p class="eyebrow eyebrow--gold hero__eyebrow">Everyone Is Welcome</p>
-        <p class="hero__sub">Rooted in Real Estate.</p>
         <div class="hero__actions">
           <a class="cta cta--gold" href="https://jonathanperez.site/" target="_blank" rel="noopener noreferrer">
             View Properties<span class="sr-only"> (opens in a new tab)</span>
@@ -237,7 +235,32 @@
         </header>
 
         <div class="property-grid">
-          <!-- Property cards are illustrative; replace data-href when real listings are wired -->
+          <!-- Real active listing (MLS 2178857) — GROWV is the listing broker.
+               Facts and photo come from the UtahRealEstate.com listing; update
+               or remove this card when the listing closes. -->
+          <article class="property property--featured reveal" data-reveal>
+            <a class="property__media" href="https://www.utahrealestate.com/2178857"
+               target="_blank" rel="noopener noreferrer"
+               aria-label="View the full listing for 5184 S 1150 W, Riverdale, on UtahRealEstate.com (opens in a new tab)">
+              <img
+                src="assets/images/prop-riverdale-1150w-sm.jpg"
+                srcset="assets/images/prop-riverdale-1150w-sm.jpg 900w, assets/images/prop-riverdale-1150w-lg.jpg 1200w"
+                sizes="(min-width: 1280px) 25vw, (min-width: 600px) 50vw, 90vw"
+                alt="Tri-level home with tan siding, brick accents, an attached two-car garage, and mature trees over a green front lawn."
+                loading="lazy" decoding="async" width="1200" height="900">
+              <span class="property__flag">Featured &middot; Active</span>
+            </a>
+            <div class="property__body">
+              <p class="property__loc">Riverdale, UT</p>
+              <h3 class="property__title">5184 S 1150 W</h3>
+              <ul class="property__meta" role="list">
+                <li>5 bed</li><li>3 bath</li><li>1,836 sqft</li>
+              </ul>
+              <p class="property__price">$457,000</p>
+            </div>
+          </article>
+
+          <!-- Property cards below are illustrative; replace data-href when real listings are wired -->
           <article class="property reveal" data-reveal>
             <a class="property__media" href="#contact" aria-label="Inquire about Glasshouse Estate, Park City">
               <img
