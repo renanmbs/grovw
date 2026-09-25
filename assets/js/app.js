@@ -44,7 +44,8 @@
       // bio: add a short bio here — the card renders fine without one.
       photo: 'assets/images/stefanie-godinez.jpg',
       photoSm: 'assets/images/stefanie-godinez-sm.jpg',
-      url: '#contact'
+      phone: '801-920-1762',
+      email: 'godinezstefanie@gmail.com'
     },
     {
       name: 'Wilian Guevara',
@@ -52,7 +53,7 @@
       // bio: add a short bio here — the card renders fine without one.
       photo: 'assets/images/wilian-guevara.jpg',
       photoSm: 'assets/images/wilian-guevara-sm.jpg',
-      url: '#contact'
+      phone: '801-347-1054'
     },
     // ---- Placeholder roles temporarily hidden until real agents join. ----
     // To restore: uncomment the objects below (or any subset), then refresh.
@@ -115,7 +116,9 @@
     if (!grid) return;
 
     grid.innerHTML = AGENTS.map((a, i) => {
-      const isExternal = /^https?:\/\//i.test(a.url) && !a.url.startsWith(window.location.origin);
+      const hasContact = !!(a.phone || a.email);
+      const url = a.url || '#contact';
+      const isExternal = /^https?:\/\//i.test(url) && !url.startsWith(window.location.origin);
       const target = isExternal ? ' target="_blank" rel="noopener noreferrer"' : '';
       const externalIndicator = isExternal
         ? ' <span class="sr-only">(opens in a new tab)</span>'
@@ -128,13 +131,15 @@
         : `Placeholder portrait card for a future ${a.role} at GROWV.`;
       // An agent without their own site links to the contact form, so the label
       // has to promise the form rather than a profile page.
-      const hasProfile = a.photo && !a.url.startsWith('#');
-      const linkLabel = hasProfile
-        ? `View ${a.name}'s profile, ${a.role}`
-        : a.photo
-          ? `Contact GROWV about ${a.name}, ${a.role}`
-          : `Contact GROWV about the ${a.role} role`;
-      const cardLabel = hasProfile ? 'View profile' : 'Get in touch';
+      const hasProfile = a.photo && !url.startsWith('#');
+      const linkLabel = hasContact
+        ? `Show contact details for ${a.name}, ${a.role}`
+        : hasProfile
+          ? `View ${a.name}'s profile, ${a.role}`
+          : a.photo
+            ? `Contact GROWV about ${a.name}, ${a.role}`
+            : `Contact GROWV about the ${a.role} role`;
+      const cardLabel = hasContact ? 'Contact' : hasProfile ? 'View profile' : 'Get in touch';
 
       const srcsetAttr = a.photoSm
         ? ` srcset="${escapeHTML(a.photoSm)} 900w, ${escapeHTML(a.photo)} 1600w" sizes="(min-width: 1024px) 360px, (min-width: 600px) 45vw, 90vw"`
@@ -153,17 +158,68 @@
             ${a.bio ? `<p class="agent__bio">${escapeHTML(a.bio)}</p>` : ''}
             <span class="agent__link" aria-hidden="true">${escapeHTML(cardLabel)}</span>
           </div>
-          <a class="agent__cover"
-             href="${escapeHTML(a.url)}"${target}
-             aria-label="${escapeHTML(linkLabel)}">
-            ${escapeHTML(linkLabel)}${externalIndicator}
-          </a>
+          ${hasContact
+            ? `<button type="button" class="agent__cover" data-agent="${i}"
+                 aria-haspopup="dialog" aria-label="${escapeHTML(linkLabel)}">
+                 ${escapeHTML(linkLabel)}
+               </button>`
+            : `<a class="agent__cover"
+                 href="${escapeHTML(url)}"${target}
+                 aria-label="${escapeHTML(linkLabel)}">
+                 ${escapeHTML(linkLabel)}${externalIndicator}
+               </a>`}
         </li>
       `;
     }).join('');
 
     // Newly-injected reveal nodes need to be observed.
     observeReveals(grid.querySelectorAll('.reveal'));
+    wireAgentDialog(grid);
+  };
+
+  /* ---------- Agent contact dialog ---------- */
+  const telHref = (phone) => 'tel:+1' + String(phone).replace(/\D/g, '');
+
+  const wireAgentDialog = (grid) => {
+    const dlg = $('#agentDialog');
+    if (!dlg || typeof dlg.showModal !== 'function') return;
+
+    const fill = (a) => {
+      const photo = $('#agentDialogPhoto');
+      photo.src = a.photoSm || a.photo || '';
+      photo.alt = `Portrait of ${a.name}, ${a.role} at GROWV.`;
+      $('#agentDialogRole').textContent = a.role;
+      $('#agentDialogName').textContent = a.name;
+
+      const rows = [];
+      if (a.phone) {
+        rows.push(`<li><span class="agent-dialog__label">Phone</span>
+          <a href="${escapeHTML(telHref(a.phone))}">${escapeHTML(a.phone)}</a></li>`);
+      }
+      if (a.email) {
+        rows.push(`<li><span class="agent-dialog__label">Email</span>
+          <a href="mailto:${escapeHTML(a.email)}">${escapeHTML(a.email)}</a></li>`);
+      }
+      $('#agentDialogContact').innerHTML = rows.join('');
+    };
+
+    grid.querySelectorAll('.agent__cover[data-agent]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const a = AGENTS[Number(btn.dataset.agent)];
+        if (!a) return;
+        fill(a);
+        dlg.showModal();
+      });
+    });
+
+    if (!dlg.dataset.wired) {
+      dlg.dataset.wired = '1';
+      // Clicking the backdrop (outside the panel) closes it.
+      dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+      dlg.querySelectorAll('[data-agent-dialog-close]').forEach((el) => {
+        el.addEventListener('click', () => dlg.close());
+      });
+    }
   };
 
   /* ---------- Header scroll state ---------- */

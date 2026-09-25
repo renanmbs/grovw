@@ -261,41 +261,40 @@
           </article>
 
           <!-- Property cards below are illustrative; replace data-href when real listings are wired -->
-          <article class="property reveal" data-reveal>
-            <a class="property__media" href="#contact" aria-label="Inquire about Glasshouse Estate, Park City">
+          <!-- Closed sale, buyer represented by GROWV. Not our listing, so the
+               card credits the side we represented rather than implying it. -->
+          <article class="property property--sold reveal" data-reveal>
+            <a class="property__media" href="#contact" aria-label="Inquire about a sale like 5793 S 4025 W, Roy">
               <img
-                src="assets/images/prop-glasshouse-sm.jpg"
-                srcset="assets/images/prop-glasshouse-sm.jpg 900w, assets/images/prop-glasshouse-lg.jpg 1800w"
+                src="assets/images/prop-sold-sm.jpg"
+                srcset="assets/images/prop-sold-sm.jpg 900w, assets/images/prop-sold-lg.jpg 1200w"
                 sizes="(min-width: 1280px) 25vw, (min-width: 600px) 50vw, 90vw"
-                alt="Modern mountain estate with floor-to-ceiling glass and a long covered terrace at dusk."
+                alt="Two-story home with brick and grey siding, an arched front window, solar panels, and an attached two-car garage."
                 loading="lazy" decoding="async" width="1200" height="900">
+              <span class="property__sold">Sold</span>
             </a>
             <div class="property__body">
-              <p class="property__loc">Park City, UT</p>
-              <h3 class="property__title">Glasshouse Estate</h3>
-              <ul class="property__meta" role="list">
-                <li>5 bed</li><li>6 bath</li><li>7,400 sqft</li>
-              </ul>
-              <p class="property__price">Price upon request</p>
+              <p class="property__loc">Roy, UT</p>
+              <h3 class="property__title">5793 S 4025 W</h3>
+              <p class="property__price">Buyer represented by GROWV</p>
             </div>
           </article>
 
-          <article class="property reveal" data-reveal data-reveal-delay="80">
-            <a class="property__media" href="#contact" aria-label="Inquire about Cedar Hollow Residence, Riverdale">
+          <!-- Closed sale, buyer represented by GROWV. -->
+          <article class="property property--sold reveal" data-reveal data-reveal-delay="80">
+            <a class="property__media" href="#contact" aria-label="Inquire about a sale like 1856 S 2425 W, West Haven">
               <img
-                src="assets/images/prop-cedar-sm.jpg"
-                srcset="assets/images/prop-cedar-sm.jpg 900w, assets/images/prop-cedar-lg.jpg 1800w"
+                src="assets/images/prop-sold-westhaven-sm.jpg"
+                srcset="assets/images/prop-sold-westhaven-sm.jpg 900w, assets/images/prop-sold-westhaven-lg.jpg 1200w"
                 sizes="(min-width: 1280px) 25vw, (min-width: 600px) 50vw, 90vw"
-                alt="Warm wood and stone luxury home with a long pool reflecting evening light."
+                alt="New-build white board-and-batten farmhouse with a dark shingle roof, three-car garage, and covered porch."
                 loading="lazy" decoding="async" width="1200" height="900">
+              <span class="property__sold">Sold</span>
             </a>
             <div class="property__body">
-              <p class="property__loc">Riverdale, UT</p>
-              <h3 class="property__title">Cedar Hollow Residence</h3>
-              <ul class="property__meta" role="list">
-                <li>4 bed</li><li>5 bath</li><li>5,100 sqft</li>
-              </ul>
-              <p class="property__price">$3.9M</p>
+              <p class="property__loc">West Haven, UT</p>
+              <h3 class="property__title">1856 S 2425 W</h3>
+              <p class="property__price">Buyer represented by GROWV</p>
             </div>
           </article>
 
@@ -447,6 +446,21 @@
       </div>
     </div>
   </footer>
+
+  <!-- Agent contact card. Populated from the AGENTS data in app.js when a team
+       card is activated; native <dialog> gives us focus trapping and ESC. -->
+  <dialog class="agent-dialog" id="agentDialog" aria-labelledby="agentDialogName">
+    <form method="dialog" class="agent-dialog__dismiss">
+      <button class="agent-dialog__close" value="close" aria-label="Close contact card">&times;</button>
+    </form>
+    <div class="agent-dialog__inner">
+      <img class="agent-dialog__photo" id="agentDialogPhoto" src="" alt="" width="200" height="250">
+      <p class="agent-dialog__role" id="agentDialogRole"></p>
+      <h2 class="agent-dialog__name" id="agentDialogName"></h2>
+      <ul class="agent-dialog__contact" role="list" id="agentDialogContact"></ul>
+      <a class="cta cta--gold cta--block" href="#contact" data-agent-dialog-close>Send a message</a>
+    </div>
+  </dialog>
 
   <script src="assets/js/app.js" defer></script>
 </body>

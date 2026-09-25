@@ -1122,3 +1122,80 @@ a.contact__value:hover, a.contact__value:focus-visible { color: var(--gold-2); }
   font-weight: 600;
   box-shadow: 0 6px 18px rgba(14, 26, 20, 0.35);
 }
+
+/* ---------- Agent contact dialog ---------- */
+.agent-dialog {
+  border: 1px solid var(--gold-3);
+  border-radius: var(--radius-lg);
+  background: var(--ink-2);
+  color: rgba(255, 255, 255, 0.82);
+  padding: 0;
+  width: min(92vw, 400px);
+  box-shadow: 0 40px 90px rgba(0, 0, 0, 0.55);
+}
+.agent-dialog::backdrop { background: rgba(14, 26, 20, 0.72); backdrop-filter: blur(3px); }
+.agent-dialog__dismiss { position: absolute; top: 0.5rem; right: 0.5rem; margin: 0; }
+.agent-dialog__close {
+  background: none; border: 0; color: rgba(255, 255, 255, 0.6);
+  font-size: 1.6rem; line-height: 1; padding: 0.35rem 0.6rem; border-radius: 50%;
+}
+.agent-dialog__close:hover { color: var(--gold-2); }
+.agent-dialog__inner { padding: clamp(1.5rem, 4vw, 2.25rem); text-align: center; }
+.agent-dialog__photo {
+  width: 108px; height: 135px; object-fit: cover;
+  border-radius: var(--radius); margin: 0 auto var(--space-4);
+  border: 1px solid var(--ink-line);
+}
+.agent-dialog__role {
+  font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold);
+}
+.agent-dialog__name {
+  font-family: var(--f-display); font-weight: 500;
+  font-size: clamp(1.5rem, 4vw, 1.9rem); color: #fff; margin-top: 0.3rem;
+}
+.agent-dialog__contact {
+  margin: var(--space-4) 0; display: grid; gap: var(--space-2);
+  border-top: 1px solid var(--ink-line); border-bottom: 1px solid var(--ink-line);
+  padding-block: var(--space-4);
+}
+.agent-dialog__contact li { display: grid; gap: 0.15rem; }
+.agent-dialog__label {
+  font-size: 0.64rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+}
+.agent-dialog__contact a {
+  font-family: var(--f-display); font-size: 1.2rem; color: var(--gold-2);
+  word-break: break-word;
+}
+.agent-dialog__contact a:hover { color: #fff; }
+
+/* The cover is a <button> for agents whose card opens the dialog — reset the
+   UA button styling so it still reads as the invisible hit area it was. */
+button.agent__cover {
+  background: none; border: 0; padding: 0; margin: 0;
+  font: inherit; color: inherit; cursor: pointer;
+}
+
+/* ---------- Sold banner ---------- */
+/* A band across the middle of the card photo. Real text rather than burned
+   into the JPEG, so it stays sharp at every size and is read aloud. */
+.property__sold {
+  position: absolute;
+  left: 0; right: 0; top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+  padding: 0.6rem 0;
+  text-align: center;
+  background: rgba(158, 27, 27, 0.62);
+  border-block: 1px solid rgba(255, 255, 255, 0.28);
+  color: #fff;
+  font-family: var(--f-body);
+  font-size: clamp(0.95rem, 1.6vw, 1.25rem);
+  font-weight: 600;
+  letter-spacing: 0.42em;
+  text-indent: 0.42em; /* balance the trailing letter-space */
+  text-transform: uppercase;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
+}
+/* The photo dims on hover across the grid; keep the banner at full strength. */
+.property--sold:hover .property__sold { background: rgba(158, 27, 27, 0.72); }
