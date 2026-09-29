@@ -1199,3 +1199,39 @@ button.agent__cover {
 }
 /* The photo dims on hover across the grid; keep the banner at full strength. */
 .property--sold:hover .property__sold { background: rgba(158, 27, 27, 0.72); }
+
+/* ---------- Bilingual call badge ---------- */
+/* Sits under the header (z 100) and under the open mobile menu (z 90) so it
+   never floats over either. */
+.es-badge {
+  position: fixed;
+  right: clamp(0.85rem, 2.5vw, 1.75rem);
+  bottom: clamp(0.85rem, 2.5vw, 1.75rem);
+  z-index: 80;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.85rem 1.35rem;
+  border-radius: 999px;
+  background: #1D4E89;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  font-family: var(--f-body);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  box-shadow: 0 14px 34px -12px rgba(9, 24, 45, 0.7);
+  transition: transform .25s var(--ease-out), background .25s var(--ease-out);
+}
+.es-badge:hover,
+.es-badge:focus-visible { background: #163C6B; transform: translateY(-2px); }
+.es-badge__icon { flex: none; }
+
+@media (max-width: 599px) {
+  .es-badge { font-size: 0.9rem; padding: 0.72rem 1.05rem; gap: 0.5rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .es-badge:hover, .es-badge:focus-visible { transform: none; }
+}
+@media print { .es-badge { display: none; } }
