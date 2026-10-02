@@ -1169,6 +1169,21 @@ a.contact__value:hover, a.contact__value:focus-visible { color: var(--gold-2); }
 }
 .agent-dialog__contact a:hover { color: #fff; }
 
+/* Dialog actions — call / listing site, stacked, plus a quiet alternative. */
+.agent-dialog__actions { display: grid; gap: 0.6rem; }
+.agent-dialog .cta--ghost { --cta-border: var(--gold-3); --cta-fg: var(--gold-2); }
+.agent-dialog .cta--ghost:hover { --cta-bg: var(--gold); --cta-fg: var(--ink); --cta-border: var(--gold); }
+.agent-dialog__alt {
+  display: inline-block;
+  margin-top: var(--space-4);
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.55);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+  padding-bottom: 1px;
+}
+.agent-dialog__alt:hover { color: #fff; border-color: var(--gold); }
+
+
 /* The cover is a <button> for agents whose card opens the dialog — reset the
    UA button styling so it still reads as the invisible hit area it was. */
 button.agent__cover {

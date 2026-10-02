@@ -45,7 +45,8 @@
       photo: 'assets/images/stefanie-godinez.jpg',
       photoSm: 'assets/images/stefanie-godinez-sm.jpg',
       phone: '801-920-1762',
-      email: 'godinezstefanie@gmail.com'
+      email: 'godinezstefanie@gmail.com',
+      ure: 'https://www.utahrealestate.com'
     },
     {
       name: 'Wilian Guevara',
@@ -53,7 +54,8 @@
       // bio: add a short bio here — the card renders fine without one.
       photo: 'assets/images/wilian-guevara.jpg',
       photoSm: 'assets/images/wilian-guevara-sm.jpg',
-      phone: '801-347-1054'
+      phone: '801-347-1054',
+      ure: 'https://www.utahrealestate.com'
     },
     // ---- Placeholder roles temporarily hidden until real agents join. ----
     // To restore: uncomment the objects below (or any subset), then refresh.
@@ -201,6 +203,20 @@
           <a href="mailto:${escapeHTML(a.email)}">${escapeHTML(a.email)}</a></li>`);
       }
       $('#agentDialogContact').innerHTML = rows.join('');
+
+      // Primary actions: place the call, or go to the listing site. Both are
+      // real links (not buttons) so they can be opened in a new tab, copied,
+      // or long-pressed on a phone the way people expect.
+      const actions = [];
+      if (a.phone) {
+        actions.push(`<a class="cta cta--gold cta--block" href="${escapeHTML(telHref(a.phone))}">
+          Call ${escapeHTML(a.phone)}</a>`);
+      }
+      if (a.ure) {
+        actions.push(`<a class="cta cta--ghost cta--block" href="${escapeHTML(a.ure)}"
+          target="_blank" rel="noopener noreferrer">UtahRealEstate.com<span class="sr-only"> (opens in a new tab)</span></a>`);
+      }
+      $('#agentDialogActions').innerHTML = actions.join('');
     };
 
     grid.querySelectorAll('.agent__cover[data-agent]').forEach((btn) => {
