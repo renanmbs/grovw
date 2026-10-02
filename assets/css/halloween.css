@@ -1,0 +1,222 @@
+/* =========================================================
+   GROWV — Halloween seasonal layer
+   ---------------------------------------------------------
+   Self-contained and additive. The whole season comes off by
+   deleting the one <link> to this file in index.html; nothing
+   in styles.css was modified.
+
+   The approach is restraint: the brand's forest-green and gold
+   already sit next to autumn, so this warms the accents toward
+   ember, pushes the hero to an October dusk, and adds two quiet
+   props (corner webs, a few distant bats). No neon orange, no
+   cartoon fonts, no animation on load.
+   ========================================================= */
+
+:root {
+  --ember:      #C06A33;  /* muted pumpkin — reads amber, not neon */
+  --ember-soft: #D98B4A;
+  --plum:       #2A1B2E;  /* dusk shadow */
+}
+
+/* ---------- Hero: late-October dusk ---------- */
+/* The photograph is bright midday. A plum-to-ember wash over the
+   existing veil drops it to dusk so the bats below read as sky,
+   not as stickers on a sunny afternoon. */
+.hero__veil {
+  background:
+    radial-gradient(90% 60% at 72% 18%, rgba(217, 139, 74, 0.26) 0%, rgba(217, 139, 74, 0) 60%),
+    radial-gradient(120% 70% at 30% 60%, rgba(42, 27, 46, 0.55) 0%, rgba(42, 27, 46, 0.34) 45%, rgba(14, 26, 20, 0.90) 100%),
+    linear-gradient(180deg, rgba(42, 27, 46, 0.58) 0%, rgba(14, 26, 20, 0.42) 38%, rgba(14, 26, 20, 0.92) 100%);
+}
+
+/* A low harvest-moon glow behind the headline, so the dusk has a source. */
+.hero__content--center::before {
+  content: "";
+  position: absolute;
+  top: 8%;
+  left: 50%;
+  width: min(60vw, 640px);
+  aspect-ratio: 1;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(226, 177, 110, 0.20) 0%, rgba(226, 177, 110, 0.06) 45%, transparent 70%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* ---------- Corner webs ---------- */
+/* Drawn as data-URI SVG rather than image files so the season adds
+   no new assets to the repo. Low opacity: suggestion, not decoration. */
+.hero::before,
+.hero::after {
+  content: "";
+  position: absolute;
+  top: var(--header-h);
+  width: clamp(110px, 14vw, 210px);
+  aspect-ratio: 1;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cg fill='none' stroke='%23F0E2C8' stroke-width='1.1' stroke-linecap='round'%3E%3Cpath d='M0 0 L100 0 M0 0 L96 28 M0 0 L82 58 M0 0 L58 82 M0 0 L28 96 M0 0 L0 100'/%3E%3Cpath d='M20 0 Q15 15 0 20'/%3E%3Cpath d='M42 0 Q31 31 0 42'/%3E%3Cpath d='M64 0 Q47 47 0 64'/%3E%3Cpath d='M88 0 Q65 65 0 88'/%3E%3C/g%3E%3C/svg%3E");
+  opacity: 0.3;
+  pointer-events: none;
+  z-index: 1;
+}
+.hero::before { left: 0; }
+.hero::after  { right: 0; transform: scaleX(-1); }
+
+/* ---------- Bats: deliberately omitted ---------- */
+/* The hero is an aerial photograph — there is no sky in frame to
+   silhouette a bat against, and a bat seen from above reads as a
+   smudge. Tried and cut rather than forced. The season is carried
+   by the dusk wash, the corner webs and the ember accents instead. */
+
+@media (max-width: 599px) {
+  .hero::before, .hero::after { width: 96px; opacity: 0.2; }
+}
+
+/* ---------- Ember accents ---------- */
+/* Small, deliberate: the eyebrow labels and the hero rule. The gold
+   stays the brand colour everywhere it carries weight. */
+.hero__invite { color: var(--ember-soft); }
+.hero__invite::before { background: var(--ember-soft); opacity: 0.85; }
+.section--ink .eyebrow--gold,
+.mission .eyebrow--gold { color: var(--ember-soft); }
+.property__flag { background: var(--ember); color: #fff; }
+
+/* A warm ember vignette on the dark sections, like low firelight. */
+.section--ink,
+.mission {
+  background-image: radial-gradient(90% 55% at 50% 0%, rgba(192, 106, 51, 0.11) 0%, transparent 62%);
+}
+
+/* Mission rules pick up the ember so the quote feels lit from the side. */
+.mission::before,
+.mission::after { background: var(--ember); }
+
+/* ---------- Footer ---------- */
+.site-footer {
+  background-image:
+    radial-gradient(70% 100% at 50% 100%, rgba(192, 106, 51, 0.10) 0%, transparent 70%);
+}
+
+/* ---------- Print ---------- */
+/* Seasonal dressing has no business on a printed page. */
+@media print {
+  .hero::before, .hero::after,
+  .hero__content--center::before { display: none; }
+}
+
+/* =========================================================
+   Hero decor — drifting ghosts and friends
+   ---------------------------------------------------------
+   Drawn as SVG rather than emoji characters: emoji render
+   differently on every OS and at hero scale they look pasted
+   on. These are sized, placed and timed deliberately, kept
+   clear of the headline column, and each one drifts on its own
+   duration so they never march in step.
+   ========================================================= */
+
+.hallo-scene {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;              /* behind the headline, above the photo */
+  overflow: hidden;
+}
+.hallo {
+  position: absolute;
+  display: block;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  will-change: transform;
+}
+
+/* ---- Ghosts: rounded body, wavy hem, friendly face ---- */
+.hallo--ghost-a,
+.hallo--ghost-b,
+.hallo--ghost-c {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 72'%3E%3Cpath fill='%23FFFFFF' d='M32 4C18.7 4 8 14.7 8 28v38 q6 6 12 0 q6 -6 12 0 q6 6 12 0 q6 -6 12 0 V28C56 14.7 45.3 4 32 4z'/%3E%3Ccircle cx='23' cy='29' r='3.6' fill='%230E1A14'/%3E%3Ccircle cx='41' cy='29' r='3.6' fill='%230E1A14'/%3E%3Cpath d='M26 40q6 6 12 0' stroke='%230E1A14' stroke-width='2.6' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='17' cy='37' r='3' fill='%23D98B4A' opacity='.5'/%3E%3Ccircle cx='47' cy='37' r='3' fill='%23D98B4A' opacity='.5'/%3E%3C/svg%3E");
+}
+.hallo--ghost-a {
+  width: clamp(46px, 5vw, 76px); aspect-ratio: 64/72;
+  left: 7%; top: 30%; opacity: 0.85;
+  animation: hallo-float-a 9s ease-in-out infinite;
+}
+.hallo--ghost-b {
+  width: clamp(34px, 3.6vw, 56px); aspect-ratio: 64/72;
+  right: 8%; top: 24%; opacity: 0.7;
+  animation: hallo-float-b 11.5s ease-in-out infinite;
+}
+.hallo--ghost-c {
+  width: clamp(26px, 2.8vw, 42px); aspect-ratio: 64/72;
+  right: 17%; bottom: 20%; opacity: 0.5;
+  animation: hallo-float-c 13s ease-in-out infinite;
+}
+
+/* ---- Pumpkin ---- */
+.hallo--pumpkin {
+  width: clamp(28px, 3vw, 46px); aspect-ratio: 1;
+  left: 14%; bottom: 22%; opacity: 0.85;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M32 14c-1 0-2-4 1-7 1 3 4 2 5 5' fill='none' stroke='%236E8A4A' stroke-width='4' stroke-linecap='round'/%3E%3Cellipse cx='32' cy='38' rx='24' ry='21' fill='%23D2762E'/%3E%3Cellipse cx='19' cy='38' rx='10' ry='21' fill='%23C06A33' opacity='.55'/%3E%3Cellipse cx='45' cy='38' rx='10' ry='21' fill='%23C06A33' opacity='.55'/%3E%3Cpath d='M23 32l5 6-5 0z' fill='%23FFE2B0'/%3E%3Cpath d='M41 32l-5 6 5 0z' fill='%23FFE2B0'/%3E%3Cpath d='M22 45q10 9 20 0 q-10 3 -20 0z' fill='%23FFE2B0'/%3E%3C/svg%3E");
+  animation: hallo-bob 7.5s ease-in-out infinite;
+}
+
+/* ---- Bat ---- */
+.hallo--bat {
+  width: clamp(26px, 2.6vw, 40px); aspect-ratio: 64/30;
+  left: 4%; top: 11%; opacity: 0.8;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 30'%3E%3Cpath fill='%234A3A52' d='M32 9c1.6-3.4 4.2-5.6 7.8-5.6-1.6 2.2-1.6 4.3-.6 6.3 3-3.2 7.6-5 12.4-4.2-3.8 1.2-6.6 4.2-8.4 8.2-1.8 3.6-4.6 5.9-7.6 5.9h-7.2c-3 0-5.8-2.3-7.6-5.9-1.8-4-4.6-7-8.4-8.2 4.8-.8 9.4 1 12.4 4.2 1-2 1-4.1-.6-6.3 3.6 0 6.2 2.2 7.8 5.6z'/%3E%3Ccircle cx='29' cy='10' r='1.4' fill='%23D98B4A'/%3E%3Ccircle cx='35' cy='10' r='1.4' fill='%23D98B4A'/%3E%3C/svg%3E");
+  animation: hallo-flit 10.5s ease-in-out infinite;
+}
+
+/* ---- Candy corn ---- */
+.hallo--candy {
+  width: clamp(16px, 1.7vw, 26px); aspect-ratio: 40/56;
+  right: 13%; top: 68%; opacity: 0.65;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 56'%3E%3Cpath d='M20 2l7 18H13z' fill='%23FFFFFF'/%3E%3Cpath d='M13 20h14l6 16H7z' fill='%23E79A3C'/%3E%3Cpath d='M7 36h26l3 10a18 7 0 0 1-32 0z' fill='%23F4D06A'/%3E%3C/svg%3E");
+  animation: hallo-bob 8.5s ease-in-out infinite 1.2s;
+}
+
+/* ---- Motion ----
+   Long, eased, differing durations so nothing syncs up. Small
+   amplitudes: this should read as drift, never as bouncing. */
+@keyframes hallo-float-a {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(-2deg); }
+  50%      { transform: translate3d(10px, -22px, 0) rotate(2deg); }
+}
+@keyframes hallo-float-b {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(2deg); }
+  50%      { transform: translate3d(-14px, -18px, 0) rotate(-3deg); }
+}
+@keyframes hallo-float-c {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  50%      { transform: translate3d(8px, -14px, 0) rotate(4deg); }
+}
+@keyframes hallo-bob {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(-4deg); }
+  50%      { transform: translate3d(0, -12px, 0) rotate(4deg); }
+}
+@keyframes hallo-flit {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(-3deg); }
+  35%      { transform: translate3d(22px, -10px, 0) rotate(3deg); }
+  70%      { transform: translate3d(8px, -20px, 0) rotate(-2deg); }
+}
+
+/* ---- Narrow screens ----
+   The headline takes the full column on a phone, so most of the
+   cast would land on top of the type. Keep two, well out of the way. */
+@media (max-width: 899px) {
+  /* The headline fills the column edge to edge and leaves only ~40px above
+     itself, so there is no side or top margin to stand in. The one clear
+     band is below the buttons — two characters live there, nothing else. */
+  .hallo--ghost-b, .hallo--ghost-c, .hallo--bat, .hallo--candy { display: none; }
+  .hallo--ghost-a { left: 7%; top: auto; bottom: 3%; width: 40px; opacity: 0.8; }
+  .hallo--pumpkin { left: auto; right: 9%; bottom: 4%; width: 32px; }
+}
+
+/* ---- Reduced motion ----
+   Keep the characters, drop the drift. */
+@media (prefers-reduced-motion: reduce) {
+  .hallo { animation: none !important; }
+}

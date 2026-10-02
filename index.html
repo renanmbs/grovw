@@ -25,6 +25,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="assets/css/styles.css">
+  <!-- Seasonal layer — delete this one line to take the site back to its
+       year-round look. Nothing in styles.css was changed. -->
+  <link rel="stylesheet" href="assets/css/halloween.css">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
@@ -103,6 +106,17 @@
       </div>
 
       <div class="hero__content hero__content--center">
+        <!-- Seasonal decor. Purely presentational and aria-hidden; with
+             halloween.css removed these are empty inline spans that render
+             nothing, so the season still comes off by dropping the stylesheet. -->
+        <div class="hallo-scene" aria-hidden="true">
+          <span class="hallo hallo--ghost-a"></span>
+          <span class="hallo hallo--ghost-b"></span>
+          <span class="hallo hallo--ghost-c"></span>
+          <span class="hallo hallo--pumpkin"></span>
+          <span class="hallo hallo--bat"></span>
+          <span class="hallo hallo--candy"></span>
+        </div>
         <div class="hero__announce">
           <h1 id="hero-title" class="display">
             <span class="display__line hero__headline">Good Decisions start with Good Advice.</span>
