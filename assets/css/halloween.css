@@ -135,31 +135,33 @@
 /* ---- Ghosts: rounded body, wavy hem, friendly face ---- */
 .hallo--ghost-a,
 .hallo--ghost-b,
-.hallo--ghost-c {
+.hallo--ghost-c,
+.hallo--ghost-d {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 72'%3E%3Cpath fill='%23FFFFFF' d='M32 4C18.7 4 8 14.7 8 28v38 q6 6 12 0 q6 -6 12 0 q6 6 12 0 q6 -6 12 0 V28C56 14.7 45.3 4 32 4z'/%3E%3Ccircle cx='23' cy='29' r='3.6' fill='%230E1A14'/%3E%3Ccircle cx='41' cy='29' r='3.6' fill='%230E1A14'/%3E%3Cpath d='M26 40q6 6 12 0' stroke='%230E1A14' stroke-width='2.6' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='17' cy='37' r='3' fill='%23D98B4A' opacity='.5'/%3E%3Ccircle cx='47' cy='37' r='3' fill='%23D98B4A' opacity='.5'/%3E%3C/svg%3E");
 }
 .hallo--ghost-a {
-  width: clamp(46px, 5vw, 76px); aspect-ratio: 64/72;
-  left: 7%; top: 30%; opacity: 0.85;
-  animation: hallo-float-a 9s ease-in-out infinite;
+  width: clamp(62px, 6.6vw, 100px); aspect-ratio: 64/72;
+  left: 3%; top: 31%; opacity: 0.88;
+  animation: hallo-float-a 5.5s ease-in-out infinite;
 }
 .hallo--ghost-b {
-  width: clamp(34px, 3.6vw, 56px); aspect-ratio: 64/72;
-  right: 8%; top: 24%; opacity: 0.7;
-  animation: hallo-float-b 11.5s ease-in-out infinite;
+  width: clamp(46px, 4.8vw, 76px); aspect-ratio: 64/72;
+  right: 2%; top: 26%; opacity: 0.75;
+  animation: hallo-float-b 7s ease-in-out infinite;
 }
 .hallo--ghost-c {
-  width: clamp(26px, 2.8vw, 42px); aspect-ratio: 64/72;
-  right: 17%; bottom: 20%; opacity: 0.5;
-  animation: hallo-float-c 13s ease-in-out infinite;
+  width: clamp(36px, 3.8vw, 58px); aspect-ratio: 64/72;
+  right: 15%; bottom: 16%; opacity: 0.58;
+  animation: hallo-float-c 8s ease-in-out infinite;
 }
 
 /* ---- Pumpkin ---- */
-.hallo--pumpkin {
+.hallo--pumpkin,
+.hallo--pumpkin-b {
   width: clamp(28px, 3vw, 46px); aspect-ratio: 1;
   left: 14%; bottom: 22%; opacity: 0.85;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M32 14c-1 0-2-4 1-7 1 3 4 2 5 5' fill='none' stroke='%236E8A4A' stroke-width='4' stroke-linecap='round'/%3E%3Cellipse cx='32' cy='38' rx='24' ry='21' fill='%23D2762E'/%3E%3Cellipse cx='19' cy='38' rx='10' ry='21' fill='%23C06A33' opacity='.55'/%3E%3Cellipse cx='45' cy='38' rx='10' ry='21' fill='%23C06A33' opacity='.55'/%3E%3Cpath d='M23 32l5 6-5 0z' fill='%23FFE2B0'/%3E%3Cpath d='M41 32l-5 6 5 0z' fill='%23FFE2B0'/%3E%3Cpath d='M22 45q10 9 20 0 q-10 3 -20 0z' fill='%23FFE2B0'/%3E%3C/svg%3E");
-  animation: hallo-bob 7.5s ease-in-out infinite;
+  animation: hallo-bob 5s ease-in-out infinite;
 }
 
 /* ---- Bat ---- */
@@ -167,15 +169,65 @@
   width: clamp(26px, 2.6vw, 40px); aspect-ratio: 64/30;
   left: 4%; top: 11%; opacity: 0.8;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 30'%3E%3Cpath fill='%234A3A52' d='M32 9c1.6-3.4 4.2-5.6 7.8-5.6-1.6 2.2-1.6 4.3-.6 6.3 3-3.2 7.6-5 12.4-4.2-3.8 1.2-6.6 4.2-8.4 8.2-1.8 3.6-4.6 5.9-7.6 5.9h-7.2c-3 0-5.8-2.3-7.6-5.9-1.8-4-4.6-7-8.4-8.2 4.8-.8 9.4 1 12.4 4.2 1-2 1-4.1-.6-6.3 3.6 0 6.2 2.2 7.8 5.6z'/%3E%3Ccircle cx='29' cy='10' r='1.4' fill='%23D98B4A'/%3E%3Ccircle cx='35' cy='10' r='1.4' fill='%23D98B4A'/%3E%3C/svg%3E");
-  animation: hallo-flit 10.5s ease-in-out infinite;
+  animation: hallo-flit 6.5s ease-in-out infinite;
 }
 
 /* ---- Candy corn ---- */
 .hallo--candy {
   width: clamp(16px, 1.7vw, 26px); aspect-ratio: 40/56;
-  right: 13%; top: 68%; opacity: 0.65;
+  right: 11%; top: 57%; opacity: 0.65;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 56'%3E%3Cpath d='M20 2l7 18H13z' fill='%23FFFFFF'/%3E%3Cpath d='M13 20h14l6 16H7z' fill='%23E79A3C'/%3E%3Cpath d='M7 36h26l3 10a18 7 0 0 1-32 0z' fill='%23F4D06A'/%3E%3C/svg%3E");
-  animation: hallo-bob 8.5s ease-in-out infinite 1.2s;
+  animation: hallo-bob 5.8s ease-in-out infinite 0.8s;
+}
+
+/* ---- Spider on a thread ----
+   Pairs with the corner webs: it drops in, hangs, and climbs back.
+   The silk is a pseudo-element running up from the spider; the scene's
+   overflow:hidden clips whatever is above the hero, so the thread appears
+   to pay out as it descends rather than being a fixed line. */
+.hallo--spider {
+  width: clamp(26px, 2.8vw, 42px); aspect-ratio: 1;
+  right: 9%; top: 0; opacity: 0.8;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cg stroke='%233B2C42' stroke-width='2.6' fill='none' stroke-linecap='round'%3E%3Cpath d='M17 23C10 19 8 13 6 9M17 27C10 27 6 29 3 33M31 23c7-4 9-10 11-14M31 27c7 0 11 2 14 6M20 31c-5 3-7 7-8 11M28 31c5 3 7 7 8 11'/%3E%3C/g%3E%3Cellipse cx='24' cy='27' rx='10' ry='9' fill='%233B2C42'/%3E%3Ccircle cx='24' cy='17' r='5.4' fill='%233B2C42'/%3E%3Ccircle cx='22' cy='16' r='1.6' fill='%23D98B4A'/%3E%3Ccircle cx='26' cy='16' r='1.6' fill='%23D98B4A'/%3E%3C/svg%3E");
+  animation: hallo-abseil 6.5s ease-in-out infinite;
+}
+.hallo--spider::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 92%;
+  width: 1px;
+  height: 320px;
+  background: linear-gradient(to bottom, rgba(240, 226, 200, 0) 0%, rgba(240, 226, 200, 0.45) 70%);
+}
+
+@keyframes hallo-abseil {
+  0%, 100% { transform: translate3d(0, -12px, 0); }
+  45%      { transform: translate3d(-5px, 132px, 0); }
+  60%      { transform: translate3d(4px, 142px, 0); }
+}
+
+/* ---- Second wave: a larger ghost and pumpkin, quicker than the rest ----
+   Both sit in the lower corners, outside the headline column and clear of
+   the button row, which is the only ground wide enough for this size. */
+.hallo--ghost-d {
+  width: clamp(78px, 8.2vw, 124px); aspect-ratio: 64/72;
+  left: 2%; bottom: 6%; opacity: 0.8;
+  animation: hallo-float-d 4.2s ease-in-out infinite;
+}
+.hallo--pumpkin-b {
+  width: clamp(40px, 4.2vw, 64px); aspect-ratio: 1;
+  left: auto; right: 4%; bottom: 7%; opacity: 0.88;
+  animation: hallo-bob-fast 3.6s ease-in-out infinite 0.4s;
+}
+
+@keyframes hallo-float-d {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(-3deg); }
+  50%      { transform: translate3d(14px, -26px, 0) rotate(3deg); }
+}
+@keyframes hallo-bob-fast {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(-6deg); }
+  50%      { transform: translate3d(0, -16px, 0) rotate(6deg); }
 }
 
 /* ---- Motion ----
@@ -203,6 +255,26 @@
   70%      { transform: translate3d(8px, -20px, 0) rotate(-2deg); }
 }
 
+/* ---- Wide screens ----
+   Above 1680px .hero__content is capped at 60%/56%, so the scene the cast
+   stands in gets narrower even as the viewport grows and they bunch up.
+   Two nudges keep them apart. */
+@media (min-width: 1680px) {
+  .hallo--ghost-b { top: 46%; }
+  .hallo--pumpkin { left: 13%; bottom: 44%; }
+  .hallo--ghost-d { left: 0.5%; bottom: 2%; }
+}
+
+/* ---- Mid widths ----
+   Between roughly 900 and 1180px the headline column eats the margins, and
+   the inner three (ghost-c, candy, spider) end up over the type or the
+   buttons. The outer cast still has room, so only the inner ones go. */
+@media (min-width: 900px) and (max-width: 1179px) {
+  .hallo--ghost-c, .hallo--candy, .hallo--spider { display: none; }
+  .hallo--ghost-a { width: clamp(54px, 5.4vw, 72px); left: 2%; }
+  .hallo--ghost-b { width: clamp(40px, 4vw, 54px); right: 2%; }
+}
+
 /* ---- Narrow screens ----
    The headline takes the full column on a phone, so most of the
    cast would land on top of the type. Keep two, well out of the way. */
@@ -210,7 +282,9 @@
   /* The headline fills the column edge to edge and leaves only ~40px above
      itself, so there is no side or top margin to stand in. The one clear
      band is below the buttons — two characters live there, nothing else. */
-  .hallo--ghost-b, .hallo--ghost-c, .hallo--bat, .hallo--candy { display: none; }
+  .hallo--ghost-b, .hallo--ghost-c, .hallo--bat,
+  .hallo--candy, .hallo--spider,
+  .hallo--ghost-d, .hallo--pumpkin-b { display: none; }
   .hallo--ghost-a { left: 7%; top: auto; bottom: 3%; width: 40px; opacity: 0.8; }
   .hallo--pumpkin { left: auto; right: 9%; bottom: 4%; width: 32px; }
 }
