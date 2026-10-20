@@ -1,3 +1,6 @@
 
 # Local preview tooling (not part of the deployed site)
 .claude/
+
+# Generated video output
+brag-output/
