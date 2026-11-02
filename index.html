@@ -26,8 +26,9 @@
 
   <link rel="stylesheet" href="assets/css/styles.css">
   <!-- Seasonal layer — delete this one line to take the site back to its
-       year-round look. Nothing in styles.css was changed. -->
-  <link rel="stylesheet" href="assets/css/halloween.css">
+       year-round look. Nothing in styles.css was changed.
+       (assets/css/halloween.css is kept for next October.) -->
+  <link rel="stylesheet" href="assets/css/thanksgiving.css">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
@@ -106,19 +107,21 @@
       </div>
 
       <div class="hero__content hero__content--center">
-        <!-- Seasonal decor. Purely presentational and aria-hidden; with
-             halloween.css removed these are empty inline spans that render
-             nothing, so the season still comes off by dropping the stylesheet. -->
-        <div class="hallo-scene" aria-hidden="true">
-          <span class="hallo hallo--ghost-a"></span>
-          <span class="hallo hallo--ghost-b"></span>
-          <span class="hallo hallo--ghost-c"></span>
-          <span class="hallo hallo--pumpkin"></span>
-          <span class="hallo hallo--bat"></span>
-          <span class="hallo hallo--candy"></span>
-          <span class="hallo hallo--spider"></span>
-          <span class="hallo hallo--ghost-d"></span>
-          <span class="hallo hallo--pumpkin-b"></span>
+        <!-- Seasonal decor. Purely presentational and aria-hidden; with the
+             seasonal stylesheet removed these are empty inline spans that render
+             nothing, so the season still comes off by dropping the stylesheet.
+             Slot names are season-neutral so the next holiday only needs a new
+             stylesheet, not new markup. -->
+        <div class="season-scene" aria-hidden="true">
+          <span class="season season--a"></span>
+          <span class="season season--b"></span>
+          <span class="season season--c"></span>
+          <span class="season season--d"></span>
+          <span class="season season--e"></span>
+          <span class="season season--f"></span>
+          <span class="season season--g"></span>
+          <span class="season season--h"></span>
+          <span class="season season--i"></span>
         </div>
         <div class="hero__announce">
           <h1 id="hero-title" class="display">
@@ -338,8 +341,7 @@
             </div>
           </article>
 
-          <!-- Closed sale, Vineyard. GROWV's side of the transaction is not
-               stated on the MLS record; label updated once confirmed. -->
+          <!-- Closed sale, Vineyard. Buyer side, per Jonathan. -->
           <article class="property property--sold reveal" data-reveal data-reveal-delay="120">
             <a class="property__media" href="#contact" aria-label="Inquire about a sale like 235 N 590 E, Vineyard">
               <img
@@ -353,7 +355,7 @@
             <div class="property__body">
               <p class="property__loc">Vineyard, UT</p>
               <h3 class="property__title">235 N 590 E</h3>
-              <p class="property__price">Represented by GROWV</p>
+              <p class="property__price">GROWV represented buyer</p>
             </div>
           </article>
 
@@ -496,6 +498,9 @@
     </div>
   </dialog>
 
+  <!-- Analytics. Paste your GA4 / Meta IDs at the top of this file;
+       until then nothing loads or is sent. See ANALYTICS.md. -->
+  <script src="assets/js/analytics.js" defer></script>
   <script src="assets/js/app.js" defer></script>
 </body>
 </html>

@@ -1,0 +1,160 @@
+/* =========================================================
+   GROWV — Thanksgiving seasonal layer
+   ---------------------------------------------------------
+   Self-contained and additive. Delete the one <link> to this
+   file in index.html and the site returns to its year-round
+   look; nothing in styles.css was modified.
+
+   Replaces the October layer. The decor slots in index.html
+   (.season--a … .season--i) are season-neutral, so this file
+   only had to change the artwork, the palette and the motion —
+   the positions and breakpoints are the ones already measured
+   as clear of the headline and buttons at 1024, 1260, 1280,
+   1440 and 1920px.
+
+   Autumn, not cartoon: harvest ambers and russets, with a drift
+   of brown maple leaves. No faces, no novelty type.
+   ========================================================= */
+
+:root{
+  --ember:#C06A33;      /* harvest amber */
+  --ember-soft:#D98B4A;
+  --russet:#9C4A24;
+  --wheat:#D9A94A;
+  --harvest:#E2CB8E;    /* warm gold for the tagline — no orange */
+}
+
+/* ---------- Hero: golden hour ---------- */
+/* Warm low sun rather than October's plum dusk. */
+.hero__veil{
+  background:
+    radial-gradient(85% 58% at 70% 20%, rgba(217,169,74,.30) 0%, rgba(217,169,74,0) 62%),
+    radial-gradient(120% 70% at 30% 60%, rgba(120,62,30,.42) 0%, rgba(90,52,28,.30) 45%, rgba(14,26,20,.90) 100%),
+    linear-gradient(180deg, rgba(120,70,34,.40) 0%, rgba(14,26,20,.42) 40%, rgba(14,26,20,.92) 100%);
+}
+.hero__content--center::before{
+  content:"";position:absolute;top:8%;left:50%;width:min(60vw,640px);aspect-ratio:1;
+  transform:translateX(-50%);border-radius:50%;pointer-events:none;z-index:-1;
+  background:radial-gradient(circle, rgba(226,177,110,.22) 0%, rgba(226,177,110,.07) 45%, transparent 70%);
+}
+
+/* No cobwebs this month — a warm corner light instead. */
+.hero::before,.hero::after{
+  content:"";position:absolute;top:var(--header-h);width:clamp(140px,18vw,300px);aspect-ratio:1;
+  pointer-events:none;z-index:1;opacity:.5;
+  background:radial-gradient(circle at 0 0, rgba(217,169,74,.26) 0%, transparent 70%);
+}
+.hero::before{left:0}
+.hero::after{right:0;transform:scaleX(-1)}
+
+/* ---------- Ember accents ---------- */
+.hero__invite{color:var(--harvest)}
+.hero__invite::before{background:var(--harvest);opacity:.9}
+.section--ink .eyebrow--gold,.mission .eyebrow--gold{color:var(--harvest)}
+.property__flag{background:var(--ember);color:#fff}
+.section--ink,.mission{
+  background-image:radial-gradient(90% 55% at 50% 0%, rgba(192,106,51,.12) 0%, transparent 62%);
+}
+.mission::before,.mission::after{background:var(--ember)}
+.site-footer{
+  background-image:radial-gradient(70% 100% at 50% 100%, rgba(192,106,51,.10) 0%, transparent 70%);
+}
+
+/* =========================================================
+   Hero decor — drifting leaves, gourds, acorn, wheat
+   ========================================================= */
+.season-scene{position:absolute;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.season{position:absolute;display:block;background-repeat:no-repeat;background-size:contain;
+        background-position:center;will-change:transform;transform-origin:50% 50%}
+
+/* ---- artwork ---- */
+/* One motif: brown maple leaves, in three shades so a drift of nine doesn't
+   look like nine copies of the same sticker. */
+.season--a,.season--f,.season--h{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 68'%3E%3Cg fill='%236E4524' transform='translate(32 48)'%3E%3Cpath d='M0 0 Q-8 -16 0 -34 Q8 -16 0 0'/%3E%3Cpath d='M0 0 Q-8 -16 0 -34 Q8 -16 0 0' transform='rotate(-42)'/%3E%3Cpath d='M0 0 Q-8 -16 0 -34 Q8 -16 0 0' transform='rotate(42)'/%3E%3Cpath d='M0 0 Q-7 -12 0 -26 Q7 -12 0 0' transform='rotate(-78)'/%3E%3Cpath d='M0 0 Q-7 -12 0 -26 Q7 -12 0 0' transform='rotate(78)'/%3E%3C/g%3E%3Cpath stroke='%23513318' stroke-width='2.4' stroke-linecap='round' d='M32 48v18'/%3E%3C/svg%3E");
+}
+.season--b,.season--d,.season--g{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 68'%3E%3Cg fill='%238A5A33' transform='translate(32 48)'%3E%3Cpath d='M0 0 Q-8 -16 0 -34 Q8 -16 0 0'/%3E%3Cpath d='M0 0 Q-8 -16 0 -34 Q8 -16 0 0' transform='rotate(-42)'/%3E%3Cpath d='M0 0 Q-8 -16 0 -34 Q8 -16 0 0' transform='rotate(42)'/%3E%3Cpath d='M0 0 Q-7 -12 0 -26 Q7 -12 0 0' transform='rotate(-78)'/%3E%3Cpath d='M0 0 Q-7 -12 0 -26 Q7 -12 0 0' transform='rotate(78)'/%3E%3C/g%3E%3Cpath stroke='%236E4524' stroke-width='2.4' stroke-linecap='round' d='M32 48v18'/%3E%3C/svg%3E");
+}
+.season--c,.season--e,.season--i{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 68'%3E%3Cg fill='%23A9703C' transform='translate(32 48)'%3E%3Cpath d='M0 0 Q-8 -16 0 -34 Q8 -16 0 0'/%3E%3Cpath d='M0 0 Q-8 -16 0 -34 Q8 -16 0 0' transform='rotate(-42)'/%3E%3Cpath d='M0 0 Q-8 -16 0 -34 Q8 -16 0 0' transform='rotate(42)'/%3E%3Cpath d='M0 0 Q-7 -12 0 -26 Q7 -12 0 0' transform='rotate(-78)'/%3E%3Cpath d='M0 0 Q-7 -12 0 -26 Q7 -12 0 0' transform='rotate(78)'/%3E%3C/g%3E%3Cpath stroke='%238A5A33' stroke-width='2.4' stroke-linecap='round' d='M32 48v18'/%3E%3C/svg%3E");
+}
+
+/* ---- positions: the geometry already validated in October ---- */
+.season--a{width:clamp(62px,6.6vw,100px);aspect-ratio:64/68;left:3%;top:31%;opacity:.88;
+           animation:leaf-drift-a 5.5s ease-in-out infinite}
+.season--b{width:clamp(46px,4.8vw,76px);aspect-ratio:64/68;right:2%;top:26%;opacity:.8;
+           animation:leaf-drift-b 7s ease-in-out infinite}
+.season--c{width:clamp(36px,3.8vw,58px);aspect-ratio:64/68;right:15%;bottom:16%;opacity:.62;
+           animation:leaf-turn 8s ease-in-out infinite}
+.season--d{width:clamp(28px,3vw,46px);aspect-ratio:64/68;left:14%;bottom:22%;opacity:.9;
+           animation:leaf-hover 5s ease-in-out infinite}
+.season--e{width:clamp(22px,2.2vw,34px);aspect-ratio:64/68;left:4%;top:11%;opacity:.8;
+           animation:leaf-hover 6.5s ease-in-out infinite .5s}
+.season--f{width:clamp(20px,2vw,30px);aspect-ratio:64/68;right:11%;top:57%;opacity:.7;
+           animation:leaf-turn 5.8s ease-in-out infinite .8s}
+.season--g{width:clamp(26px,2.8vw,42px);aspect-ratio:64/68;right:9%;top:0;opacity:.78;
+           animation:leaf-fall 6.5s ease-in-out infinite}
+.season--h{width:clamp(78px,8.2vw,124px);aspect-ratio:64/68;left:2%;bottom:6%;opacity:.9;
+           animation:leaf-hover 4.2s ease-in-out infinite}
+.season--i{width:clamp(40px,4.2vw,64px);aspect-ratio:64/68;right:4%;bottom:7%;opacity:.85;
+           animation:leaf-drift-b 3.6s ease-in-out infinite .4s}
+
+/* ---- motion: leaves turn as they drift; one of them actually falls ---- */
+@keyframes leaf-drift-a{
+  0%,100%{transform:translate3d(0,0,0) rotate(-10deg)}
+  50%    {transform:translate3d(10px,-22px,0) rotate(12deg)}
+}
+@keyframes leaf-drift-b{
+  0%,100%{transform:translate3d(0,0,0) rotate(8deg)}
+  50%    {transform:translate3d(-14px,-18px,0) rotate(-14deg)}
+}
+@keyframes leaf-turn{
+  0%,100%{transform:translate3d(0,0,0) rotate(0deg)}
+  50%    {transform:translate3d(8px,-14px,0) rotate(18deg)}
+}
+@keyframes leaf-hover{
+  0%,100%{transform:translate3d(0,0,0) rotate(-14deg)}
+  50%    {transform:translate3d(4px,-12px,0) rotate(16deg)}
+}
+/* The one that actually falls, tumbling the whole way down. */
+@keyframes leaf-fall{
+  0%     {transform:translate3d(0,-14px,0) rotate(0deg)}
+  45%    {transform:translate3d(-16px,120px,0) rotate(160deg)}
+  60%    {transform:translate3d(10px,140px,0) rotate(200deg)}
+  100%   {transform:translate3d(0,-14px,0) rotate(360deg)}
+}
+
+/* ---- Wide screens: .hero__content narrows to 60%/56%, so spread out ---- */
+@media (min-width:1680px){
+  .season--b{top:46%}
+  .season--d{left:13%;bottom:44%}
+  .season--h{left:.5%;bottom:2%}
+}
+
+/* ---- Mid widths: the headline column eats the margins ---- */
+@media (min-width:900px) and (max-width:1179px){
+  .season--c,.season--f,.season--g{display:none}
+  .season--a{width:clamp(54px,5.4vw,72px);left:2%}
+  .season--b{width:clamp(40px,4vw,54px);right:2%}
+}
+
+/* ---- Phones: only the band below the buttons is clear ---- */
+@media (max-width:899px){
+  .season--b,.season--c,.season--e,
+  .season--f,.season--g,.season--i{display:none}
+  .season--a{left:7%;top:auto;bottom:3%;width:44px;opacity:.85}
+  .season--d{left:auto;right:9%;bottom:4%;width:34px}
+  .season--h{display:none}
+  .hero::before,.hero::after{width:120px;opacity:.4}
+}
+
+/* ---- Reduced motion: keep the scene, drop the drift ---- */
+@media (prefers-reduced-motion:reduce){
+  .season{animation:none !important}
+}
+
+@media print{
+  .hero::before,.hero::after,.season-scene,
+  .hero__content--center::before{display:none}
+}
