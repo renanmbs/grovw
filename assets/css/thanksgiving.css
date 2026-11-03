@@ -12,8 +12,10 @@
    as clear of the headline and buttons at 1024, 1260, 1280,
    1440 and 1920px.
 
-   Autumn, not cartoon: harvest ambers and russets, with a drift
-   of brown maple leaves. No faces, no novelty type.
+   Autumn without a tint: the hero photograph keeps its own
+   colour under a neutral veil, and the season reads through the
+   drift of brown maple leaves, the harvest gold tagline and the
+   ember accents further down the page.
    ========================================================= */
 
 :root{
@@ -24,28 +26,45 @@
   --harvest:#E2CB8E;    /* warm gold for the tagline — no orange */
 }
 
-/* ---------- Hero: golden hour ---------- */
-/* Warm low sun rather than October's plum dusk. */
-.hero__veil{
-  background:
-    radial-gradient(85% 58% at 70% 20%, rgba(217,169,74,.30) 0%, rgba(217,169,74,0) 62%),
-    radial-gradient(120% 70% at 30% 60%, rgba(120,62,30,.42) 0%, rgba(90,52,28,.30) 45%, rgba(14,26,20,.90) 100%),
-    linear-gradient(180deg, rgba(120,70,34,.40) 0%, rgba(14,26,20,.42) 40%, rgba(14,26,20,.92) 100%);
+/* ---------- Hero: clear, not tinted ---------- */
+/* No amber wash over the photograph. The veil is the year-round neutral
+   ink, pulled lighter than styles.css so the house actually reads, and
+   the headline gets its contrast from a shadow instead of a filter. */
+@media (min-width:768px){
+  .hero__veil{
+    background:
+      radial-gradient(120% 75% at 30% 55%, rgba(14,26,20,.22) 0%, rgba(14,26,20,.16) 45%, rgba(14,26,20,.38) 100%),
+      linear-gradient(180deg, rgba(14,26,20,.30) 0%, rgba(14,26,20,.12) 32%, rgba(14,26,20,.52) 72%, rgba(14,26,20,.88) 100%);
+  }
 }
+/* Phones keep the portrait crop's own staging from styles.css, just lighter
+   up top so the house shows; the band under the headline stays dark. */
+@media (max-width:767px){
+  .hero__veil{
+    background:linear-gradient(180deg,
+      rgba(14,26,20,.18) 0%,
+      rgba(14,26,20,.24) 22%,
+      rgba(14,26,20,.78) 42%,
+      rgba(14,26,20,.94) 100%);
+  }
+}
+/* A neutral scrim sized to the text block — buys back the legibility the
+   lighter veil gives up, without tinting the whole frame. */
 .hero__content--center::before{
-  content:"";position:absolute;top:8%;left:50%;width:min(60vw,640px);aspect-ratio:1;
+  content:"";position:absolute;top:6%;left:50%;width:min(76vw,900px);height:76%;
   transform:translateX(-50%);border-radius:50%;pointer-events:none;z-index:-1;
-  background:radial-gradient(circle, rgba(226,177,110,.22) 0%, rgba(226,177,110,.07) 45%, transparent 70%);
+  background:radial-gradient(60% 50% at 50% 50%, rgba(14,26,20,.42) 0%, rgba(14,26,20,.18) 58%, transparent 78%);
 }
-
-/* No cobwebs this month — a warm corner light instead. */
-.hero::before,.hero::after{
-  content:"";position:absolute;top:var(--header-h);width:clamp(140px,18vw,300px);aspect-ratio:1;
-  pointer-events:none;z-index:1;opacity:.5;
-  background:radial-gradient(circle at 0 0, rgba(217,169,74,.26) 0%, transparent 70%);
-}
-.hero::before{left:0}
-.hero::after{right:0;transform:scaleX(-1)}
+.hero__headline{text-shadow:0 2px 18px rgba(8,16,12,.55), 0 1px 3px rgba(8,16,12,.45)}
+.hero__invite,.hero .eyebrow{text-shadow:0 2px 12px rgba(8,16,12,.6)}
+/* The photo now shows through at the top of the frame, so the chrome that
+   floats over it carries its own shadow instead of leaning on the veil.
+   Only while the header is still transparent — once it gains a background
+   on scroll, styles.css takes over. */
+.site-header[data-scrolled="false"] .primary-nav a,
+.site-header[data-scrolled="false"] .cta--ghost{text-shadow:0 1px 8px rgba(8,16,12,.75)}
+.hero__scroll-label{text-shadow:0 1px 8px rgba(8,16,12,.75)}
+.hero__actions .cta--ghost{text-shadow:0 1px 8px rgba(8,16,12,.7)}
 
 /* ---------- Ember accents ---------- */
 .hero__invite{color:var(--harvest)}
@@ -146,7 +165,6 @@
   .season--a{left:7%;top:auto;bottom:3%;width:44px;opacity:.85}
   .season--d{left:auto;right:9%;bottom:4%;width:34px}
   .season--h{display:none}
-  .hero::before,.hero::after{width:120px;opacity:.4}
 }
 
 /* ---- Reduced motion: keep the scene, drop the drift ---- */
@@ -155,6 +173,5 @@
 }
 
 @media print{
-  .hero::before,.hero::after,.season-scene,
-  .hero__content--center::before{display:none}
+  .season-scene,.hero__content--center::before{display:none}
 }
