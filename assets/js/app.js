@@ -19,6 +19,10 @@
      ===================================================== */
   const FORM_ENDPOINT = 'https://script.google.com/macros/s/AKfycbykbcAN9feeY_O1rbPiibOs3bK-0WHDpKurE9pGkOU_-mStIWCE5d70cbF-YwWwBY4hyw/exec';
 
+  // The registration gate posts to this same endpoint. Exposed rather than
+  // duplicated so there is only ever one URL to change.
+  window.GROWV_FORM_ENDPOINT = FORM_ENDPOINT;
+
   /* -----------------------------------------------------
      AGENT DATA — EDIT HERE
      Each agent renders a clickable card linking to their

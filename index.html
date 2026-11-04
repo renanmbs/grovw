@@ -29,6 +29,9 @@
        year-round look. Nothing in styles.css was changed.
        (assets/css/halloween.css is kept for next October.) -->
   <link rel="stylesheet" href="assets/css/thanksgiving.css">
+  <!-- Registration gate. Remove this link and the register-gate.js script
+       below to take the gate off the site entirely. -->
+  <link rel="stylesheet" href="assets/css/register-gate.css">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
@@ -130,12 +133,8 @@
           </h1>
         </div>
         <div class="hero__actions">
-          <a class="cta cta--gold" href="https://jonathanperez.site/" target="_blank" rel="noopener noreferrer">
+          <a class="cta cta--gold" href="https://www.utahrealestate.com/" target="_blank" rel="noopener noreferrer">
             View Properties<span class="sr-only"> (opens in a new tab)</span>
-          </a>
-          <a class="cta cta--quiet" href="#properties">
-            <span>Search Listings</span>
-            <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" focusable="false"><path d="M1 7h11M7 1l5 6-5 6" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
         </div>
       </div>
@@ -481,6 +480,58 @@
     <span>¿Español? ¡Claro que Sí!</span>
   </a>
 
+  <!-- Registration gate. Shown by register-gate.js after two minutes of
+       active time on the site; the details post to the same endpoint as the
+       contact form, tagged source "registration-gate". -->
+  <dialog class="gate" id="registerGate" aria-labelledby="gateTitle" closedby="none">
+    <div class="gate__inner">
+      <img class="gate__logo" src="assets/images/growv-logo-gold.png" alt="GROWV" width="140" height="81">
+
+      <h2 class="gate__title" id="gateTitle">
+        Before you go further &mdash;<br><em>who are we talking to?</em>
+      </h2>
+
+      <p class="gate__lede">
+        GROWV is a licensed Utah brokerage, not a listing portal. Leave your
+        details and we&rsquo;ll send you what isn&rsquo;t on the public sites:
+        new listings before they are widely advertised, and honest numbers on
+        what homes in Weber and Davis County are actually closing at.
+      </p>
+
+      <form id="gateForm" novalidate>
+        <label class="gate__field">
+          <span>Full name</span>
+          <input type="text" name="name" required autocomplete="name" placeholder="Your name">
+        </label>
+        <div class="gate__row">
+          <label class="gate__field">
+            <span>Email</span>
+            <input type="email" name="email" required autocomplete="email" placeholder="you@email.com">
+          </label>
+          <label class="gate__field">
+            <span>Phone</span>
+            <input type="tel" name="phone" required autocomplete="tel" placeholder="(801) 555-0000">
+          </label>
+        </div>
+
+        <!-- Honeypot — real visitors leave this empty. -->
+        <input type="text" name="company_website" class="gate__honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+        <button type="submit" class="cta cta--gold cta--block cta--lg gate__submit" id="gateSubmit">
+          <span>Get access</span>
+        </button>
+
+        <p class="gate__status" id="gateStatus" role="status" aria-live="polite"></p>
+      </form>
+
+      <p class="gate__fine">
+        We use your details to contact you about Utah real estate. We don&rsquo;t
+        sell them. Prefer to just talk? Call
+        <a href="tel:+18019403551">(801)&nbsp;940-3551</a>.
+      </p>
+    </div>
+  </dialog>
+
   <!-- Agent contact card. Populated from the AGENTS data in app.js when a team
        card is activated; native <dialog> gives us focus trapping and ESC. -->
   <dialog class="agent-dialog" id="agentDialog" aria-labelledby="agentDialogName">
@@ -501,5 +552,6 @@
        until then nothing loads or is sent. See ANALYTICS.md. -->
   <script src="assets/js/analytics.js" defer></script>
   <script src="assets/js/app.js" defer></script>
+  <script src="assets/js/register-gate.js" defer></script>
 </body>
 </html>

@@ -98,9 +98,14 @@ const CONFIG = {
       }, 'ViewContent');
     });
 
-    // Outbound to jonathanperez.site.
-    on('a[href*="jonathanperez.site"]', 'click', () => track('outbound_listings',
-      { destination: 'jonathanperez.site' }));
+    // Outbound to a listings site — the hero button, the agent cards.
+    // Matched by host rather than one hard-coded domain so swapping where
+    // "View Properties" points doesn't silently stop the event firing.
+    on('a[href*="utahrealestate.com"], a[href*="jonathanperez.site"]', 'click', (el) => {
+      let destination = 'unknown';
+      try { destination = new URL(el.href).hostname.replace(/^www\./, ''); } catch (_) {}
+      track('outbound_listings', { destination });
+    });
 
     // Agent cards opening the contact dialog.
     on('.agent__cover[data-agent]', 'click', (el) => {

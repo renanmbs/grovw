@@ -1,0 +1,103 @@
+/* =========================================================
+   GROWV — registration gate
+   ---------------------------------------------------------
+   Self-contained. Remove the <link> to this file and the
+   <script> for register-gate.js and the site loses the gate
+   entirely; nothing else references these classes.
+
+   Styled off the same tokens as the rest of the site, so it
+   reads as part of the brand rather than a bolted-on popup.
+   ========================================================= */
+
+.gate{
+  border:0;padding:0;background:transparent;
+  max-width:min(540px,calc(100vw - 2rem));width:100%;
+  color:rgba(255,255,255,.92);
+}
+.gate::backdrop{
+  background:rgba(8,16,12,.86);
+  backdrop-filter:blur(7px);
+  -webkit-backdrop-filter:blur(7px);
+}
+
+.gate__inner{
+  background:var(--ink-2);
+  border:1px solid var(--ink-line);
+  border-top:2px solid var(--gold);
+  padding:clamp(1.75rem,4vw,2.75rem);
+  box-shadow:0 30px 80px rgba(0,0,0,.6);
+}
+
+.gate__logo{display:block;height:40px;width:auto;margin-bottom:var(--space-5)}
+
+.gate__title{
+  font-family:var(--f-display);font-weight:400;
+  font-size:clamp(1.6rem,4.4vw,2.2rem);line-height:1.12;
+  color:#fff;margin:0 0 var(--space-3);letter-spacing:-.008em;
+}
+.gate__title em{font-style:italic;color:var(--gold-2)}
+
+.gate__lede{
+  font-size:var(--fs-small);line-height:1.6;
+  color:rgba(255,255,255,.72);margin:0 0 var(--space-5);max-width:46ch;
+}
+
+.gate__field{display:block;margin-bottom:var(--space-3)}
+.gate__field span{
+  display:block;font-family:var(--f-body);font-size:.72rem;
+  letter-spacing:.2em;text-transform:uppercase;
+  color:rgba(255,255,255,.55);margin-bottom:.45rem;
+}
+.gate__field input{
+  width:100%;background:rgba(0,0,0,.28);color:#fff;
+  border:1px solid var(--ink-line);border-radius:var(--radius-sm);
+  padding:.85rem 1rem;font-family:var(--f-body);font-size:1rem;
+  transition:border-color .25s var(--ease-out),background .25s var(--ease-out);
+}
+.gate__field input::placeholder{color:rgba(255,255,255,.34)}
+.gate__field input:focus{
+  outline:none;border-color:var(--gold);background:rgba(0,0,0,.42);
+}
+.gate__field input:user-invalid{border-color:#C0553A}
+
+.gate__row{display:grid;gap:var(--space-3)}
+@media (min-width:520px){.gate__row{grid-template-columns:1fr 1fr}}
+
+/* Bots fill this; people never see it. */
+.gate__honeypot{
+  position:absolute!important;width:1px;height:1px;
+  padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;
+}
+
+.gate__submit{width:100%;margin-top:var(--space-4)}
+
+.gate__status{
+  margin:var(--space-3) 0 0;font-size:var(--fs-small);min-height:1.2em;
+}
+.gate__status[data-state="error"]{color:#E08B6F}
+.gate__status[data-state="success"]{color:var(--gold-2)}
+
+.gate__fine{
+  margin:var(--space-4) 0 0;font-size:.78rem;line-height:1.55;
+  color:rgba(255,255,255,.45);max-width:46ch;
+}
+.gate__fine a{color:rgba(255,255,255,.7)}
+
+/* Only rendered when DISMISSIBLE is turned on in register-gate.js. */
+.gate__later{
+  display:block;margin:var(--space-4) auto 0;background:none;border:0;
+  font-family:var(--f-body);font-size:.78rem;letter-spacing:.14em;
+  text-transform:uppercase;color:rgba(255,255,255,.45);
+  cursor:pointer;text-decoration:underline;text-underline-offset:3px;
+}
+.gate__later:hover{color:rgba(255,255,255,.8)}
+
+/* While the gate is open the page behind it must not scroll. */
+html.gate-open,body.gate-open{overflow:hidden}
+
+@media (prefers-reduced-motion:no-preference){
+  .gate[open] .gate__inner{animation:gate-in .4s var(--ease-out) both}
+  @keyframes gate-in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+}
+
+@media print{.gate{display:none}}
