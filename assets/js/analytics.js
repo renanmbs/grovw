@@ -108,12 +108,14 @@ const CONFIG = {
       track('view_agent', { agent: name });
     });
 
-    // Contact form — the actual conversion. Fires on submit, so it counts
-    // attempts; pair it with the success state below for clean numbers.
+    // Contact form — this is the ATTEMPT, not the conversion. The send can
+    // still fail, so the lead itself is counted on /thank-you.html, which is
+    // only reachable after a successful submit. Keeping the two separate
+    // means generate_lead stays clean and the gap between form_submit and
+    // generate_lead tells you the form is erroring.
     const form = document.querySelector('form[data-contact], #contactForm, .contact form');
     if (form) {
-      form.addEventListener('submit', () => track('generate_lead',
-        { form: 'contact', value: 1 }, 'Lead'));
+      form.addEventListener('submit', () => track('form_submit', { form: 'contact' }));
     }
 
     // Scroll depth — tells you whether anyone reaches the listings at all.

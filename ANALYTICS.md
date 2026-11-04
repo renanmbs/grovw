@@ -57,7 +57,8 @@ These fire automatically — no extra work:
 | Event | When it fires | Why you care |
 |---|---|---|
 | `contact_call` | Any phone number tapped | **Your #1 metric.** Includes *where* they tapped: `spanish_badge`, `agent_card`, `footer` |
-| `generate_lead` | Contact form submitted | Your actual conversion. Also sent to Meta as `Lead` |
+| `generate_lead` | `/thank-you.html` loads | **Your actual conversion.** Fires on the confirmation page, not on submit, so a failed send never counts. Also sent to Meta as `Lead` |
+| `form_submit` | Contact form submitted | The *attempt*. A gap between this and `generate_lead` means the form is erroring |
 | `contact_email` | An email address clicked | Lower intent than a call, still a lead |
 | `select_listing` | A property card clicked | Tells you **which homes** draw interest — address, city, active/sold |
 | `spanish_cta` | The ¿Español? badge clicked | Proves whether the bilingual angle pays |
@@ -114,3 +115,33 @@ rate per traffic source, which is the whole point.
 - **A call tracked here is a click, not a conversation.** Someone tapping your
   number isn't necessarily someone who spoke to you. Treat it as intent, and
   compare it against your own call log.
+
+---
+
+## The confirmation page (`/thank-you.html`)
+
+The contact form used to submit over AJAX and never change the URL. That is
+invisible to Google Ads, which tracks conversions by watching for a visit to a
+particular page. So a successful submit now redirects to `/thank-you.html`.
+
+**The URL to give Google Ads:**
+
+```
+https://mygrowv.com/thank-you
+```
+
+Set the rule to **URL contains** `/thank-you` rather than an exact match —
+Netlify serves the page at both `/thank-you` and `/thank-you.html`, and
+"contains" matches either.
+
+Two things about that page are load-bearing, so don't undo them:
+
+- **It is `noindex`.** If Google indexed it, organic visitors landing on it
+  would be counted as booked consultations and your conversion data would be
+  fiction.
+- **It is not linked from anywhere.** Same reason. The only way to reach it is
+  to actually submit the form.
+
+To test it yourself, submit the form once — you'll land on the page and
+`generate_lead` will fire. Note that this also creates a real row in your Apps
+Script sheet, so delete that test row afterward.

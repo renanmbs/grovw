@@ -474,8 +474,15 @@
           body: JSON.stringify(data)
         });
         if (!res.ok) throw new Error('Bad response ' + res.status);
-        setStatus('success', 'Thank you — your message is on its way. Jonathan will be in touch shortly.');
+        // Hand off to the confirmation page. The redirect is what makes the
+        // conversion measurable: Google Ads watches for a visit to
+        // /thank-you, and an AJAX form that never changes URL gives it
+        // nothing to watch. The page also fires generate_lead, so a lead is
+        // only counted once the send actually succeeded.
         form.reset();
+        setStatus('success', 'Thank you — taking you to your confirmation…');
+        window.location.assign('/thank-you.html');
+        return;
       } catch (err) {
         setStatus('error', 'Something went wrong. Please email jonathan@mygrowv.com directly.');
       } finally {
