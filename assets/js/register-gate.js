@@ -137,6 +137,55 @@ const GATE = {
       dlg.querySelector('.gate__inner').appendChild(later);
     }
 
+    /* ---------- language ---------- */
+    // Copy lives in data-en / data-es on the elements themselves, so the
+    // two languages cannot drift apart in separate files. A pipe in a
+    // title splits the second half into the gold italic line.
+    const setLang = (lang) => {
+      const attr = 'data-' + lang;
+      dlg.querySelectorAll('[' + attr + ']').forEach((el) => {
+        const text = el.getAttribute(attr);
+        if (text == null) return;
+        if (el === dlg.querySelector('#gateTitle')) {
+          const [a, b] = text.split('|');
+          el.innerHTML = decode(a) + (b ? '<br><em>' + decode(b) + '</em>' : '');
+        } else if (el.classList.contains('gate__fine')) {
+          // Keep the phone number a live link in both languages.
+          el.innerHTML = decode(text).replace(
+            /\(801\)\s*940-3551/,
+            '<a href="tel:+18019403551">(801)&nbsp;940-3551</a>'
+          );
+        } else {
+          el.innerHTML = decode(text);
+        }
+      });
+      dlg.querySelectorAll('[data-ph-' + lang + ']').forEach((el) => {
+        el.setAttribute('placeholder', decode(el.getAttribute('data-ph-' + lang)));
+      });
+      dlg.querySelectorAll('.gate__langbtn').forEach((b) => {
+        const on = b.dataset.lang === lang;
+        b.classList.toggle('is-active', on);
+        b.setAttribute('aria-pressed', String(on));
+      });
+      dlg.setAttribute('lang', lang);
+      current = lang;
+    };
+
+    // Entities live in the attributes; this turns them back into characters.
+    const decoder = document.createElement('textarea');
+    function decode(str) { decoder.innerHTML = str; return decoder.value; }
+
+    let current = 'en';
+    dlg.querySelectorAll('.gate__langbtn').forEach((b) => {
+      b.addEventListener('click', () => {
+        setLang(b.dataset.lang);
+        if (window.growvTrack) window.growvTrack('gate_language', { lang: b.dataset.lang });
+      });
+    });
+
+    // A browser set to Spanish gets the Spanish form without having to ask.
+    if (/^es/i.test(navigator.language || '')) setLang('es');
+
     /* ---------- submit ---------- */
     const setStatus = (state, msg) => {
       status.dataset.state = state;
@@ -149,26 +198,61 @@ const GATE = {
       if (form.elements['company_website'].value) return;      // honeypot
 
       if (!form.checkValidity()) {
-        setStatus('error', 'Please complete all three fields.');
+        setStatus('error', current === 'es'
+          ? 'Por favor complete nombre, correo y teléfono.'
+          : 'Please complete name, email and phone.');
         form.reportValidity();
         return;
       }
 
+      // The search criteria are folded into `message` rather than sent as
+      // new fields, because the Apps Script writes a fixed set of columns
+      // and renders `message` in the notification email. This way the
+      // criteria reach Jonathan's inbox without touching the backend.
+      const val = (n) => (form.elements[n] ? form.elements[n].value.trim() : '');
+      const label = (n) => {
+        const sel = form.elements[n];
+        if (!sel || !sel.value) return '';
+        return sel.options[sel.selectedIndex].textContent.trim();
+      };
+
+      const criteria = [
+        ['Looking to', label('intent')],
+        ['Area',       val('area')],
+        ['Bedrooms',   label('beds')],
+        ['Baths',      label('baths')],
+        ['Price',      label('budget')],
+      ].filter(([, v]) => v).map(([k, v]) => k + ': ' + v);
+
+      const notes = val('notes');
+
+      const message = [
+        'Registered via the website gate after ' + Math.round(seconds / 60)
+          + ' minute(s) of browsing. Form language: ' + current.toUpperCase() + '.',
+        criteria.length ? '\nWHAT THEY ARE LOOKING FOR\n' + criteria.join('\n')
+                        : '\n(No search criteria given.)',
+        notes ? '\nNOTES\n' + notes : '',
+      ].filter(Boolean).join('\n');
+
       const data = {
-        name:  form.elements['name'].value.trim(),
-        email: form.elements['email'].value.trim(),
-        phone: form.elements['phone'].value.trim(),
-        message: 'Registered via the website gate after '
-                 + Math.round(seconds / 60) + ' minutes of browsing.',
+        name:  val('name'),
+        email: val('email'),
+        phone: val('phone'),
+        message: message,
         source: 'registration-gate',
         submitted_at: new Date().toISOString(),
       };
 
       const endpoint = window.GROWV_FORM_ENDPOINT;
-      if (!endpoint) { setStatus('error', 'Unable to register right now. Please call (801) 940-3551.'); return; }
+      if (!endpoint) {
+        setStatus('error', current === 'es'
+          ? 'No se pudo registrar. Llame al (801) 940-3551.'
+          : 'Unable to register right now. Please call (801) 940-3551.');
+        return;
+      }
 
       button.disabled = true;
-      label.textContent = 'Registering…';
+      label.textContent = current === 'es' ? 'Registrando…' : 'Registering…';
       setStatus('', '');
 
       try {
@@ -192,7 +276,9 @@ const GATE = {
         setStatus('success', 'Thank you — you’re all set.');
         setTimeout(close, 700);
       } catch (err) {
-        setStatus('error', 'Something went wrong. Please call (801) 940-3551 or email jonathan@mygrowv.com.');
+        setStatus('error', current === 'es'
+          ? 'Algo salió mal. Llame al (801) 940-3551 o escriba a jonathan@mygrowv.com.'
+          : 'Something went wrong. Please call (801) 940-3551 or email jonathan@mygrowv.com.');
         button.disabled = false;
         label.textContent = originalLabel;
       }

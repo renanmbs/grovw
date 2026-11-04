@@ -485,46 +485,139 @@
        contact form, tagged source "registration-gate". -->
   <dialog class="gate" id="registerGate" aria-labelledby="gateTitle" closedby="none">
     <div class="gate__inner">
-      <img class="gate__logo" src="assets/images/growv-logo-gold.png" alt="GROWV" width="140" height="81">
 
-      <h2 class="gate__title" id="gateTitle">
+      <!-- Spanish first, and always visible. A Spanish-speaking visitor
+           should recognise this as something they can complete before
+           they read a word of English. The toggle below switches the
+           whole form; register-gate.js also pre-selects Spanish when the
+           browser is set to it. -->
+      <p class="gate__bilingual" lang="es">
+        <strong>¿Busca o vende casa en Utah?</strong>
+        Hablamos español. Complete este formulario y le llamamos.
+      </p>
+
+      <div class="gate__langbar">
+        <img class="gate__logo" src="assets/images/growv-logo-gold.png" alt="GROWV" width="140" height="81">
+        <div class="gate__lang" role="group" aria-label="Language / Idioma">
+          <button type="button" class="gate__langbtn is-active" data-lang="en" aria-pressed="true">English</button>
+          <button type="button" class="gate__langbtn" data-lang="es" aria-pressed="false">Español</button>
+        </div>
+      </div>
+
+      <h2 class="gate__title" id="gateTitle"
+          data-en="Before you go further &mdash;|who are we talking to?"
+          data-es="Antes de continuar &mdash;|¿con quién hablamos?">
         Before you go further &mdash;<br><em>who are we talking to?</em>
       </h2>
 
-      <p class="gate__lede">
-        GROWV is a licensed Utah brokerage, not a listing portal. Leave your
-        details and we&rsquo;ll send you what isn&rsquo;t on the public sites:
-        new listings before they are widely advertised, and honest numbers on
-        what homes in Weber and Davis County are actually closing at.
+      <p class="gate__lede"
+         data-en="GROWV is a licensed Utah brokerage, not a listing portal. Tell us what you&rsquo;re looking for and we&rsquo;ll send you what isn&rsquo;t on the public sites &mdash; new listings before they are widely advertised, and honest numbers on what homes in Weber and Davis County are actually closing at."
+         data-es="GROWV es una correduría con licencia en Utah, no un portal de anuncios. Díganos qué busca y le enviaremos lo que no está en los sitios públicos: casas nuevas antes de que se anuncien y números reales de lo que se está vendiendo en los condados de Weber y Davis.">
+        GROWV is a licensed Utah brokerage, not a listing portal. Tell us what
+        you&rsquo;re looking for and we&rsquo;ll send you what isn&rsquo;t on the
+        public sites &mdash; new listings before they are widely advertised, and
+        honest numbers on what homes in Weber and Davis County are actually
+        closing at.
       </p>
 
       <form id="gateForm" novalidate>
+
         <label class="gate__field">
-          <span>Full name</span>
-          <input type="text" name="name" required autocomplete="name" placeholder="Your name">
+          <span data-en="Full name" data-es="Nombre completo">Full name</span>
+          <input type="text" name="name" required autocomplete="name"
+                 data-ph-en="Your name" data-ph-es="Su nombre" placeholder="Your name">
         </label>
+
         <div class="gate__row">
           <label class="gate__field">
-            <span>Email</span>
-            <input type="email" name="email" required autocomplete="email" placeholder="you@email.com">
+            <span data-en="Email" data-es="Correo electrónico">Email</span>
+            <input type="email" name="email" required autocomplete="email"
+                   data-ph-en="you@email.com" data-ph-es="usted@correo.com" placeholder="you@email.com">
           </label>
           <label class="gate__field">
-            <span>Phone</span>
-            <input type="tel" name="phone" required autocomplete="tel" placeholder="(801) 555-0000">
+            <span data-en="Phone" data-es="Teléfono">Phone</span>
+            <input type="tel" name="phone" required autocomplete="tel"
+                   data-ph-en="(801) 555-0000" data-ph-es="(801) 555-0000" placeholder="(801) 555-0000">
           </label>
         </div>
+
+        <!-- Everything below is optional on purpose. This is a gate, and
+             every required field is someone who leaves instead. -->
+        <p class="gate__divider"
+           data-en="Tell us what you&rsquo;re looking for &mdash; optional"
+           data-es="Díganos qué busca &mdash; opcional">Tell us what you&rsquo;re looking for &mdash; optional</p>
+
+        <div class="gate__row">
+          <label class="gate__field">
+            <span data-en="I want to" data-es="Quiero">I want to</span>
+            <select name="intent">
+              <option value="" data-en="Choose one" data-es="Elija una">Choose one</option>
+              <option value="buy"  data-en="Buy a home"        data-es="Comprar casa">Buy a home</option>
+              <option value="sell" data-en="Sell a home"       data-es="Vender casa">Sell a home</option>
+              <option value="both" data-en="Buy and sell"      data-es="Comprar y vender">Buy and sell</option>
+              <option value="look" data-en="Just looking"      data-es="Solo estoy viendo">Just looking</option>
+            </select>
+          </label>
+          <label class="gate__field">
+            <span data-en="Area or city" data-es="Zona o ciudad">Area or city</span>
+            <input type="text" name="area"
+                   data-ph-en="Ogden, Riverdale, Roy…" data-ph-es="Ogden, Riverdale, Roy…"
+                   placeholder="Ogden, Riverdale, Roy…">
+          </label>
+        </div>
+
+        <div class="gate__row gate__row--3">
+          <label class="gate__field">
+            <span data-en="Bedrooms" data-es="Recámaras">Bedrooms</span>
+            <select name="beds">
+              <option value="" data-en="Any" data-es="Cualquiera">Any</option>
+              <option value="1+">1+</option><option value="2+">2+</option>
+              <option value="3+">3+</option><option value="4+">4+</option>
+              <option value="5+">5+</option>
+            </select>
+          </label>
+          <label class="gate__field">
+            <span data-en="Baths" data-es="Baños">Baths</span>
+            <select name="baths">
+              <option value="" data-en="Any" data-es="Cualquiera">Any</option>
+              <option value="1+">1+</option><option value="2+">2+</option>
+              <option value="3+">3+</option><option value="4+">4+</option>
+            </select>
+          </label>
+          <label class="gate__field">
+            <span data-en="Price range" data-es="Presupuesto">Price range</span>
+            <select name="budget">
+              <option value="" data-en="Any" data-es="Cualquiera">Any</option>
+              <option value="under-300k" data-en="Under $300k" data-es="Menos de $300k">Under $300k</option>
+              <option value="300-400k">$300k &ndash; $400k</option>
+              <option value="400-500k">$400k &ndash; $500k</option>
+              <option value="500-650k">$500k &ndash; $650k</option>
+              <option value="650k-plus" data-en="$650k and up" data-es="$650k o más">$650k and up</option>
+            </select>
+          </label>
+        </div>
+
+        <label class="gate__field">
+          <span data-en="Anything else?" data-es="¿Algo más?">Anything else?</span>
+          <textarea name="notes" rows="2"
+                    data-ph-en="Timeline, must-haves, questions…"
+                    data-ph-es="Cuándo, qué necesita, preguntas…"
+                    placeholder="Timeline, must-haves, questions…"></textarea>
+        </label>
 
         <!-- Honeypot — real visitors leave this empty. -->
         <input type="text" name="company_website" class="gate__honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
 
         <button type="submit" class="cta cta--gold cta--block cta--lg gate__submit" id="gateSubmit">
-          <span>Get access</span>
+          <span data-en="Get access" data-es="Obtener acceso">Get access</span>
         </button>
 
         <p class="gate__status" id="gateStatus" role="status" aria-live="polite"></p>
       </form>
 
-      <p class="gate__fine">
+      <p class="gate__fine"
+         data-en="We use your details to contact you about Utah real estate. We don&rsquo;t sell them. Prefer to just talk? Call (801) 940-3551."
+         data-es="Usamos sus datos para comunicarnos con usted sobre bienes raíces en Utah. No los vendemos. ¿Prefiere hablar? Llame al (801) 940-3551.">
         We use your details to contact you about Utah real estate. We don&rsquo;t
         sell them. Prefer to just talk? Call
         <a href="tel:+18019403551">(801)&nbsp;940-3551</a>.
