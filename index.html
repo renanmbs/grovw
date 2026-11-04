@@ -486,16 +486,9 @@
   <dialog class="gate" id="registerGate" aria-labelledby="gateTitle" closedby="none">
     <div class="gate__inner">
 
-      <!-- Spanish first, and always visible. A Spanish-speaking visitor
-           should recognise this as something they can complete before
-           they read a word of English. The toggle below switches the
-           whole form; register-gate.js also pre-selects Spanish when the
-           browser is set to it. -->
-      <p class="gate__bilingual" lang="es">
-        <strong>¿Busca o vende casa en Utah?</strong>
-        Hablamos español. Complete este formulario y le llamamos.
-      </p>
-
+      <!-- The Español button is the Spanish signal on this panel: maroon
+           with a pulsing ring, so it reads as "click me" at a glance.
+           English is always the default. -->
       <div class="gate__langbar">
         <img class="gate__logo" src="assets/images/growv-logo-gold.png" alt="GROWV" width="140" height="81">
         <div class="gate__lang" role="group" aria-label="Language / Idioma">
@@ -539,21 +532,22 @@
           </label>
         </div>
 
-        <!-- Everything below is optional on purpose. This is a gate, and
-             every required field is someone who leaves instead. -->
+        <!-- Optional on purpose. This is a gate, and every required field
+             is a visitor who leaves instead. Beds and baths are one choice
+             rather than two, and the bands are deliberately coarse — this
+             is a starting point for a call, not a search query. -->
         <p class="gate__divider"
-           data-en="Tell us what you&rsquo;re looking for &mdash; optional"
-           data-es="Díganos qué busca &mdash; opcional">Tell us what you&rsquo;re looking for &mdash; optional</p>
+           data-en="What are you looking for? &mdash; optional"
+           data-es="¿Qué busca? &mdash; opcional">What are you looking for? &mdash; optional</p>
 
         <div class="gate__row">
           <label class="gate__field">
             <span data-en="I want to" data-es="Quiero">I want to</span>
             <select name="intent">
               <option value="" data-en="Choose one" data-es="Elija una">Choose one</option>
-              <option value="buy"  data-en="Buy a home"        data-es="Comprar casa">Buy a home</option>
-              <option value="sell" data-en="Sell a home"       data-es="Vender casa">Sell a home</option>
-              <option value="both" data-en="Buy and sell"      data-es="Comprar y vender">Buy and sell</option>
-              <option value="look" data-en="Just looking"      data-es="Solo estoy viendo">Just looking</option>
+              <option value="buy"  data-en="Buy"           data-es="Comprar">Buy</option>
+              <option value="sell" data-en="Sell"          data-es="Vender">Sell</option>
+              <option value="both" data-en="Buy and sell"  data-es="Comprar y vender">Buy and sell</option>
             </select>
           </label>
           <label class="gate__field">
@@ -564,44 +558,28 @@
           </label>
         </div>
 
-        <div class="gate__row gate__row--3">
+        <div class="gate__row">
           <label class="gate__field">
-            <span data-en="Bedrooms" data-es="Recámaras">Bedrooms</span>
-            <select name="beds">
+            <span data-en="Size" data-es="Tamaño">Size</span>
+            <select name="size">
               <option value="" data-en="Any" data-es="Cualquiera">Any</option>
-              <option value="1+">1+</option><option value="2+">2+</option>
-              <option value="3+">3+</option><option value="4+">4+</option>
-              <option value="5+">5+</option>
+              <option value="2bd-1ba" data-en="2+ bed &middot; 1+ bath" data-es="2+ recámaras &middot; 1+ baño">2+ bed &middot; 1+ bath</option>
+              <option value="3bd-2ba" data-en="3+ bed &middot; 2+ bath" data-es="3+ recámaras &middot; 2+ baños">3+ bed &middot; 2+ bath</option>
+              <option value="4bd-2ba" data-en="4+ bed &middot; 2+ bath" data-es="4+ recámaras &middot; 2+ baños">4+ bed &middot; 2+ bath</option>
+              <option value="5bd-3ba" data-en="5+ bed &middot; 3+ bath" data-es="5+ recámaras &middot; 3+ baños">5+ bed &middot; 3+ bath</option>
             </select>
           </label>
           <label class="gate__field">
-            <span data-en="Baths" data-es="Baños">Baths</span>
-            <select name="baths">
-              <option value="" data-en="Any" data-es="Cualquiera">Any</option>
-              <option value="1+">1+</option><option value="2+">2+</option>
-              <option value="3+">3+</option><option value="4+">4+</option>
-            </select>
-          </label>
-          <label class="gate__field">
-            <span data-en="Price range" data-es="Presupuesto">Price range</span>
+            <span data-en="Budget" data-es="Presupuesto">Budget</span>
             <select name="budget">
               <option value="" data-en="Any" data-es="Cualquiera">Any</option>
-              <option value="under-300k" data-en="Under $300k" data-es="Menos de $300k">Under $300k</option>
-              <option value="300-400k">$300k &ndash; $400k</option>
-              <option value="400-500k">$400k &ndash; $500k</option>
-              <option value="500-650k">$500k &ndash; $650k</option>
-              <option value="650k-plus" data-en="$650k and up" data-es="$650k o más">$650k and up</option>
+              <option value="under-350k" data-en="Under $350k"  data-es="Menos de $350k">Under $350k</option>
+              <option value="350-500k">$350k &ndash; $500k</option>
+              <option value="500-700k">$500k &ndash; $700k</option>
+              <option value="700k-plus" data-en="$700k and up" data-es="$700k o más">$700k and up</option>
             </select>
           </label>
         </div>
-
-        <label class="gate__field">
-          <span data-en="Anything else?" data-es="¿Algo más?">Anything else?</span>
-          <textarea name="notes" rows="2"
-                    data-ph-en="Timeline, must-haves, questions…"
-                    data-ph-es="Cuándo, qué necesita, preguntas…"
-                    placeholder="Timeline, must-haves, questions…"></textarea>
-        </label>
 
         <!-- Honeypot — real visitors leave this empty. -->
         <input type="text" name="company_website" class="gate__honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
@@ -614,11 +592,11 @@
       </form>
 
       <p class="gate__fine"
-         data-en="We use your details to contact you about Utah real estate. We don&rsquo;t sell them. Prefer to just talk? Call (801) 940-3551."
-         data-es="Usamos sus datos para comunicarnos con usted sobre bienes raíces en Utah. No los vendemos. ¿Prefiere hablar? Llame al (801) 940-3551.">
+         data-en="We use your details to contact you about Utah real estate. We don&rsquo;t sell them. Prefer to just talk? Call (801) 888-8817."
+         data-es="Usamos sus datos para comunicarnos con usted sobre bienes raíces en Utah. No los vendemos. ¿Prefiere hablar? Llame al (801) 888-8817.">
         We use your details to contact you about Utah real estate. We don&rsquo;t
         sell them. Prefer to just talk? Call
-        <a href="tel:+18019403551">(801)&nbsp;940-3551</a>.
+        <a href="tel:+18018888817">(801)&nbsp;888-8817</a>.
       </p>
     </div>
   </dialog>

@@ -152,8 +152,8 @@ const GATE = {
         } else if (el.classList.contains('gate__fine')) {
           // Keep the phone number a live link in both languages.
           el.innerHTML = decode(text).replace(
-            /\(801\)\s*940-3551/,
-            '<a href="tel:+18019403551">(801)&nbsp;940-3551</a>'
+            /\(801\)\s*888-8817/,
+            '<a href="tel:+18018888817">(801)&nbsp;888-8817</a>'
           );
         } else {
           el.innerHTML = decode(text);
@@ -183,8 +183,94 @@ const GATE = {
       });
     });
 
-    // A browser set to Spanish gets the Spanish form without having to ask.
-    if (/^es/i.test(navigator.language || '')) setLang('es');
+    // English is always the default, including for a Spanish-set browser.
+    // The maroon pulsing Español button is how a Spanish speaker switches.
+
+    /* ---------- payload ---------- */
+    // The criteria fold into `message` rather than becoming new fields: the
+    // Apps Script writes a fixed column set and renders `message` in the
+    // notification email, so this reaches the inbox with no backend change.
+    const val = (n) => (form.elements[n] ? form.elements[n].value.trim() : '');
+    const optLabel = (n) => {
+      const sel = form.elements[n];
+      if (!sel || !sel.value) return '';
+      return sel.options[sel.selectedIndex].textContent.trim();
+    };
+
+    function buildPayload(source) {
+      const criteria = [
+        ['Looking to', optLabel('intent')],
+        ['Area',       val('area')],
+        ['Size',       optLabel('size')],
+        ['Budget',     optLabel('budget')],
+      ].filter(([, v]) => v).map(([k, v]) => k + ': ' + v);
+
+      const partial = source.indexOf('partial') !== -1;
+
+      const message = [
+        partial
+          ? 'INCOMPLETE — this person started the registration form and left '
+            + 'without finishing it. They have NOT agreed to be contacted; '
+            + 'treat it as a warm lead, not a request for a call.'
+          : 'Registered via the website gate after ' + Math.round(seconds / 60)
+            + ' minute(s) of browsing.',
+        'Form language: ' + current.toUpperCase() + '.',
+        criteria.length ? '\nWHAT THEY ARE LOOKING FOR\n' + criteria.join('\n')
+                        : '\n(No search criteria given.)',
+      ].filter(Boolean).join('\n');
+
+      return {
+        name:  val('name'),
+        email: val('email'),
+        phone: val('phone'),
+        message: message,
+        source: source,
+        submitted_at: new Date().toISOString(),
+      };
+    }
+
+    /* ---------- partial capture ---------- */
+    // Most people who open a gate never finish it. If they typed a name or
+    // an email before giving up, that is still worth having — so it is sent
+    // when the page is being unloaded, which is the last moment we can.
+    //
+    // sendBeacon is the only reliable transport here: a normal fetch is
+    // killed mid-flight when the tab closes. It is fire-and-forget, so there
+    // is no response to check.
+    //
+    // These arrive tagged "registration-gate-partial" and say plainly in the
+    // body that the person did not complete the form, because they did not
+    // consent to being contacted the way a completed registration does.
+    let sent = false;
+    const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+    function sendPartial() {
+      if (sent || alreadyRegistered()) return;
+      const name = val('name');
+      const email = val('email');
+      const phone = val('phone');
+
+      // Worth sending only if there is a real way to reach them.
+      if (!EMAIL_RE.test(email) && phone.replace(/\D/g, '').length < 10) return;
+      if (!name && !email) return;
+
+      const endpoint = window.GROWV_FORM_ENDPOINT;
+      if (!endpoint || !navigator.sendBeacon) return;
+
+      try {
+        const blob = new Blob([JSON.stringify(buildPayload('registration-gate-partial'))],
+                              { type: 'text/plain;charset=utf-8' });
+        sent = navigator.sendBeacon(endpoint, blob);
+      } catch (_) { /* nothing more we can do at unload */ }
+    }
+
+    // pagehide covers tab close, navigation and the bfcache on iOS, where
+    // unload never fires. visibilitychange catches backgrounding on mobile,
+    // which is often the real end of the visit.
+    window.addEventListener('pagehide', sendPartial);
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'hidden') sendPartial();
+    });
 
     /* ---------- submit ---------- */
     const setStatus = (state, msg) => {
@@ -205,49 +291,13 @@ const GATE = {
         return;
       }
 
-      // The search criteria are folded into `message` rather than sent as
-      // new fields, because the Apps Script writes a fixed set of columns
-      // and renders `message` in the notification email. This way the
-      // criteria reach Jonathan's inbox without touching the backend.
-      const val = (n) => (form.elements[n] ? form.elements[n].value.trim() : '');
-      const label = (n) => {
-        const sel = form.elements[n];
-        if (!sel || !sel.value) return '';
-        return sel.options[sel.selectedIndex].textContent.trim();
-      };
-
-      const criteria = [
-        ['Looking to', label('intent')],
-        ['Area',       val('area')],
-        ['Bedrooms',   label('beds')],
-        ['Baths',      label('baths')],
-        ['Price',      label('budget')],
-      ].filter(([, v]) => v).map(([k, v]) => k + ': ' + v);
-
-      const notes = val('notes');
-
-      const message = [
-        'Registered via the website gate after ' + Math.round(seconds / 60)
-          + ' minute(s) of browsing. Form language: ' + current.toUpperCase() + '.',
-        criteria.length ? '\nWHAT THEY ARE LOOKING FOR\n' + criteria.join('\n')
-                        : '\n(No search criteria given.)',
-        notes ? '\nNOTES\n' + notes : '',
-      ].filter(Boolean).join('\n');
-
-      const data = {
-        name:  val('name'),
-        email: val('email'),
-        phone: val('phone'),
-        message: message,
-        source: 'registration-gate',
-        submitted_at: new Date().toISOString(),
-      };
+      const data = buildPayload('registration-gate');
 
       const endpoint = window.GROWV_FORM_ENDPOINT;
       if (!endpoint) {
         setStatus('error', current === 'es'
-          ? 'No se pudo registrar. Llame al (801) 940-3551.'
-          : 'Unable to register right now. Please call (801) 940-3551.');
+          ? 'No se pudo registrar. Llame al (801) 888-8817.'
+          : 'Unable to register right now. Please call (801) 888-8817.');
         return;
       }
 
@@ -269,6 +319,7 @@ const GATE = {
         try { verdict = await res.clone().json(); } catch (_) {}
         if (verdict && verdict.ok === false) throw new Error(verdict.error || 'unknown');
 
+        sent = true;   // don't also fire a partial on the way out
         set(KEY_DONE, String(Date.now() + GATE.REMEMBER_DAYS * 864e5));
         if (window.growvTrack) {
           window.growvTrack('generate_lead', { form: 'registration-gate', value: 1 }, 'Lead');
@@ -277,8 +328,8 @@ const GATE = {
         setTimeout(close, 700);
       } catch (err) {
         setStatus('error', current === 'es'
-          ? 'Algo salió mal. Llame al (801) 940-3551 o escriba a jonathan@mygrowv.com.'
-          : 'Something went wrong. Please call (801) 940-3551 or email jonathan@mygrowv.com.');
+          ? 'Algo salió mal. Llame al (801) 888-8817 o escriba a jonathan@mygrowv.com.'
+          : 'Something went wrong. Please call (801) 888-8817 or email jonathan@mygrowv.com.');
         button.disabled = false;
         label.textContent = originalLabel;
       }

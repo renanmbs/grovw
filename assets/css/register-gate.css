@@ -28,23 +28,11 @@
   /* The form is long enough to overrun a laptop in landscape, so the
      panel scrolls internally rather than the page behind it. */
   max-height:min(92svh,860px);overflow-y:auto;overscroll-behavior:contain;
-  padding:0 clamp(1.5rem,4vw,2.5rem) clamp(1.5rem,4vw,2.5rem);
+  padding:clamp(1.5rem,4vw,2.5rem);
 }
-
-/* Spanish banner — sticky to the top of the panel so it stays visible
-   while the form scrolls. This is the line a Spanish speaker should see
-   first, before any English. */
-.gate__bilingual{
-  position:sticky;top:0;z-index:2;
-  margin:0 calc(-1 * clamp(1.5rem,4vw,2.5rem));
-  padding:.85rem clamp(1.5rem,4vw,2.5rem);
-  background:var(--maroon,#7A2E3A);
-  color:#fff;font-size:.86rem;line-height:1.45;max-width:none;
-}
-.gate__bilingual strong{color:#fff;display:block;font-size:.95rem;margin-bottom:.1rem}
 
 .gate__langbar{display:flex;align-items:center;justify-content:space-between;
-  gap:var(--space-3);margin:var(--space-5) 0 var(--space-4)}
+  gap:var(--space-3);margin:0 0 var(--space-4)}
 .gate__logo{display:block;height:38px;width:auto;margin:0}
 
 .gate__lang{display:flex;gap:.25rem;flex:0 0 auto}
@@ -56,6 +44,28 @@
 }
 .gate__langbtn:hover{color:#fff;border-color:rgba(255,255,255,.3)}
 .gate__langbtn.is-active{background:var(--gold);border-color:var(--gold);color:var(--ink);font-weight:600}
+
+/* Español: maroon, with a ring that pulses so a Spanish speaker spots it
+   without a banner taking up the top of the panel. The pulse stops once
+   it is the active language — it has done its job by then. */
+.gate__langbtn[data-lang="es"]{
+  background:var(--maroon,#7A2E3A);border-color:#A8465A;color:#fff;font-weight:600;
+}
+.gate__langbtn[data-lang="es"]:hover{background:var(--maroon-2,#5E2029);border-color:#C25A70;color:#fff}
+.gate__langbtn[data-lang="es"]:not(.is-active){animation:gate-lang-pulse 1.8s ease-in-out infinite}
+.gate__langbtn[data-lang="es"].is-active{
+  background:var(--maroon,#7A2E3A);border-color:#D9C28C;color:#fff;
+  box-shadow:0 0 0 2px rgba(217,194,140,.35);
+}
+@keyframes gate-lang-pulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(217,90,112,.75), 0 0 10px 1px rgba(217,90,112,.35);border-color:#A8465A}
+  50%    {box-shadow:0 0 0 5px rgba(217,90,112,0),  0 0 18px 4px rgba(217,90,112,.55);border-color:#E58098}
+}
+@media (prefers-reduced-motion:reduce){
+  .gate__langbtn[data-lang="es"]:not(.is-active){
+    animation:none;box-shadow:0 0 0 2px rgba(217,90,112,.55);border-color:#E58098;
+  }
+}
 
 .gate__title{
   font-family:var(--f-display);font-weight:400;
