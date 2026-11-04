@@ -145,14 +145,20 @@
 }
 .gate__fine a{color:rgba(255,255,255,.7)}
 
-/* Only rendered when DISMISSIBLE is turned on in register-gate.js. */
+/* The first pass's exit. Hidden in the markup, revealed by the script
+   part-way through; it fades in rather than appearing, so someone who was
+   mid-sentence notices it arrive instead of finding it already there. */
 .gate__later{
   display:block;margin:var(--space-4) auto 0;background:none;border:0;
   font-family:var(--f-body);font-size:.78rem;letter-spacing:.14em;
   text-transform:uppercase;color:rgba(255,255,255,.45);
   cursor:pointer;text-decoration:underline;text-underline-offset:3px;
+  animation:gate-later-in .5s var(--ease-out) both;
 }
+.gate__later[hidden]{display:none}
 .gate__later:hover{color:rgba(255,255,255,.8)}
+@keyframes gate-later-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.gate__later{animation:none}}
 
 /* While the gate is open the page behind it must not scroll. */
 html.gate-open,body.gate-open{overflow:hidden}

@@ -23,12 +23,19 @@ const GATE = {
   // Turn the whole thing off without touching the HTML.
   ENABLED: true,
 
-  // Active seconds before the gate appears.
+  // Active seconds of browsing before the gate first appears.
   DELAY_SECONDS: 45,
 
-  // false = a true gate: no close button, ESC does nothing.
-  // true  = adds a "Continue browsing" link that dismisses it for the visit.
-  DISMISSIBLE: false,
+  // The gate runs in two passes.
+  //
+  // Pass one is escapable: after this many seconds a "Continue browsing"
+  // link fades in. Set to 0 to make the very first pass inescapable.
+  EXIT_AFTER_SECONDS: 25,
+
+  // Pass two comes back this many seconds after they escaped pass one,
+  // and has no way out. Reloading the page is the only exit, and that
+  // buys them another DELAY_SECONDS before pass one starts again.
+  RETURN_AFTER_SECONDS: 60,
 
   // Remembered for this many days once someone registers.
   REMEMBER_DAYS: 180,
@@ -41,7 +48,6 @@ const GATE = {
 
   const KEY_DONE  = 'growv_registered';
   const KEY_TIME  = 'growv_active_seconds';
-  const KEY_SKIP  = 'growv_gate_skipped';
 
   // The confirmation page is the one place this must never fire.
   if (/thank-you/.test(location.pathname)) return;
@@ -60,7 +66,6 @@ const GATE = {
   };
 
   if (alreadyRegistered()) return;
-  if (sessionStorage.getItem?.(KEY_SKIP)) return;
 
   document.addEventListener('DOMContentLoaded', () => {
     const dlg = document.getElementById('registerGate');
@@ -72,25 +77,64 @@ const GATE = {
     const label  = button.querySelector('span');
     const originalLabel = label.textContent;
 
-    /* ---------- the clock ---------- */
+    /* ---------- the clock and the two passes ---------- */
+    // stage lives in memory on purpose, so a refresh wipes it. That is what
+    // makes "reload to get out" true: pass two is otherwise inescapable, and
+    // a reload drops the visitor back to stage 0 with a fresh grace period.
+    //   0 = not yet shown
+    //   1 = pass one open (escapable once EXIT_AFTER_SECONDS elapses)
+    //   2 = escaped pass one, waiting out RETURN_AFTER_SECONDS
+    //   3 = pass two open, no way out
+    let stage = 0;
+    let inGate = 0;       // seconds the current pass has been on screen
+    let waiting = 0;      // seconds since they escaped pass one
+
     let seconds = parseInt(get(KEY_TIME) || '0', 10);
     if (!Number.isFinite(seconds) || seconds < 0) seconds = 0;
 
-    const tick = setInterval(() => {
+    const later = dlg.querySelector('#gateLater');
+
+    setInterval(() => {
       if (document.visibilityState !== 'visible') return;   // background tabs don't count
+
+      if (dlg.open) {
+        inGate += 1;
+        // Reveal the exit on pass one only, and only once.
+        if (stage === 1 && GATE.EXIT_AFTER_SECONDS > 0
+            && inGate >= GATE.EXIT_AFTER_SECONDS && later.hidden) {
+          later.hidden = false;
+        }
+        return;
+      }
+
+      if (stage === 2) {
+        waiting += 1;
+        if (waiting >= GATE.RETURN_AFTER_SECONDS) open(3);
+        return;
+      }
+
+      // Browsing time only counts while no pass is on screen.
       seconds += 1;
       set(KEY_TIME, String(seconds));
-      if (seconds >= GATE.DELAY_SECONDS) open();
+      if (stage === 0 && seconds >= GATE.DELAY_SECONDS) open(1);
     }, 1000);
 
-    function open() {
-      clearInterval(tick);
+    function open(nextStage) {
       if (dlg.open || alreadyRegistered()) return;
+      stage = nextStage;
+      inGate = 0;
+      // The counter measures time since the last pass, not time since the
+      // first ever visit — otherwise a reload would re-trigger instantly
+      // and "reload to get out" would be a lie.
+      seconds = 0;
+      set(KEY_TIME, '0');
+      later.hidden = true;
+
       prefill();
       dlg.showModal();
       document.documentElement.classList.add('gate-open');
       document.body.classList.add('gate-open');
-      if (window.growvTrack) window.growvTrack('view_gate', { after_seconds: seconds });
+      if (window.growvTrack) window.growvTrack('view_gate', { pass: stage === 3 ? 2 : 1 });
     }
 
     function close() {
@@ -99,23 +143,21 @@ const GATE = {
       document.body.classList.remove('gate-open');
     }
 
+    const escapable = () => stage === 1 && !later.hidden;
+
     // Keeping a modal <dialog> open is surprisingly hard. Three layers,
     // because the first two are not reliable on their own:
     //   1. closedby="none" — the modern, declarative way (set in the HTML).
     //   2. preventDefault on 'cancel' — the older way. Chrome still closes
     //      the dialog on ESC in some builds despite it.
-    //   3. re-open on 'close' — the backstop that actually holds. Safe from
-    //      looping because every legitimate close marks the visitor done
-    //      first, and both checks below then pass.
+    //   3. re-open on 'close' — the backstop that actually holds.
     dlg.addEventListener('cancel', (e) => {
-      if (!GATE.DISMISSIBLE) e.preventDefault();
+      if (!escapable()) e.preventDefault();
     });
 
     dlg.addEventListener('close', () => {
       if (alreadyRegistered()) return;
-      if (GATE.DISMISSIBLE && sessionStorage.getItem?.(KEY_SKIP)) return;
-      // Re-assert on the next frame; closing and re-opening in the same
-      // task is ignored by the dialog element.
+      if (stage === 2) return;              // they took the exit, let it close
       requestAnimationFrame(() => {
         if (!dlg.open) {
           dlg.showModal();
@@ -125,18 +167,13 @@ const GATE = {
       });
     });
 
-    if (GATE.DISMISSIBLE) {
-      const later = document.createElement('button');
-      later.type = 'button';
-      later.className = 'gate__later';
-      later.textContent = 'Continue browsing';
-      later.addEventListener('click', () => {
-        try { sessionStorage.setItem(KEY_SKIP, '1'); } catch (_) {}
-        if (window.growvTrack) window.growvTrack('gate_dismissed', { after_seconds: seconds });
-        close();
-      });
-      dlg.querySelector('.gate__inner').appendChild(later);
-    }
+    later.addEventListener('click', () => {
+      if (!escapable()) return;
+      stage = 2;
+      waiting = 0;
+      if (window.growvTrack) window.growvTrack('gate_dismissed', { pass: 1 });
+      close();
+    });
 
     /* ---------- language ---------- */
     // Copy lives in data-en / data-es on the elements themselves, so the
