@@ -474,6 +474,19 @@
           body: JSON.stringify(data)
         });
         if (!res.ok) throw new Error('Bad response ' + res.status);
+
+        // Apps Script answers HTTP 200 even when the script itself threw —
+        // the real verdict is in the body ({ok:true} / {ok:false, error}).
+        // Trusting the status alone meant a failed send looked like a sent
+        // one: the visitor saw "thank you", and nobody was ever emailed.
+        // An unreadable body is left as success rather than inventing a
+        // failure, but an explicit ok:false is now treated as one.
+        let verdict = null;
+        try { verdict = await res.clone().json(); } catch (_) { /* opaque — let it pass */ }
+        if (verdict && verdict.ok === false) {
+          throw new Error('Script error: ' + (verdict.error || 'unknown'));
+        }
+
         // Hand off to the confirmation page. The redirect is what makes the
         // conversion measurable: Google Ads watches for a visit to
         // /thank-you, and an AJAX form that never changes URL gives it

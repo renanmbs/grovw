@@ -25,9 +25,25 @@ const NOTIFY_SUBJECT = 'New lead from mygrowv.com';
 const COLUMNS = ['Date', 'Name', 'Email', 'Phone', 'Message', 'Source', 'Status', 'Notes'];
 
 function doPost(e) {
+  var payload;
   try {
-    const payload = JSON.parse(e.postData.contents);
+    payload = JSON.parse(e.postData.contents);
+  } catch (err) {
+    return reply({ ok: false, error: 'Unreadable payload: ' + err });
+  }
+
+  // The sheet write and the email are independent. They used to be one
+  // try block with the email second, which meant any spreadsheet problem
+  // — a renamed sheet, a revoked permission, a full sheet — silently
+  // swallowed the notification too. The email is the part Jonathan
+  // actually acts on, so it must not depend on the logging succeeding.
+  var sheetUrl = '';
+  var timeZone = Session.getScriptTimeZone();
+  var sheetError = null;
+
+  try {
     const ss = SpreadsheetApp.getActiveSpreadsheet();
+    if (!ss) throw new Error('No bound spreadsheet — is this a standalone script?');
     const sheet = ss.getActiveSheet();
 
     // Add header row the first time the sheet is empty.
@@ -47,9 +63,15 @@ function doPost(e) {
       ''
     ]);
 
-    const sheetUrl = ss.getUrl();
-    const submittedAt = Utilities.formatDate(new Date(), ss.getSpreadsheetTimeZone(), "MMM d, yyyy 'at' h:mm a");
+    sheetUrl = ss.getUrl();
+    timeZone = ss.getSpreadsheetTimeZone();
+  } catch (err) {
+    sheetError = String(err);
+  }
 
+  const submittedAt = Utilities.formatDate(new Date(), timeZone, "MMM d, yyyy 'at' h:mm a");
+
+  try {
     MailApp.sendEmail({
       to: NOTIFY_EMAIL,
       subject: NOTIFY_SUBJECT + (payload.name ? ' — ' + payload.name : ''),
@@ -58,15 +80,30 @@ function doPost(e) {
       replyTo: payload.email || NOTIFY_EMAIL,
       name: 'GROWV Website'
     });
-
-    return ContentService
-      .createTextOutput(JSON.stringify({ ok: true }))
-      .setMimeType(ContentService.MimeType.JSON);
   } catch (err) {
-    return ContentService
-      .createTextOutput(JSON.stringify({ ok: false, error: String(err) }))
-      .setMimeType(ContentService.MimeType.JSON);
+    // Nobody was notified. That is a hard failure — say so, so the site
+    // shows the visitor the fallback address instead of a false thank-you.
+    return reply({ ok: false, error: 'Email failed: ' + err, sheetError: sheetError });
   }
+
+  // Email went out. A sheet problem is reported but does not fail the
+  // submission, because the lead did reach a human.
+  return reply({ ok: true, sheetError: sheetError });
+}
+
+// How many notification emails today's quota still allows. Call this from the
+// Apps Script editor if leads stop arriving — a consumer Gmail account gets
+// 100 recipients a day, Workspace 1,500, and MailApp throws when it runs out.
+function remainingEmailQuota() {
+  const left = MailApp.getRemainingDailyQuota();
+  Logger.log('Emails left today: ' + left);
+  return left;
+}
+
+function reply(obj) {
+  return ContentService
+    .createTextOutput(JSON.stringify(obj))
+    .setMimeType(ContentService.MimeType.JSON);
 }
 
 // Plain-text fallback for clients that block HTML.
