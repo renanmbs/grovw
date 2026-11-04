@@ -11,8 +11,8 @@
    Deliberate behaviour, so none of it looks like a bug later:
      - Time is counted only while the tab is VISIBLE. A tab left
        open in the background does not trip it.
-     - The count is cumulative across pages in the visit, so
-       someone who browses three sections still hits 2:00.
+     - The count is cumulative, and never resets: someone who
+       spent 30s here yesterday is gated 15s into today.
      - Anyone who already registered, or already sent the
        contact form, never sees it again.
      - It never runs on /thank-you.html — they have just
@@ -24,7 +24,7 @@ const GATE = {
   ENABLED: true,
 
   // Active seconds before the gate appears.
-  DELAY_SECONDS: 120,
+  DELAY_SECONDS: 45,
 
   // false = a true gate: no close button, ESC does nothing.
   // true  = adds a "Continue browsing" link that dismisses it for the visit.
