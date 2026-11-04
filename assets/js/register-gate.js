@@ -86,6 +86,7 @@ const GATE = {
     function open() {
       clearInterval(tick);
       if (dlg.open || alreadyRegistered()) return;
+      prefill();
       dlg.showModal();
       document.documentElement.classList.add('gate-open');
       document.body.classList.add('gate-open');
@@ -185,6 +186,66 @@ const GATE = {
 
     // English is always the default, including for a Spanish-set browser.
     // The maroon pulsing Español button is how a Spanish speaker switches.
+
+    /* ---------- prefill ---------- */
+    // Three ways to know who this is before they type, best first. None of
+    // them can discover a stranger's identity — there is no browser API for
+    // that — but between them most returning and emailed visitors arrive
+    // with the fields already filled.
+    //
+    //   1. autocomplete="name|email|tel" on the inputs. The browser's own
+    //      autofill does the work, from the contact card the person already
+    //      saved. Nothing to code; it is why those attributes are there.
+    //   2. Anything they typed here before, on this device.
+    //   3. ?name=&email=&phone= on the link, so a campaign email to the
+    //      existing database arrives pre-filled.
+    const KEY_WHO = 'growv_known_contact';
+
+    const readKnown = () => {
+      try { return JSON.parse(get(KEY_WHO) || '{}'); } catch (_) { return {}; }
+    };
+
+    const remember = () => {
+      const who = { name: val('name'), email: val('email'), phone: val('phone') };
+      if (!who.name && !who.email && !who.phone) return;
+      set(KEY_WHO, JSON.stringify(who));
+    };
+
+    function prefill() {
+      const known = readKnown();
+      const params = new URLSearchParams(location.search);
+      let fromUrl = false;
+
+      ['name', 'email', 'phone'].forEach((k) => {
+        const field = form.elements[k];
+        if (!field || field.value) return;
+        // A link parameter is more current than anything cached locally.
+        const v = (params.get(k) || known[k] || '').trim();
+        if (!v) return;
+        field.value = v;
+        if (params.get(k)) fromUrl = true;
+      });
+
+      // Take the details back out of the address bar once they are in the
+      // form: a URL carrying someone's email gets copied, pasted, shared and
+      // sent along in referrer headers. Reading it once is useful; leaving it
+      // on screen is not.
+      if (fromUrl) {
+        ['name', 'email', 'phone'].forEach((k) => params.delete(k));
+        const q = params.toString();
+        history.replaceState(null, '', location.pathname + (q ? '?' + q : '') + location.hash);
+      }
+
+      if (val('name') || val('email')) {
+        if (window.growvTrack) window.growvTrack('gate_prefilled', { from: fromUrl ? 'link' : 'device' });
+      }
+    }
+
+    // Keep what they type, so a second visit starts further along.
+    ['name', 'email', 'phone'].forEach((k) => {
+      const field = form.elements[k];
+      if (field) field.addEventListener('change', remember);
+    });
 
     /* ---------- payload ---------- */
     // The criteria fold into `message` rather than becoming new fields: the
@@ -320,6 +381,7 @@ const GATE = {
         if (verdict && verdict.ok === false) throw new Error(verdict.error || 'unknown');
 
         sent = true;   // don't also fire a partial on the way out
+        remember();
         set(KEY_DONE, String(Date.now() + GATE.REMEMBER_DAYS * 864e5));
         if (window.growvTrack) {
           window.growvTrack('generate_lead', { form: 'registration-gate', value: 1 }, 'Lead');

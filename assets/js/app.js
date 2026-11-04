@@ -491,6 +491,14 @@
           throw new Error('Script error: ' + (verdict.error || 'unknown'));
         }
 
+        // Share what they told us with the registration gate, so someone who
+        // used the contact form first never retypes their details.
+        try {
+          window.localStorage.setItem('growv_known_contact', JSON.stringify({
+            name: data.name, email: data.email, phone: data.phone,
+          }));
+        } catch (_) {}
+
         // Hand off to the confirmation page. The redirect is what makes the
         // conversion measurable: Google Ads watches for a visit to
         // /thank-you, and an AJAX form that never changes URL gives it
