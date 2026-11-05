@@ -61,6 +61,16 @@
       phone: '801-347-1054',
       ure: 'https://www.utahrealestate.com'
     },
+    {
+      name: 'Veronica Toro',
+      role: 'Real Estate Agent',
+      // bio: add a short bio here — the card renders fine without one.
+      photo: 'assets/images/veronica-toro.jpg',
+      photoSm: 'assets/images/veronica-toro-sm.jpg',
+      phone: '801-941-1591',
+      email: 'vtoro4@gmail.com',
+      ure: 'https://www.utahrealestate.com'
+    },
     // ---- Placeholder roles temporarily hidden until real agents join. ----
     // To restore: uncomment the objects below (or any subset), then refresh.
     // {

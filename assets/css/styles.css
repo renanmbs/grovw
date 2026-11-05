@@ -770,9 +770,11 @@ html.is-nav-open .site-header {
   gap: clamp(1.5rem, 3vw, 2.25rem);
   grid-template-columns: 1fr;
 }
+/* Column counts are even numbers on purpose. With a four-person team a
+   three-column band (which used to run 1024-1439px, covering most laptops)
+   left the fourth agent stranded alone on a second row. */
 @media (min-width: 600px)  { .team-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 1024px) { .team-grid { grid-template-columns: repeat(3, 1fr); } }
-@media (min-width: 1440px) { .team-grid { grid-template-columns: repeat(4, 1fr); } }
+@media (min-width: 1200px) { .team-grid { grid-template-columns: repeat(4, 1fr); } }
 
 /* When only one agent is present (placeholders hidden) — keep the card
    at a portrait-friendly width and center it instead of stretching to a full row.
