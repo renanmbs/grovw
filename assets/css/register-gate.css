@@ -15,17 +15,19 @@
   max-width:min(540px,calc(100vw - 2rem));width:100%;
   color:rgba(255,255,255,.92);
 }
+/* Deliberately light, and no blur. The site stays readable behind the
+   panel — the form sits on top of the page rather than replacing it, so
+   someone can still see what they would be registering to get at. The
+   panel's own shadow and solid fill do the separating. */
 .gate::backdrop{
-  background:rgba(8,16,12,.86);
-  backdrop-filter:blur(7px);
-  -webkit-backdrop-filter:blur(7px);
+  background:rgba(8,16,12,.38);
 }
 
 .gate__inner{
   background:var(--ink-2);
   border:1px solid var(--ink-line);
   border-top:2px solid var(--gold);
-  box-shadow:0 30px 80px rgba(0,0,0,.6);
+  box-shadow:0 40px 90px rgba(0,0,0,.7), 0 0 0 1px rgba(0,0,0,.35);
   /* The form is long enough to overrun a laptop in landscape, so the
      panel scrolls internally rather than the page behind it. */
   max-height:min(92svh,860px);overflow-y:auto;overscroll-behavior:contain;

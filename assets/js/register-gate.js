@@ -12,7 +12,7 @@
      - Time is counted only while the tab is VISIBLE. A tab left
        open in the background does not trip it.
      - Dismissing it restarts the clock, so it comes back after
-       another DELAY_SECONDS rather than going away.
+       RETURN_AFTER_SECONDS rather than going away.
      - Anyone who already registered, or already sent the
        contact form, never sees it again.
      - It never runs on /thank-you.html — they have just
@@ -30,6 +30,11 @@ const GATE = {
   // there is no way out — not the X, not Escape. Set to 0 to show the X
   // immediately; raise it to hold people longer.
   EXIT_AFTER_SECONDS: 8,
+
+  // Seconds of browsing between a dismissal and the gate coming back.
+  // Separate from DELAY_SECONDS so the first ask can land sooner than the
+  // repeats do — being asked again should feel less frequent, not equal.
+  RETURN_AFTER_SECONDS: 60,
 
   // Remembered for this many days once someone registers.
   REMEMBER_DAYS: 180,
@@ -74,8 +79,8 @@ const GATE = {
     /* ---------- the clock ---------- */
     // The gate is persistent rather than final: it opens after
     // DELAY_SECONDS of browsing, refuses to close for EXIT_AFTER_SECONDS,
-    // then offers an X. Closing it just restarts the clock, so it returns
-    // every DELAY_SECONDS until they register.
+    // then offers an X. Closing it restarts the clock, and every
+    // appearance after the first waits RETURN_AFTER_SECONDS instead.
     let onScreen = 0;     // seconds the gate has been visible this time
     let shown = 0;        // how many times it has opened this page load
 
@@ -98,7 +103,8 @@ const GATE = {
 
       seconds += 1;
       set(KEY_TIME, String(seconds));
-      if (seconds >= GATE.DELAY_SECONDS) open();
+      const threshold = shown === 0 ? GATE.DELAY_SECONDS : GATE.RETURN_AFTER_SECONDS;
+      if (seconds >= threshold) open();
     }, 1000);
 
     function open() {
@@ -106,7 +112,7 @@ const GATE = {
       onScreen = 0;
       shown += 1;
       // Measure from the last appearance, not from the first ever visit,
-      // so dismissing it genuinely buys DELAY_SECONDS of quiet.
+      // so dismissing it genuinely buys a full quiet stretch.
       seconds = 0;
       set(KEY_TIME, '0');
       closeBtn.hidden = true;
