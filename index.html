@@ -480,10 +480,23 @@
     <span>¿Español? ¡Claro que Sí!</span>
   </a>
 
-  <!-- Registration gate. Shown by register-gate.js after 45 seconds of
-       active time on the site; the details post to the same endpoint as the
-       contact form, tagged source "registration-gate". -->
+  <!-- Registration gate. Opens after 45 seconds of active browsing, can be
+       closed once the X appears 8 seconds later, and returns 45 seconds
+       after each dismissal until they register. The details post to the same
+       endpoint as the contact form, tagged source "registration-gate". -->
   <dialog class="gate" id="registerGate" aria-labelledby="gateTitle" closedby="none">
+
+    <!-- Revealed by register-gate.js once the gate has been on screen for
+         EXIT_AFTER_SECONDS. A sibling of .gate__inner, not a child, because
+         the inner panel scrolls and this must stay pinned to the corner. -->
+    <button type="button" class="gate__x" id="gateClose" hidden
+            aria-label="Close" data-al-en="Close" data-al-es="Cerrar">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+
     <div class="gate__inner">
 
       <!-- The Español button is the Spanish signal on this panel: maroon
@@ -590,11 +603,6 @@
 
         <p class="gate__status" id="gateStatus" role="status" aria-live="polite"></p>
       </form>
-
-      <!-- Revealed by register-gate.js part-way through the first pass.
-           The second pass does not show it. -->
-      <button type="button" class="gate__later" id="gateLater" hidden
-              data-en="Continue browsing" data-es="Seguir navegando">Continue browsing</button>
 
       <p class="gate__fine"
          data-en="We use your details to contact you about Utah real estate. We don&rsquo;t sell them. Prefer to just talk? Call (801) 888-8817."

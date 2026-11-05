@@ -11,8 +11,8 @@
    Deliberate behaviour, so none of it looks like a bug later:
      - Time is counted only while the tab is VISIBLE. A tab left
        open in the background does not trip it.
-     - The count is cumulative, and never resets: someone who
-       spent 30s here yesterday is gated 15s into today.
+     - Dismissing it restarts the clock, so it comes back after
+       another DELAY_SECONDS rather than going away.
      - Anyone who already registered, or already sent the
        contact form, never sees it again.
      - It never runs on /thank-you.html — they have just
@@ -26,16 +26,10 @@ const GATE = {
   // Active seconds of browsing before the gate first appears.
   DELAY_SECONDS: 45,
 
-  // The gate runs in two passes.
-  //
-  // Pass one is escapable: after this many seconds a "Continue browsing"
-  // link fades in. Set to 0 to make the very first pass inescapable.
-  EXIT_AFTER_SECONDS: 25,
-
-  // Pass two comes back this many seconds after they escaped pass one,
-  // and has no way out. Reloading the page is the only exit, and that
-  // buys them another DELAY_SECONDS before pass one starts again.
-  RETURN_AFTER_SECONDS: 60,
+  // Seconds the gate must be on screen before the X appears. Until then
+  // there is no way out — not the X, not Escape. Set to 0 to show the X
+  // immediately; raise it to hold people longer.
+  EXIT_AFTER_SECONDS: 8,
 
   // Remembered for this many days once someone registers.
   REMEMBER_DAYS: 180,
@@ -77,64 +71,51 @@ const GATE = {
     const label  = button.querySelector('span');
     const originalLabel = label.textContent;
 
-    /* ---------- the clock and the two passes ---------- */
-    // stage lives in memory on purpose, so a refresh wipes it. That is what
-    // makes "reload to get out" true: pass two is otherwise inescapable, and
-    // a reload drops the visitor back to stage 0 with a fresh grace period.
-    //   0 = not yet shown
-    //   1 = pass one open (escapable once EXIT_AFTER_SECONDS elapses)
-    //   2 = escaped pass one, waiting out RETURN_AFTER_SECONDS
-    //   3 = pass two open, no way out
-    let stage = 0;
-    let inGate = 0;       // seconds the current pass has been on screen
-    let waiting = 0;      // seconds since they escaped pass one
+    /* ---------- the clock ---------- */
+    // The gate is persistent rather than final: it opens after
+    // DELAY_SECONDS of browsing, refuses to close for EXIT_AFTER_SECONDS,
+    // then offers an X. Closing it just restarts the clock, so it returns
+    // every DELAY_SECONDS until they register.
+    let onScreen = 0;     // seconds the gate has been visible this time
+    let shown = 0;        // how many times it has opened this page load
 
     let seconds = parseInt(get(KEY_TIME) || '0', 10);
     if (!Number.isFinite(seconds) || seconds < 0) seconds = 0;
 
-    const later = dlg.querySelector('#gateLater');
+    const closeBtn = dlg.querySelector('#gateClose');
 
     setInterval(() => {
       if (document.visibilityState !== 'visible') return;   // background tabs don't count
 
       if (dlg.open) {
-        inGate += 1;
-        // Reveal the exit on pass one only, and only once.
-        if (stage === 1 && GATE.EXIT_AFTER_SECONDS > 0
-            && inGate >= GATE.EXIT_AFTER_SECONDS && later.hidden) {
-          later.hidden = false;
+        onScreen += 1;
+        if (GATE.EXIT_AFTER_SECONDS >= 0
+            && onScreen >= GATE.EXIT_AFTER_SECONDS && closeBtn.hidden) {
+          closeBtn.hidden = false;
         }
-        return;
+        return;   // time spent looking at a modal is not browsing time
       }
 
-      if (stage === 2) {
-        waiting += 1;
-        if (waiting >= GATE.RETURN_AFTER_SECONDS) open(3);
-        return;
-      }
-
-      // Browsing time only counts while no pass is on screen.
       seconds += 1;
       set(KEY_TIME, String(seconds));
-      if (stage === 0 && seconds >= GATE.DELAY_SECONDS) open(1);
+      if (seconds >= GATE.DELAY_SECONDS) open();
     }, 1000);
 
-    function open(nextStage) {
+    function open() {
       if (dlg.open || alreadyRegistered()) return;
-      stage = nextStage;
-      inGate = 0;
-      // The counter measures time since the last pass, not time since the
-      // first ever visit — otherwise a reload would re-trigger instantly
-      // and "reload to get out" would be a lie.
+      onScreen = 0;
+      shown += 1;
+      // Measure from the last appearance, not from the first ever visit,
+      // so dismissing it genuinely buys DELAY_SECONDS of quiet.
       seconds = 0;
       set(KEY_TIME, '0');
-      later.hidden = true;
+      closeBtn.hidden = true;
 
       prefill();
       dlg.showModal();
       document.documentElement.classList.add('gate-open');
       document.body.classList.add('gate-open');
-      if (window.growvTrack) window.growvTrack('view_gate', { pass: stage === 3 ? 2 : 1 });
+      if (window.growvTrack) window.growvTrack('view_gate', { shown: shown });
     }
 
     function close() {
@@ -143,21 +124,21 @@ const GATE = {
       document.body.classList.remove('gate-open');
     }
 
-    const escapable = () => stage === 1 && !later.hidden;
+    // Closable only once the X is showing.
+    const escapable = () => !closeBtn.hidden;
 
-    // Keeping a modal <dialog> open is surprisingly hard. Three layers,
+    // Keeping a modal <dialog> shut is surprisingly hard. Three layers,
     // because the first two are not reliable on their own:
     //   1. closedby="none" — the modern, declarative way (set in the HTML).
     //   2. preventDefault on 'cancel' — the older way. Chrome still closes
-    //      the dialog on ESC in some builds despite it.
+    //      the dialog on Escape in some builds despite it.
     //   3. re-open on 'close' — the backstop that actually holds.
     dlg.addEventListener('cancel', (e) => {
       if (!escapable()) e.preventDefault();
     });
 
     dlg.addEventListener('close', () => {
-      if (alreadyRegistered()) return;
-      if (stage === 2) return;              // they took the exit, let it close
+      if (alreadyRegistered() || escapable()) return;
       requestAnimationFrame(() => {
         if (!dlg.open) {
           dlg.showModal();
@@ -167,11 +148,9 @@ const GATE = {
       });
     });
 
-    later.addEventListener('click', () => {
+    closeBtn.addEventListener('click', () => {
       if (!escapable()) return;
-      stage = 2;
-      waiting = 0;
-      if (window.growvTrack) window.growvTrack('gate_dismissed', { pass: 1 });
+      if (window.growvTrack) window.growvTrack('gate_dismissed', { shown: shown });
       close();
     });
 
@@ -199,6 +178,11 @@ const GATE = {
       });
       dlg.querySelectorAll('[data-ph-' + lang + ']').forEach((el) => {
         el.setAttribute('placeholder', decode(el.getAttribute('data-ph-' + lang)));
+      });
+      // The X has no text, so its label is the only thing a screen reader
+      // gets — it has to switch languages with everything else.
+      dlg.querySelectorAll('[data-al-' + lang + ']').forEach((el) => {
+        el.setAttribute('aria-label', decode(el.getAttribute('data-al-' + lang)));
       });
       dlg.querySelectorAll('.gate__langbtn').forEach((b) => {
         const on = b.dataset.lang === lang;

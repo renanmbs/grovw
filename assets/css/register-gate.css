@@ -10,6 +10,7 @@
    ========================================================= */
 
 .gate{
+  position:relative;
   border:0;padding:0;background:transparent;
   max-width:min(540px,calc(100vw - 2rem));width:100%;
   color:rgba(255,255,255,.92);
@@ -145,20 +146,23 @@
 }
 .gate__fine a{color:rgba(255,255,255,.7)}
 
-/* The first pass's exit. Hidden in the markup, revealed by the script
-   part-way through; it fades in rather than appearing, so someone who was
-   mid-sentence notices it arrive instead of finding it already there. */
-.gate__later{
-  display:block;margin:var(--space-4) auto 0;background:none;border:0;
-  font-family:var(--f-body);font-size:.78rem;letter-spacing:.14em;
-  text-transform:uppercase;color:rgba(255,255,255,.45);
-  cursor:pointer;text-decoration:underline;text-underline-offset:3px;
-  animation:gate-later-in .5s var(--ease-out) both;
+/* The X. Hidden in the markup, revealed by the script after a few
+   seconds; it fades in rather than appearing, so someone mid-sentence
+   notices it arrive instead of finding it already there. */
+.gate__x{
+  position:absolute;top:.6rem;right:.6rem;z-index:3;
+  width:38px;height:38px;display:grid;place-items:center;
+  background:rgba(0,0,0,.35);border:1px solid var(--ink-line);border-radius:50%;
+  color:rgba(255,255,255,.7);cursor:pointer;
+  animation:gate-x-in .45s var(--ease-out) both;
+  transition:color .2s var(--ease-out),background .2s var(--ease-out),border-color .2s var(--ease-out);
 }
-.gate__later[hidden]{display:none}
-.gate__later:hover{color:rgba(255,255,255,.8)}
-@keyframes gate-later-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-@media (prefers-reduced-motion:reduce){.gate__later{animation:none}}
+.gate__x[hidden]{display:none}
+.gate__x svg{width:17px;height:17px;display:block}
+.gate__x:hover{color:#fff;background:rgba(0,0,0,.6);border-color:rgba(255,255,255,.3)}
+.gate__x:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+@keyframes gate-x-in{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.gate__x{animation:none}}
 
 /* While the gate is open the page behind it must not scroll. */
 html.gate-open,body.gate-open{overflow:hidden}
