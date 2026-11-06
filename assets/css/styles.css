@@ -828,7 +828,26 @@ html.is-nav-open .site-header {
 }
 .agent__role {
   font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold);
+  display: flex; align-items: center; gap: 0.6rem;
 }
+
+/* Sits above .agent__cover, which is stretched across the whole card at
+   z-index 2 — without its own stacking context this link would be under
+   the cover and unclickable. */
+.agent__social {
+  position: relative; z-index: 3;
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px; flex: 0 0 auto;
+  border-radius: 50%;
+  color: var(--gold-2);
+  border: 1px solid rgba(191,161,100,0.3);
+  transition: color .25s var(--ease-out), border-color .25s var(--ease-out), background .25s var(--ease-out);
+}
+.agent__social svg { width: 14px; height: 14px; display: block; }
+.agent__social:hover {
+  color: #fff; border-color: var(--gold); background: var(--gold-soft);
+}
+.agent__social:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 .agent__name {
   font-family: var(--f-display); font-weight: 500;
   font-size: clamp(1.4rem, 1.4vw + 0.7rem, 1.8rem);

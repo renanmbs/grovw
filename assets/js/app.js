@@ -40,7 +40,9 @@
       bio: 'A decade across lending, property management, and negotiation. Bilingual EN/ES. Personally accountable on every transaction.',
       photo: 'assets/images/jonathan-headshot.jpg',
       photoSm: 'assets/images/jonathan-headshot-sm.jpg',
-      url: 'https://jonathanperez.site/'
+      url: 'https://jonathanperez.site/',
+      instagram: 'https://www.instagram.com/just_jonathanperez',
+      reviews: 'https://g.page/r/CWuFuCoU51YeEAE/review'
     },
     {
       name: 'Stefanie Godinez',
@@ -127,6 +129,34 @@
     );
 
   /* ---------- Render team grid ---------- */
+  // Small icon links that sit beside an agent's role. Any agent can have
+  // either; today only Jonathan does. The star is deliberate — Google's own
+  // mark is theirs, and a star is what "leave a review" actually means.
+  const SOCIAL_ICONS = {
+    instagram: {
+      label: 'on Instagram',
+      svg: `<rect x="2.5" y="2.5" width="19" height="19" rx="5.5" fill="none" stroke="currentColor" stroke-width="1.8"/>
+            <circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.8"/>
+            <circle cx="17.4" cy="6.6" r="1.25" fill="currentColor"/>`
+    },
+    reviews: {
+      label: '\u2014 leave a Google review',
+      svg: `<path d="M12 2.9l2.72 5.52 6.09.89-4.4 4.29 1.04 6.06L12 16.79l-5.45 2.87 1.04-6.06-4.4-4.29 6.09-.89z"
+                  fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>`
+    }
+  };
+
+  const socialLinks = (a) => Object.keys(SOCIAL_ICONS)
+    .filter((k) => a[k])
+    .map((k) => {
+      const icon = SOCIAL_ICONS[k];
+      return `<a class="agent__social" href="${escapeHTML(a[k])}"
+           target="_blank" rel="noopener noreferrer"
+           aria-label="${escapeHTML(a.name)} ${escapeHTML(icon.label)} (opens in a new tab)">
+           <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">${icon.svg}</svg>
+         </a>`;
+    }).join('');
+
   const renderTeam = () => {
     const grid = $('#teamGrid');
     if (!grid) return;
@@ -169,7 +199,10 @@
                  loading="lazy" decoding="async" width="900" height="1125">
           </div>
           <div class="agent__body">
-            <p class="agent__role">${escapeHTML(a.role)}</p>
+            <p class="agent__role">
+              ${escapeHTML(a.role)}
+              ${socialLinks(a)}
+            </p>
             <h3 class="agent__name">${escapeHTML(a.name)}</h3>
             ${a.bio ? `<p class="agent__bio">${escapeHTML(a.bio)}</p>` : ''}
             <span class="agent__link" aria-hidden="true">${escapeHTML(cardLabel)}</span>

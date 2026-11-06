@@ -72,6 +72,16 @@ const CONFIG = {
   const on = (sel, ev, fn) => document.querySelectorAll(sel)
     .forEach((el) => el.addEventListener(ev, () => fn(el)));
 
+  // For anything app.js renders. This file is deferred ahead of app.js, so
+  // both DOMContentLoaded handlers are queued in load order and ours runs
+  // FIRST — before renderTeam() has put the team cards in the DOM. A direct
+  // querySelectorAll binding therefore matches nothing and the events never
+  // fire. Delegating from the document avoids depending on that ordering.
+  const onLive = (sel, ev, fn) => document.addEventListener(ev, (e) => {
+    const el = e.target.closest?.(sel);
+    if (el) fn(el);
+  });
+
   document.addEventListener('DOMContentLoaded', () => {
     // Phone taps — the highest-intent action on a real estate site.
     on('a[href^="tel:"]', 'click', (el) => track('contact_call', {
@@ -107,8 +117,17 @@ const CONFIG = {
       track('outbound_listings', { destination });
     });
 
-    // Agent cards opening the contact dialog.
-    on('.agent__cover[data-agent]', 'click', (el) => {
+    // Social and review links on the agent cards — rendered by app.js.
+    onLive('.agent__social', 'click', (el) => {
+      const name = el.closest('.agent')?.querySelector('.agent__name')?.textContent.trim();
+      const href = el.getAttribute('href') || '';
+      const network = href.indexOf('instagram.com') !== -1 ? 'instagram'
+                    : href.indexOf('g.page') !== -1 ? 'google_reviews' : 'other';
+      track('outbound_social', { network, agent: name });
+    });
+
+    // Agent cards opening the contact dialog — also rendered by app.js.
+    onLive('.agent__cover[data-agent]', 'click', (el) => {
       const name = el.closest('.agent')?.querySelector('.agent__name')?.textContent.trim();
       track('view_agent', { agent: name });
     });
