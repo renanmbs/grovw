@@ -129,33 +129,54 @@
     );
 
   /* ---------- Render team grid ---------- */
-  // Small icon links that sit beside an agent's role. Any agent can have
-  // either; today only Jonathan does. The star is deliberate — Google's own
-  // mark is theirs, and a star is what "leave a review" actually means.
-  const SOCIAL_ICONS = {
-    instagram: {
-      label: 'on Instagram',
-      svg: `<rect x="2.5" y="2.5" width="19" height="19" rx="5.5" fill="none" stroke="currentColor" stroke-width="1.8"/>
-            <circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.8"/>
-            <circle cx="17.4" cy="6.6" r="1.25" fill="currentColor"/>`
-    },
-    reviews: {
-      label: '\u2014 leave a Google review',
-      svg: `<path d="M12 2.9l2.72 5.52 6.09.89-4.4 4.29 1.04 6.06L12 16.79l-5.45 2.87 1.04-6.06-4.4-4.29 6.09-.89z"
-                  fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>`
-    }
+  // Small brand icon links beside an agent's role. Any agent can have
+  // either; today only Jonathan does. Drawn in each platform's own colours
+  // so they are recognised at a glance rather than read.
+  //
+  // The Instagram gradient needs an id, and ids must be unique in a
+  // document — if a second agent ever gets an Instagram link, two <svg>s
+  // with the same gradient id would make the second one render wrong. So
+  // the id is suffixed with the agent's index.
+  const socialIcon = {
+    instagram: (i) => `
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <defs>
+          <linearGradient id="ig-${i}" x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%"   stop-color="#FFD521"/>
+            <stop offset="25%"  stop-color="#F50000"/>
+            <stop offset="60%"  stop-color="#B900B4"/>
+            <stop offset="100%" stop-color="#4F5BD5"/>
+          </linearGradient>
+        </defs>
+        <rect width="24" height="24" rx="6.4" fill="url(#ig-${i})"/>
+        <rect x="5.1" y="5.1" width="13.8" height="13.8" rx="4.3"
+              fill="none" stroke="#fff" stroke-width="1.7"/>
+        <circle cx="12" cy="12" r="3.3" fill="none" stroke="#fff" stroke-width="1.7"/>
+        <circle cx="16.9" cy="7.2" r="1.15" fill="#fff"/>
+      </svg>`,
+
+    // Google's own four-colour G, on white so it reads against the dark card.
+    reviews: () => `
+      <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+        <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+        <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+        <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+        <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+      </svg>`
   };
 
-  const socialLinks = (a) => Object.keys(SOCIAL_ICONS)
+  const SOCIAL_LABEL = {
+    instagram: 'on Instagram',
+    reviews: '\u2014 leave a Google review'
+  };
+
+  const socialLinks = (a, i) => Object.keys(socialIcon)
     .filter((k) => a[k])
-    .map((k) => {
-      const icon = SOCIAL_ICONS[k];
-      return `<a class="agent__social" href="${escapeHTML(a[k])}"
-           target="_blank" rel="noopener noreferrer"
-           aria-label="${escapeHTML(a.name)} ${escapeHTML(icon.label)} (opens in a new tab)">
-           <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">${icon.svg}</svg>
-         </a>`;
-    }).join('');
+    .map((k) => `<a class="agent__social agent__social--${k}" href="${escapeHTML(a[k])}"
+         target="_blank" rel="noopener noreferrer"
+         aria-label="${escapeHTML(a.name)} ${escapeHTML(SOCIAL_LABEL[k])} (opens in a new tab)">
+         ${socialIcon[k](i)}
+       </a>`).join('');
 
   const renderTeam = () => {
     const grid = $('#teamGrid');
@@ -201,7 +222,7 @@
           <div class="agent__body">
             <p class="agent__role">
               ${escapeHTML(a.role)}
-              ${socialLinks(a)}
+              ${socialLinks(a, i)}
             </p>
             <h3 class="agent__name">${escapeHTML(a.name)}</h3>
             ${a.bio ? `<p class="agent__bio">${escapeHTML(a.bio)}</p>` : ''}

@@ -1,7 +1,8 @@
 /* =========================================================
    GROWV — registration gate
    ---------------------------------------------------------
-   After DELAY_SECONDS of ACTIVE time on the site, a modal asks
+   Opens on two triggers: DELAY_SECONDS of ACTIVE time on the site,
+   or a click on anything marked data-gate-listings. A modal asks
    for name, email and phone before the visitor can carry on.
    The details go to the same Apps Script endpoint the contact
    form uses, so they land in the lead sheet and email
@@ -156,6 +157,9 @@ const GATE = {
 
     closeBtn.addEventListener('click', () => {
       if (!escapable()) return;
+      // Closing means they chose not to register, so the listings trip is
+      // off; they stay where they are rather than being sent anyway.
+      pendingHref = null;
       if (window.growvTrack) window.growvTrack('gate_dismissed', { shown: shown });
       close();
     });
@@ -272,6 +276,22 @@ const GATE = {
     ['name', 'email', 'phone'].forEach((k) => {
       const field = form.elements[k];
       if (field) field.addEventListener('change', remember);
+    });
+
+    /* ---------- the listings link ---------- */
+    // Clicking "View Properties" is the strongest signal of intent on the
+    // page, so it asks before handing them to the portal rather than
+    // waiting out the clock. Registered visitors never reach this — the
+    // whole script returns early for them, so the link behaves normally.
+    let pendingHref = null;
+
+    document.addEventListener('click', (e) => {
+      const link = e.target.closest?.('[data-gate-listings]');
+      if (!link || dlg.open) return;
+      e.preventDefault();
+      pendingHref = link.href;
+      open();
+      if (window.growvTrack) window.growvTrack('gate_from_listings_click', {});
     });
 
     /* ---------- payload ---------- */
@@ -413,7 +433,21 @@ const GATE = {
         if (window.growvTrack) {
           window.growvTrack('generate_lead', { form: 'registration-gate', value: 1 }, 'Lead');
         }
-        setStatus('success', 'Thank you — you’re all set.');
+        if (pendingHref) {
+          // They were on their way to the listings. Send them, in this tab:
+          // a window.open() here is no longer inside the click gesture, so
+          // popup blockers would eat it.
+          setStatus('success', current === 'es'
+            ? 'Gracias — abriendo las propiedades…'
+            : 'Thank you — opening properties…');
+          const href = pendingHref;
+          pendingHref = null;
+          setTimeout(() => { window.location.href = href; }, 900);
+          return;
+        }
+        setStatus('success', current === 'es'
+          ? 'Gracias — ya está registrado.'
+          : 'Thank you — you’re all set.');
         setTimeout(close, 700);
       } catch (err) {
         setStatus('error', current === 'es'

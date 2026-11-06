@@ -833,21 +833,30 @@ html.is-nav-open .site-header {
 
 /* Sits above .agent__cover, which is stretched across the whole card at
    z-index 2 — without its own stacking context this link would be under
-   the cover and unclickable. */
+   the cover and unclickable. Each icon carries its platform's own colours,
+   so the container stays out of the way rather than tinting them gold. */
 .agent__social {
   position: relative; z-index: 3;
   display: inline-flex; align-items: center; justify-content: center;
   width: 26px; height: 26px; flex: 0 0 auto;
-  border-radius: 50%;
-  color: var(--gold-2);
-  border: 1px solid rgba(191,161,100,0.3);
-  transition: color .25s var(--ease-out), border-color .25s var(--ease-out), background .25s var(--ease-out);
+  transition: transform .25s var(--ease-out), box-shadow .25s var(--ease-out);
 }
-.agent__social svg { width: 14px; height: 14px; display: block; }
-.agent__social:hover {
-  color: #fff; border-color: var(--gold); background: var(--gold-soft);
+.agent__social svg { width: 100%; height: 100%; display: block; }
+.agent__social:hover { transform: translateY(-2px); }
+.agent__social:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+
+/* The gradient tile is the Instagram mark itself, so it just needs the
+   app-icon corner radius. */
+.agent__social--instagram { border-radius: 7px; overflow: hidden; }
+.agent__social--instagram:hover { box-shadow: 0 4px 14px rgba(185,0,180,0.45); }
+
+/* Google's G is drawn for light backgrounds — on the dark card it needs a
+   white disc under it or the blue and the red disappear. */
+.agent__social--reviews {
+  background: #fff; border-radius: 50%; padding: 5px;
 }
-.agent__social:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.agent__social--reviews:hover { box-shadow: 0 4px 14px rgba(66,133,244,0.45); }
+
 .agent__name {
   font-family: var(--f-display); font-weight: 500;
   font-size: clamp(1.4rem, 1.4vw + 0.7rem, 1.8rem);

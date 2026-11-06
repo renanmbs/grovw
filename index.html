@@ -133,7 +133,11 @@
           </h1>
         </div>
         <div class="hero__actions">
-          <a class="cta cta--gold" href="https://www.utahrealestate.com/" target="_blank" rel="noopener noreferrer">
+          <!-- data-gate-listings: register-gate.js intercepts this click and
+               asks for details first. Registered visitors follow it straight
+               through, and so does everyone if the gate is switched off. -->
+          <a class="cta cta--gold" href="https://www.utahrealestate.com/" data-gate-listings
+             target="_blank" rel="noopener noreferrer">
             View Properties<span class="sr-only"> (opens in a new tab)</span>
           </a>
         </div>
