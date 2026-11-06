@@ -828,7 +828,12 @@ html.is-nav-open .site-header {
 }
 .agent__role {
   font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold);
-  display: flex; align-items: center; gap: 0.6rem;
+}
+
+/* Their own row beneath the bio. */
+.agent__socials {
+  display: flex; align-items: center; gap: 0.5rem;
+  margin-top: 0.85rem;
 }
 
 /* Sits above .agent__cover, which is stretched across the whole card at

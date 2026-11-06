@@ -220,12 +220,13 @@
                  loading="lazy" decoding="async" width="900" height="1125">
           </div>
           <div class="agent__body">
-            <p class="agent__role">
-              ${escapeHTML(a.role)}
-              ${socialLinks(a, i)}
-            </p>
+            <p class="agent__role">${escapeHTML(a.role)}</p>
             <h3 class="agent__name">${escapeHTML(a.name)}</h3>
             ${a.bio ? `<p class="agent__bio">${escapeHTML(a.bio)}</p>` : ''}
+            ${(() => {
+              const links = socialLinks(a, i);
+              return links ? `<div class="agent__socials">${links}</div>` : '';
+            })()}
             <span class="agent__link" aria-hidden="true">${escapeHTML(cardLabel)}</span>
           </div>
           ${hasContact
