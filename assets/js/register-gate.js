@@ -71,6 +71,11 @@ const GATE = {
     const dlg = document.getElementById('registerGate');
     if (!dlg || typeof dlg.showModal !== 'function') return;
 
+    // Set when the gate was opened by a click on the listings link; it
+    // decides both the copy the panel shows and where they go afterwards.
+    // Declared here because setLang, defined below, reads it.
+    let pendingHref = null;
+
     const form   = dlg.querySelector('#gateForm');
     const status = dlg.querySelector('#gateStatus');
     const button = dlg.querySelector('#gateSubmit');
@@ -117,6 +122,9 @@ const GATE = {
       seconds = 0;
       set(KEY_TIME, '0');
       closeBtn.hidden = true;
+      // Re-render the copy: the generic introduction for the timer, the
+      // listings wording when they clicked through to the portal.
+      setLang(current);
 
       prefill();
       dlg.showModal();
@@ -170,8 +178,14 @@ const GATE = {
     // title splits the second half into the gold italic line.
     const setLang = (lang) => {
       const attr = 'data-' + lang;
+      // Opened from "View Properties"? Prefer the -alt copy where an element
+      // has it, so the panel speaks to what they just clicked instead of
+      // giving the generic introduction.
+      const altAttr = attr + '-alt';
       dlg.querySelectorAll('[' + attr + ']').forEach((el) => {
-        const text = el.getAttribute(attr);
+        const text = (pendingHref && el.hasAttribute(altAttr))
+          ? el.getAttribute(altAttr)
+          : el.getAttribute(attr);
         if (text == null) return;
         if (el === dlg.querySelector('#gateTitle')) {
           const [a, b] = text.split('|');
@@ -283,8 +297,6 @@ const GATE = {
     // page, so it asks before handing them to the portal rather than
     // waiting out the clock. Registered visitors never reach this — the
     // whole script returns early for them, so the link behaves normally.
-    let pendingHref = null;
-
     document.addEventListener('click', (e) => {
       const link = e.target.closest?.('[data-gate-listings]');
       if (!link || dlg.open) return;
