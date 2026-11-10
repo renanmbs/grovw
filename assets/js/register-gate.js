@@ -122,9 +122,15 @@ const GATE = {
       seconds = 0;
       set(KEY_TIME, '0');
       closeBtn.hidden = true;
-      // Re-render the copy: the generic introduction for the timer, the
-      // listings wording when they clicked through to the portal.
-      setLang(current);
+      // Always English on open, every time — a visitor who switched to
+      // Spanish earlier in the visit still gets the English panel back,
+      // because the language is a per-appearance choice rather than a
+      // setting. The flashing Español button is how they switch, and it
+      // is the most conspicuous thing in the panel.
+      //
+      // This also re-renders the copy: the generic introduction for the
+      // timer, the listings wording for a click on View Properties.
+      setLang('en');
 
       prefill();
       dlg.showModal();
