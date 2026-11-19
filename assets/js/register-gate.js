@@ -24,8 +24,10 @@ const GATE = {
   // Turn the whole thing off without touching the HTML.
   ENABLED: true,
 
-  // Active seconds of browsing before the gate first appears.
-  DELAY_SECONDS: 45,
+  // Active seconds of browsing before the gate first appears. Active is the
+  // operative word: time spent on another tab does not count, so this is a
+  // minute and a half of someone actually looking at the site.
+  DELAY_SECONDS: 90,
 
   // Seconds the gate must be on screen before the X appears. Until then
   // there is no way out — not the X, not Escape. Set to 0 to show the X

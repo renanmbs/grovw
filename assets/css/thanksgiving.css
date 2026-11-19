@@ -62,28 +62,22 @@
 }
 .hero__headline{text-shadow:0 2px 18px rgba(8,16,12,.55), 0 1px 3px rgba(8,16,12,.45)}
 .hero__invite,.hero .eyebrow{text-shadow:0 2px 12px rgba(8,16,12,.6)}
-/* The photo now shows through at the top of the frame, so the chrome that
-   floats over it carries its own shadow instead of leaning on the veil.
-   Only while the header is still transparent — once it gains a background
-   on scroll, styles.css takes over. */
-.site-header[data-scrolled="false"] .primary-nav a,
-.site-header[data-scrolled="false"] .cta--ghost{text-shadow:0 1px 8px rgba(8,16,12,.75)}
+/* The header is a solid white bar now, so its text no longer sits on the
+   photograph and no longer needs a shadow to survive it. A dark shadow under
+   dark text on white only reads as smudge. */
 .hero__scroll-label{text-shadow:0 1px 8px rgba(8,16,12,.75)}
 .hero__actions .cta--ghost{text-shadow:0 1px 8px rgba(8,16,12,.7)}
 
 /* ---------- Hero CTA: fall maroon, not gold ---------- */
 .hero__actions .cta--gold{
-  /* Translucent, so the glass treatment in styles.css reads on the primary
-     too. Deep enough that white text stays well clear of contrast limits
-     over the photograph. */
-  --cta-bg:rgba(122,46,58,.78);--cta-border:rgba(168,70,90,.62);--cta-fg:#fff;
+  /* Solid, not frosted. One confident fill against two pieces of glass is
+     what makes the primary unmistakable — a translucent primary beside
+     translucent secondaries asks the eye to rank three similar things. */
+  --cta-bg:var(--maroon);--cta-border:var(--maroon);--cta-fg:#fff;
 }
 .hero__actions .cta--gold:hover,
 .hero__actions .cta--gold:focus-visible{
-  --cta-bg:rgba(94,32,41,.92);--cta-border:rgba(217,194,140,.55);--cta-fg:#fff;
-}
-@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))){
-  .hero__actions .cta--gold{--cta-bg:var(--maroon);--cta-border:var(--maroon)}
+  --cta-bg:#8C3644;--cta-border:#8C3644;--cta-fg:#fff;
 }
 
 /* ---------- Ember accents ---------- */

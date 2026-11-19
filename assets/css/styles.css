@@ -232,25 +232,44 @@ p strong { font-weight: 600; color: var(--char); }
   --cta-bg: var(--ink);
   --cta-fg: #fff;
   --cta-border: var(--ink);
+  /* A hairline of light along the top edge and a shadow that reads as
+     contact with the page, rather than a drop shadow floating over it.
+     Both are variables so a variant can deepen them on hover without
+     restating the whole stack. */
+  --cta-sheen: linear-gradient(180deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0) 60%);
+  --cta-shadow: inset 0 1px 0 rgba(255,255,255,0.12),
+                0 1px 2px rgba(8,16,12,0.16),
+                0 8px 20px -11px rgba(8,16,12,0.5);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.65em;
-  /* Slightly asymmetric inline padding compensates for letter-spacing's
-     trailing gap on the last character — optically centers uppercase text.
-     text-align: center keeps each line centered when text wraps. */
-  padding: 0.95em 1.55em 0.95em 1.65em;
+  gap: 0.55em;
+  /* Padding is symmetric now. The old asymmetry existed to absorb the gap
+     that wide letter-spacing leaves after the final character; with the
+     tracking gone there is nothing left to compensate for. */
+  padding: 0.92em 1.5em;
   text-align: center;
   font-family: var(--f-body);
-  font-size: 0.85rem;
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+  /* The real tell of a dated button is not its corner radius — it is a
+     small uppercase label on wide tracking. Sentence case at a readable
+     size, set tight and carried by weight, is what reads as current. It
+     also lets the label say an ordinary thing in an ordinary voice, which
+     is what expensive brands actually do. */
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
   color: var(--cta-fg);
-  background: var(--cta-bg);
+  background-color: var(--cta-bg);
+  background-image: var(--cta-sheen);
   border: 1px solid var(--cta-border);
-  border-radius: 999px;
-  transition: background .3s var(--ease-out), color .3s var(--ease-out), border-color .3s var(--ease-out), transform .3s var(--ease-out);
+  /* Just enough to be a considered corner rather than a default one. */
+  border-radius: 4px;
+  /* Quicker than before. A third of a second on a press reads as lag. */
+  transition: background-color .22s var(--ease-out), color .22s var(--ease-out),
+              border-color .22s var(--ease-out), transform .22s var(--ease-out),
+              box-shadow .22s var(--ease-out);
+  box-shadow: var(--cta-shadow);
   cursor: pointer;
   text-decoration: none;
   position: relative;
@@ -260,6 +279,28 @@ p strong { font-weight: 600; color: var(--char); }
   --cta-bg: var(--gold-3);
   --cta-border: var(--gold-3);
   --cta-fg: #fff;
+}
+/* Lift on hover, settle under the finger on press. The press state is what
+   makes a button feel like a physical control rather than a link. */
+.cta:not(.cta--quiet):hover,
+.cta:not(.cta--quiet):focus-visible {
+  transform: translateY(-2px);
+  --cta-shadow: inset 0 1px 0 rgba(255,255,255,0.18),
+                0 2px 4px rgba(8,16,12,0.18),
+                0 14px 28px -12px rgba(8,16,12,0.6);
+}
+.cta:not(.cta--quiet):active {
+  transform: translateY(0) scale(0.985);
+  --cta-shadow: inset 0 1px 2px rgba(8,16,12,0.22);
+}
+.cta:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .cta:not(.cta--quiet):hover,
+  .cta:not(.cta--quiet):focus-visible,
+  .cta:not(.cta--quiet):active { transform: none; }
 }
 .cta--gold {
   --cta-bg: var(--gold);
@@ -275,6 +316,14 @@ p strong { font-weight: 600; color: var(--char); }
   --cta-bg: transparent;
   --cta-border: var(--gold);
   --cta-fg: var(--gold);
+  /* Nothing to catch a highlight on a transparent fill — the sheen would
+     just read as a grey smear, and the shadow as dirt under the outline. */
+  --cta-sheen: none;
+  --cta-shadow: none;
+}
+.cta--ghost:hover,
+.cta--ghost:focus-visible {
+  --cta-shadow: 0 10px 24px -12px rgba(8,16,12,0.5);
 }
 .cta--ghost:hover {
   --cta-bg: var(--gold);
@@ -294,11 +343,13 @@ p strong { font-weight: 600; color: var(--char); }
   --cta-bg: transparent;
   --cta-border: transparent;
   --cta-fg: currentColor;
+  --cta-sheen: none;
+  --cta-shadow: none;
   padding-inline: 0.4em;
 }
 .cta--quiet:hover { --cta-fg: var(--gold); --cta-bg: transparent; --cta-border: transparent; transform: translateX(4px); }
 .cta--block { width: 100%; }
-.cta--lg { padding: 1.15em 1.8em; }
+.cta--lg { padding: 1.05em 1.8em; font-size: 1rem; }
 
 .link-arrow {
   display: inline-flex; align-items: center; gap: 0.6em;
@@ -312,19 +363,23 @@ p strong { font-weight: 600; color: var(--char); }
 .section--ink .link-arrow:hover { color: var(--gold-2); }
 
 /* ---------- Header / Nav ---------- */
+/* A solid white bar rather than a scrim over the photograph. It costs the
+   top 76px of the image, and buys navigation that is legible before the
+   photo has even loaded — the nav used to depend on whatever happened to be
+   behind it. The bar is white at every scroll position; only its edge
+   changes, gaining a hairline and a shadow once the page moves under it. */
 .site-header {
   position: fixed;
   inset: 0 0 auto 0;
   z-index: 100;
-  background: linear-gradient(180deg, rgba(14,26,20,0.55) 0%, rgba(14,26,20,0) 100%);
-  transition: background-color .35s var(--ease-out), backdrop-filter .35s var(--ease-out);
+  background: var(--paper);
+  border-bottom: 1px solid transparent;
+  transition: box-shadow .35s var(--ease-out), border-color .35s var(--ease-out);
 }
 .site-header[data-scrolled="true"],
 html.is-nav-open .site-header {
-  background: rgba(14, 26, 20, 0.96);
-  backdrop-filter: saturate(180%) blur(12px);
-  -webkit-backdrop-filter: saturate(180%) blur(12px);
-  border-bottom: 1px solid rgba(255,255,255,0.06);
+  border-bottom-color: var(--hairline);
+  box-shadow: 0 1px 2px rgba(20,34,25,0.04), 0 10px 30px -18px rgba(20,34,25,0.3);
 }
 .nav-shell {
   display: flex; align-items: center; justify-content: space-between;
@@ -336,7 +391,10 @@ html.is-nav-open .site-header {
 .brand { display: inline-flex; align-items: center; flex-shrink: 0; }
 .brand__logo {
   height: 38px; width: auto;
-  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.25));
+  /* The gold was picked to sit on a photograph. On white it goes pale, so it
+     is deepened here rather than by shipping a second logo file — one source
+     of truth for the artwork, adjusted for the surface it lands on. */
+  filter: saturate(1.12) brightness(0.88) contrast(1.05);
 }
 @media (min-width: 1024px) {
   .brand__logo { height: 48px; }
@@ -345,7 +403,7 @@ html.is-nav-open .site-header {
 .primary-nav { display: none; }
 .primary-nav ul { display: flex; gap: clamp(1rem, 2.4vw, 2.5rem); }
 .primary-nav a {
-  color: rgba(255,255,255,0.86);
+  color: var(--char);
   font-size: 0.82rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -358,23 +416,33 @@ html.is-nav-open .site-header {
   height: 1px; background: var(--gold);
   transition: right .35s var(--ease-out);
 }
-.primary-nav a:hover, .primary-nav a:focus-visible { color: var(--gold-2); }
+/* gold-3 rather than gold: the lighter golds are for dark grounds and go
+   illegible on white. */
+.primary-nav a:hover, .primary-nav a:focus-visible { color: var(--gold-3); }
+.primary-nav a::after { background: var(--gold-3); }
 .primary-nav a:hover::after, .primary-nav a:focus-visible::after { right: 0; }
 
-.site-header .cta--ghost { display: none; padding: 0.65em 1.25em; font-size: 0.74rem; letter-spacing: 0.18em; }
+/* The header button keeps its own smaller scale, but tracks with the rest
+   of the buttons rather than holding the old wide setting on its own. */
+.site-header .cta--ghost {
+  display: none; padding: 0.62em 1.1em; font-size: 0.85rem; letter-spacing: 0;
+  --cta-border: var(--ink); --cta-fg: var(--ink);
+}
+.site-header .cta--ghost:hover,
+.site-header .cta--ghost:focus-visible { --cta-bg: var(--ink); --cta-fg: var(--gold-2); }
 
 .nav-toggle {
-  background: transparent; border: 1px solid rgba(255,255,255,0.25);
+  background: transparent; border: 1px solid var(--hairline);
   width: 44px; height: 44px;
   display: inline-flex; flex-direction: column; gap: 5px;
   align-items: center; justify-content: center;
   border-radius: 50%;
   transition: border-color .25s var(--ease-out), background .25s var(--ease-out);
 }
-.nav-toggle:hover { border-color: var(--gold); }
+.nav-toggle:hover { border-color: var(--gold-3); }
 .nav-toggle span {
   display: block; width: 16px; height: 1.5px;
-  background: #fff; transition: transform .3s var(--ease-out), opacity .3s var(--ease-out);
+  background: var(--char); transition: transform .3s var(--ease-out), opacity .3s var(--ease-out);
 }
 .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
 .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
@@ -513,14 +581,22 @@ html.is-nav-open .site-header {
    leave ~7% slack for font-loading differences. */
 .hero__content { container-type: inline-size; }
 .hero__headline {
-  font-size: clamp(2.31rem, 8.14cqw, 6.3rem);
-  line-height: 1.06;
-  letter-spacing: -0.005em;
+  /* Sized down from 8.14cqw. The longer headline needed three lines at the
+     old size; at this one it sits on two and stops competing with the
+     photograph for the top of the page. */
+  font-size: clamp(1.95rem, 5.4cqw, 4.25rem);
+  line-height: 1.08;
+  letter-spacing: -0.008em;
   font-weight: 500;
   text-wrap: balance;
   margin-inline: auto;
-  max-width: 18ch;
+  max-width: 30ch;
 }
+/* The break is explicit above 768px so the two lines are the two phrases,
+   not wherever the measure happens to run out. On a phone there is no width
+   for two lines at a readable size, so it is removed and the text wraps. */
+.hero__brk { display: none; }
+@media (min-width: 768px) { .hero__brk { display: inline; } }
 /* Both lines share the display serif — one family, roman over italic — with the
    tagline in gold. */
 .hero__invite {
@@ -593,6 +669,9 @@ html.is-nav-open .site-header {
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.16),
     0 12px 32px -14px rgba(8, 16, 12, 0.75);
+  /* Sentence case is doing the modernising; on a photograph the labels need
+     a touch more weight than they do on a flat section to hold their edge. */
+  font-weight: 650;
   transition: background .3s var(--ease-out), color .3s var(--ease-out),
               border-color .3s var(--ease-out), transform .3s var(--ease-out),
               box-shadow .3s var(--ease-out);
@@ -617,9 +696,50 @@ html.is-nav-open .site-header {
 }
 .hero__actions .cta--ghost:hover,
 .hero__actions .cta--ghost:focus-visible {
-  --cta-bg: rgba(217, 194, 140, 0.92);
-  --cta-border: rgba(217, 194, 140, 0.95);
+  --cta-bg: rgba(242, 237, 226, 0.95);
+  --cta-border: rgba(242, 237, 226, 0.98);
   --cta-fg: var(--ink);
+}
+/* One mark per button — a roofline, a price tag, a shoot. Drawn as strokes
+   in the label's own colour so they inherit every state for free, including
+   the ghost buttons flipping to ink on hover. Sized in em so they scale with
+   the label rather than being pinned to a pixel size. */
+.cta__mark {
+  width: 1.1em; height: 1.1em; flex: 0 0 auto;
+  fill: none; stroke: currentColor; stroke-width: 1.6;
+  stroke-linecap: round; stroke-linejoin: round;
+  opacity: 0.88;
+  transition: opacity .22s var(--ease-out), transform .22s var(--ease-out);
+}
+.cta:hover .cta__mark,
+.cta:focus-visible .cta__mark { opacity: 1; }
+/* The GROWV mark is the real artwork, not a drawn glyph, so it keeps its own
+   gold rather than taking the label's colour. A touch larger than the stroked
+   marks because its strokes are finer and it is set inside a square. */
+.cta__mark--logo {
+  width: 1.3em; height: 1.3em; object-fit: contain; opacity: 1;
+}
+/* The tag tips as though it has been lifted off a rail — only the one mark
+   that could plausibly move. */
+[data-contact-intent="sell"]:hover .cta__mark { transform: rotate(-6deg); }
+@media (prefers-reduced-motion: reduce) {
+  [data-contact-intent="sell"]:hover .cta__mark { transform: none; }
+}
+
+/* The solid primary casts its own colour rather than a generic grey — the
+   detail that stops a flat fill looking like a default button. */
+.hero__actions .cta--gold {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    0 2px 6px rgba(50, 14, 20, 0.35),
+    0 16px 34px -14px rgba(74, 20, 28, 0.85);
+}
+.hero__actions .cta--gold:hover,
+.hero__actions .cta--gold:focus-visible {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.24),
+    0 3px 8px rgba(50, 14, 20, 0.4),
+    0 22px 44px -16px rgba(74, 20, 28, 0.9);
 }
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .hero__actions .cta--ghost { --cta-bg: rgba(14, 26, 20, 0.66); }
