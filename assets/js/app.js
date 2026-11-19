@@ -485,6 +485,34 @@
     if (el) el.textContent = String(new Date().getFullYear());
   };
 
+  /* ---------- Hero intent buttons ---------- */
+  // Sell Your Home / Join GROWV both scroll to the same form. Without this
+  // they would be indistinguishable in the inbox, because the Apps Script
+  // only reads name, email, phone and message. Seeding the message both
+  // tells Jonathan which door they came through and spares the visitor a
+  // blank box. It is a starting sentence, not a locked field — it is left
+  // alone the moment there is anything already typed there.
+  const INTENT_MESSAGE = {
+    sell: 'I\u2019m thinking about selling my home. I\u2019d like to know what it could sell for and what the process looks like.',
+    join: 'I\u2019m a licensed agent (or working on my license) and I\u2019d like to hear about joining GROWV.',
+  };
+
+  const initIntentCtas = () => {
+    document.addEventListener('click', (e) => {
+      const a = e.target.closest('[data-contact-intent]');
+      if (!a) return;
+      const intent = a.getAttribute('data-contact-intent');
+      const field = $('#contactForm [name="message"]');
+      if (field && !field.value.trim() && INTENT_MESSAGE[intent]) {
+        field.value = INTENT_MESSAGE[intent];
+      }
+      // Which of the three hero doors actually produces leads.
+      if (window.growvTrack) {
+        window.growvTrack('select_cta', { cta: intent, location: 'hero' });
+      }
+    });
+  };
+
   /* ---------- Contact form ---------- */
   const initContactForm = () => {
     const form = $('#contactForm');
@@ -587,6 +615,7 @@
     initHeader();
     initMobileNav();
     initSmoothScroll();
+    initIntentCtas();
     initYear();
     renderTeam();
     initContactForm();

@@ -128,7 +128,7 @@
         </div>
         <div class="hero__announce">
           <h1 id="hero-title" class="display">
-            <span class="display__line hero__headline">Good Decisions start with Good Advice.</span>
+            <span class="display__line hero__headline">Great Real Estate Decisions start with Great Advice.</span>
             <span class="display__line hero__invite">Rooted in Real Estate.</span>
           </h1>
         </div>
@@ -140,6 +140,12 @@
              target="_blank" rel="noopener noreferrer">
             View Properties<span class="sr-only"> (opens in a new tab)</span>
           </a>
+          <!-- Both of these land on the contact form. data-contact-intent tells
+               app.js which one was clicked so the message box arrives already
+               saying what they came for — the Apps Script only reads the four
+               known fields, so the message IS how the intent reaches Jonathan. -->
+          <a class="cta cta--ghost" href="#contact" data-contact-intent="sell">Sell Your Home</a>
+          <a class="cta cta--ghost" href="#contact" data-contact-intent="join">Join GROWV</a>
         </div>
       </div>
 

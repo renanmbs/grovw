@@ -73,11 +73,17 @@
 
 /* ---------- Hero CTA: fall maroon, not gold ---------- */
 .hero__actions .cta--gold{
-  --cta-bg:var(--maroon);--cta-border:var(--maroon);--cta-fg:#fff;
+  /* Translucent, so the glass treatment in styles.css reads on the primary
+     too. Deep enough that white text stays well clear of contrast limits
+     over the photograph. */
+  --cta-bg:rgba(122,46,58,.78);--cta-border:rgba(168,70,90,.62);--cta-fg:#fff;
 }
 .hero__actions .cta--gold:hover,
 .hero__actions .cta--gold:focus-visible{
-  --cta-bg:var(--maroon-2);--cta-border:var(--maroon-2);--cta-fg:#fff;
+  --cta-bg:rgba(94,32,41,.92);--cta-border:rgba(217,194,140,.55);--cta-fg:#fff;
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))){
+  .hero__actions .cta--gold{--cta-bg:var(--maroon);--cta-border:var(--maroon)}
 }
 
 /* ---------- Ember accents ---------- */
