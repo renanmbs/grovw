@@ -491,8 +491,12 @@ html.is-nav-open .site-header {
 /* ---------- Hero ---------- */
 .hero {
   position: relative;
-  min-height: 100svh;
-  min-height: 100vh;
+  /* Deliberately short of a full screen. A hero that fills the viewport
+     exactly tells the eye the page has ended; leaving a band of the next
+     section visible is the single most reliable reason people keep going.
+     svh so a phone's collapsing address bar cannot push it back to full. */
+  min-height: 90vh;
+  min-height: 90svh;
   display: flex;
   align-items: center;
   color: #fff;
@@ -649,13 +653,44 @@ html.is-nav-open .site-header {
   .hero__actions { align-items: center; }
   .hero__actions .cta { width: min(100%, 22rem); }
 }
+/* Three equal columns rather than three pills of three different lengths.
+   Matching widths are what make them read as one considered control instead
+   of three separate links that happen to sit together. The row escapes the
+   hero's 78% column so it can hold its width on any laptop. */
 @media (min-width: 760px) {
   .hero__content--center .hero__actions {
-    width: max-content;
-    max-width: calc(100vw - 2 * var(--pad-side));
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    width: min(calc(100vw - 2 * var(--pad-side)), 47rem);
     margin-left: 50%;
     transform: translateX(-50%);
   }
+}
+/* Mark, then label, then the chevron pushed to the trailing edge. Left
+   aligned, because centred text inside a fixed-width button leaves the mark
+   floating at a different distance from the edge on each one. */
+.hero__content--center .hero__actions .cta {
+  justify-content: flex-start;
+  gap: 0.7em;
+  padding: 1.05em 1.1em 1.05em 1.15em;
+  text-align: left;
+}
+/* Inter, like every other button on the site. The labels are held to one
+   line so the three boxes stay the same height whatever goes in them. */
+.hero__content--center .hero__actions .cta__label {
+  flex: 1 1 auto; min-width: 0; white-space: nowrap;
+}
+.cta__go {
+  width: 1.05em; height: 1.05em; flex: 0 0 auto;
+  fill: none; stroke: currentColor; stroke-width: 1.7;
+  stroke-linecap: round; stroke-linejoin: round;
+  opacity: 0.45;
+  transition: opacity .22s var(--ease-out), transform .22s var(--ease-out);
+}
+.cta:hover .cta__go,
+.cta:focus-visible .cta__go { opacity: 0.95; transform: translateX(3px); }
+@media (prefers-reduced-motion: reduce) {
+  .cta:hover .cta__go, .cta:focus-visible .cta__go { transform: none; }
 }
 
 /* The hero sits on a photograph, so the buttons take a little of it in
@@ -751,17 +786,34 @@ html.is-nav-open .site-header {
 
 .hero__scroll {
   position: absolute;
-  left: 50%; bottom: clamp(1.25rem, 3vh, 2rem);
+  left: 50%; bottom: clamp(0.9rem, 2.2vh, 1.5rem);
   transform: translateX(-50%);
   display: none;
-  flex-direction: column; align-items: center; gap: 0.6rem;
-  color: rgba(255,255,255,0.6);
-  font-size: 0.7rem; letter-spacing: 0.32em; text-transform: uppercase;
-  transition: color .25s var(--ease-out);
+  flex-direction: column; align-items: center; gap: 0.5rem;
+  /* Naming the destination beats "Scroll": an instruction asks for effort,
+     a destination offers a reason. It also points at the section directly
+     below, which the old cue skipped past. */
+  color: rgba(255,255,255,0.78);
+  font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase;
+  transition: color .25s var(--ease-out), transform .25s var(--ease-out);
+  text-shadow: 0 1px 8px rgba(8,16,12,0.75);
 }
-.hero__scroll:hover { color: var(--gold); }
+.hero__scroll:hover { color: var(--gold-2); }
+.hero__scroll-chev {
+  width: 20px; height: 20px; fill: none; stroke: currentColor;
+  stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+  animation: scrollNudge 2.4s var(--ease-in-out) infinite;
+}
+@keyframes scrollNudge {
+  0%, 60%, 100% { transform: translateY(0); opacity: .65; }
+  30% { transform: translateY(5px); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero__scroll-chev { animation: none; opacity: .8; }
+  .hero__scroll-line::after { animation: none; }
+}
 .hero__scroll-line {
-  display: block; width: 1px; height: 60px;
+  display: block; width: 1px; height: 44px;
   background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.7) 100%);
   position: relative; overflow: hidden;
 }
@@ -773,9 +825,9 @@ html.is-nav-open .site-header {
 @keyframes scrollDot {
   0% { top: -30px; opacity: 0; }
   30% { opacity: 1; }
-  100% { top: 60px; opacity: 0; }
+  100% { top: 44px; opacity: 0; }
 }
-@media (min-width: 600px) and (min-height: 700px) {
+@media (min-width: 600px) and (min-height: 640px) {
   .hero__scroll { display: flex; }
 }
 
@@ -1052,6 +1104,10 @@ html.is-nav-open .site-header {
   background: #fff; border-radius: 50%; padding: 5px;
 }
 .agent__social--reviews:hover { box-shadow: 0 4px 14px rgba(66,133,244,0.45); }
+
+/* LinkedIn ships as a tile like Instagram's, so it only needs the corner. */
+.agent__social--linkedin { border-radius: 5px; overflow: hidden; }
+.agent__social--linkedin:hover { box-shadow: 0 4px 14px rgba(10,102,194,0.5); }
 
 .agent__name {
   font-family: var(--f-display); font-weight: 500;

@@ -122,7 +122,8 @@ const CONFIG = {
       const name = el.closest('.agent')?.querySelector('.agent__name')?.textContent.trim();
       const href = el.getAttribute('href') || '';
       const network = href.indexOf('instagram.com') !== -1 ? 'instagram'
-                    : href.indexOf('g.page') !== -1 ? 'google_reviews' : 'other';
+                    : href.indexOf('g.page') !== -1 ? 'google_reviews'
+                    : href.indexOf('linkedin.com') !== -1 ? 'linkedin' : 'other';
       track('outbound_social', { network, agent: name });
     });
 

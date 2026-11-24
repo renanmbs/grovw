@@ -42,7 +42,8 @@
       photoSm: 'assets/images/jonathan-headshot-sm.jpg',
       url: 'https://jonathanperez.site/',
       instagram: 'https://www.instagram.com/just_jonathanperez',
-      reviews: 'https://g.page/r/CWuFuCoU51YeEAE/review'
+      reviews: 'https://g.page/r/CWuFuCoU51YeEAE/review',
+      linkedin: 'https://www.linkedin.com/in/jonathan-perez-8b658371'
     },
     {
       name: 'Stefanie Godinez',
@@ -162,12 +163,23 @@
         <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
         <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
         <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+      </svg>`,
+
+    // LinkedIn's mark: the brand blue tile with the white "in". Drawn rather
+    // than loaded so it costs nothing and scales with the other two.
+    linkedin: () => `
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <rect width="24" height="24" rx="4.6" fill="#0A66C2"/>
+        <circle cx="6.35" cy="6.1" r="1.95" fill="#fff"/>
+        <rect x="4.6" y="9.3" width="3.5" height="10.2" fill="#fff"/>
+        <path fill="#fff" d="M10.4 9.3h3.35v1.4h.05c.47-.85 1.6-1.75 3.3-1.75 3.53 0 4.18 2.2 4.18 5.07v5.48h-3.49v-4.86c0-1.16-.02-2.65-1.69-2.65-1.69 0-1.95 1.26-1.95 2.57v4.94H10.4z"/>
       </svg>`
   };
 
   const SOCIAL_LABEL = {
     instagram: 'on Instagram',
-    reviews: '\u2014 leave a Google review'
+    reviews: '\u2014 leave a Google review',
+    linkedin: 'on LinkedIn'
   };
 
   const socialLinks = (a, i) => Object.keys(socialIcon)
@@ -502,8 +514,11 @@
       const a = e.target.closest('[data-contact-intent]');
       if (!a) return;
       const intent = a.getAttribute('data-contact-intent');
+      const samePage = (a.getAttribute('href') || '').charAt(0) === '#';
       const field = $('#contactForm [name="message"]');
-      if (field && !field.value.trim() && INTENT_MESSAGE[intent]) {
+      // Only seed a form we are actually staying on. Sell Your Home now
+      // leads to its own page, which has its own fields.
+      if (samePage && field && !field.value.trim() && INTENT_MESSAGE[intent]) {
         field.value = INTENT_MESSAGE[intent];
       }
       // Which of the three hero doors actually produces leads.
@@ -541,18 +556,34 @@
         return;
       }
 
+      // The Apps Script reads four fields and nothing else, so anything a
+      // page adds beyond them — a property address, a selling timeframe —
+      // has to travel inside the message or it is dropped in transit.
+      // Marking a field data-fold="Label" folds it in, labelled, above
+      // whatever the visitor typed.
+      const folded = Array.from(form.querySelectorAll('[data-fold]'))
+        .map((el) => [el.getAttribute('data-fold'), (el.value || '').trim()])
+        .filter(([, v]) => v)
+        .map(([k, v]) => k + ': ' + v)
+        .join('\n');
+      const typed = form.elements['message']
+        ? form.elements['message'].value.trim() : '';
+      const message = folded ? (typed ? folded + '\n\n' + typed : folded) : typed;
+
       const data = {
         name: form.elements['name'].value.trim(),
         email: form.elements['email'].value.trim(),
         phone: form.elements['phone'].value.trim(),
-        message: form.elements['message'].value.trim(),
-        source: 'mygrowv.com',
+        message: message,
+        source: window.location.pathname.indexOf('sell') !== -1
+          ? 'mygrowv.com/sell' : 'mygrowv.com',
         submitted_at: new Date().toISOString()
       };
 
       // Fallback to mailto if the Apps Script URL hasn't been set yet
       if (!FORM_ENDPOINT) {
         const body = `Name: ${data.name}%0D%0AEmail: ${data.email}%0D%0APhone: ${data.phone}%0D%0A%0D%0A${encodeURIComponent(data.message)}`;
+        /* data.message already carries any folded fields. */
         window.location.href = `mailto:jonathan@mygrowv.com?subject=Inquiry%20from%20${encodeURIComponent(data.name)}&body=${body}`;
         return;
       }
